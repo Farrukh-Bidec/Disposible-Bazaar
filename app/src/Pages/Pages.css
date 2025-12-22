@@ -1,0 +1,106 @@
+/* for shap detail page */
+.my-form {
+  --_clr-primary: #fff;
+  --_clr-hover: #1E7773;
+  --_clr-checked: #1E7773;
+}
+
+.my-form>div {
+  --_clr-current: var(--_clr-primary);
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.my-form-heading{
+  height: initial !important;
+}
+
+/* .my-form > div + div {
+    margin-block-start: 0.5rem;
+  } */
+/* .my-form label {
+    cursor: pointer;
+    color: var(--_clr-current);
+    transition: color 150ms ease-in-out;
+  } */
+/* styled radio */
+.my-form input[type="radio"] {
+  appearance: none;
+  outline: none;
+  width: 1rem;
+  /* height: 1rem ; */
+  aspect-ratio: 1;
+  padding: 0.25rem;
+  background: transparent;
+  border: 1px solid var(--_clr-current);
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.my-form input[type="radio"]::after {
+  content: "";
+  position: absolute;
+  inset: 0.25rem;
+  opacity: 0;
+  scale: 0;
+  transition:
+    opacity 150ms ease-in-out,
+    scale 150ms ease-in-out;
+  background-color: var(--_clr-checked);
+  border-radius: inherit;
+}
+
+.my-form label:hover,
+.my-form input[type="radio"]:focus-visible,
+.my-form input[type="radio"]:focus-visible+label,
+.my-form input[type="radio"]:hover,
+.my-form input[type="radio"]:hover+label {
+  --_clr-current: var(--_clr-hover);
+}
+
+.my-form input[type="radio"]:focus-visible::after,
+.my-form input[type="radio"]:hover::after {
+  opacity: 0.5;
+  scale: 1;
+  background-color: var(--_clr-hover);
+}
+
+.my-form input[type="radio"]:checked+label:not(:hover),
+.my-form input[type="radio"]:checked:not(:hover) {
+  --_clr-current: var(--_clr-checked);
+}
+
+.my-form input[type="radio"]:checked::after {
+  opacity: 1;
+  scale: 1;
+}
+
+/* Autofill background for dark mode (or any custom color) */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #20202c inset;
+  /* Replace with your desired color */
+  box-shadow: 0 0 0 1000px #20202c inset;
+  /* Replace with your desired color */
+  -webkit-text-fill-color: #fff;
+  /* Text color */
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #1E7773;
+  /* Red color for scrollbar */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+

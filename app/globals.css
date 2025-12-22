@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@font-face {
+    font-family: 'Lalezar';
+    src: url("/Fonts/Lalezar/Lalezar-Regular.ttf");
+}
+
+
+.font-bazaar {
+    font-family: 'Lalezar';
+    
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #20202C;
+    --foreground: #ededed;
+  }
+}
+
+body {
+      --background: #20202C;
+
+  background: var(--background);
+  color: var(--foreground);
+}
+.font-30 {
+	font-size: 30px
+}

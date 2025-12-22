@@ -1,0 +1,198 @@
+.swiper-button-next:after {
+    font-size: 1rem !important;
+    padding: 0px 2px 0px;
+}
+
+.swiper-button-prev:after {
+    font-size: 1rem !important;
+    padding: 0px 2px 0px;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.swiper-slide{
+    /* margin-right: 0px !important; */
+    display: flex !important;
+    justify-content: center !important;
+}
+
+@media screen and (max-width: 480px) {
+    .mobileVeiw{
+        max-height: 240px;
+    
+    }
+    .mobileVeiw:hover{
+        max-height: fit-content;
+    }
+}
+
+/* Hero Slider CSS */
+
+/* Base styling for slide */
+.slide {
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.6s ease-in-out; /* Slow fade transition */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  /* Style for the current slide */
+  .slide.current {
+    opacity: 1; /* Fully visible */
+  }
+  
+  /* Style for the previous slide */
+  .slide.animateIn.previous {
+    opacity: 1; /* Fully visible */
+  }
+  
+  /* Style for the next slide */
+  .slide.animateIn.next {
+    opacity: 1; /* Fully visible */
+  }
+  
+  /* Style for the slide being animated out */
+  .slide.animateOut {
+    opacity: 0; /* Fade out */
+  }
+  
+  /* Heading styling */
+  .slide .heading {
+    transition: all 0.6s ease-in-out; /* Slow transition */
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  
+  .slide.animateIn.previous .heading,
+  .slide.current .heading,
+  .slide.animateIn.next .heading {
+    transform: translateX(0px);
+    transition-delay: 0.9s;
+    opacity: 1;
+  }
+  
+  /* EmptyCup styling */
+  .slide .emptyCup {
+    transition: all 0.6s ease-in-out; /* Slow transition */
+    transform: translateY(0);
+    opacity: 0;
+  }
+  
+  .slide.animateIn.previous .emptyCup,
+  .slide.current .emptyCup,
+  .slide.animateIn.next .emptyCup {
+    transform: translateY(10px);
+    transition-delay: 0.9s;
+    opacity: 1;
+  }
+  
+  /* Cup styling */
+  .slide .Cup {
+    transition: all 0.6s ease-in-out; /* Slow transition */
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  
+  .slide.animateIn.previous .Cup,
+  .slide.current .Cup,
+  .slide.animateIn.next .Cup {
+    transform: translateY(20px);
+    transition-delay: 0.9s;
+    opacity: 1;
+  }
+  
+  /* Plate styling */
+  .slide .Plate {
+    transition: all 0.6s ease-in-out; /* Slow transition */
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  
+  .slide.animateIn.previous .Plate,
+  .slide.current .Plate,
+  .slide.animateIn.next .Plate {
+    transform: translateX(0);
+    transition-delay: 0.9s;
+    opacity: 1;
+  }
+  
+  /* Plate styling */
+  .slide .Basket {
+    transition: all 0.6s ease-in-out; /* Slow transition */
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  
+  .slide.animateIn.previous .Basket,
+  .slide.current .Basket,
+  .slide.animateIn.next .Basket {
+    transform: translateY(0);
+    transition-delay: 0.9s;
+    opacity: 1;
+  }
+  
+  /* Box styling */
+  .slide .Box {
+    transition: all 0.6s ease-in-out; /* Slow transition */
+    transform: translateX(0);
+    opacity: 0;
+  }
+  
+  .slide.animateIn.previous .Box,
+  .slide.current .Box,
+  .slide.animateIn.next .Box {
+    transform: translateX(10px);
+    transition-delay: 0.9s;
+    opacity: 1;
+  }
+  
+  /* Shopper styling */
+  .slide .Shopper {
+    transition: all 0.6s ease-in-out; /* Slow transition */
+    transform: translateY(0);
+    opacity: 0;
+  }
+  
+  .slide.animateIn.previous .Shopper,
+  .slide.current .Shopper,
+  .slide.animateIn.next .Shopper {
+    transform: translateY(-10px);
+    transition-delay: 0.9s;
+    opacity: 1;
+  }
+  /* Additional styles for animateOut and animateIn */
+  .slide.animateOut .heading,
+  .slide.animateOut .emptyCup,
+  .slide.animateOut .Cup,
+  .slide.animateOut .Plate, 
+  .slide.animateOut .Basket,
+  .slide.animateOut .Box,  
+  .slide.animateOut .Shopper {
+  
+    transition-delay: 0.6s;
+  }
+  
+  .slide.animateIn .heading,
+  .slide.animateIn .emptyCup,
+  .slide.animateIn .Cup,
+  .slide.animateIn .Plate,
+  .slide.animateIn .Basket,
+  .slide.animateIn .Box,
+  .slide.animateIn .Shopper {
+    transition-delay: 1.2s;
+  }
+  

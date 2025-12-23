@@ -238,7 +238,7 @@ const CustomizationCategory = ({ params }) => {
               </div>
             ) : filteredProduct.length === 0 ? (
               <div className="flex justify-center h-screen items-center">
-                <h2 className="text-4xl font-bazaar">Loading ...</h2>
+                <h2 className="text-4xl font-bazaar">No product found</h2>
               </div>
             ) : (
               <>

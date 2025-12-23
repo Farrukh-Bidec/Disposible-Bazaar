@@ -13,11 +13,12 @@ export const metadata: Metadata = {
   title: "Disposable Bazaar",
   description: "Quality disposable products",
   other: {
-    "link": [
-      { rel: "preload", href: "https://ecommerce-inventory.thegallerygen.com/public/Frontend/Assets/HomeAssets/HeroSecton/Banner1.png", as: "image" }
+    link: [
+      "https://ecommerce-inventory.thegallerygen.com/public/Frontend/Assets/HomeAssets/HeroSecton/Banner1.png"
     ]
   }
 };
+
 
 export default function RootLayout({
   children,

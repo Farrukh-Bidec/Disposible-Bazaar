@@ -183,6 +183,13 @@ export default function Login() {
                         <h4 className="text-xl md:text-4xl mb4 font-bazaar">
                             Login
                         </h4>
+                             <div className="flex items-center mt-2 mb-2">
+                            <hr className="flex-grow w-12 border-t border-gray-400"></hr>
+                            <span className="mx-2 text-white text-lg font-bold">
+                                OR
+                            </span>
+                            <hr className="flex-grow w-12 border-t border-gray-400"></hr>
+                        </div>
 
                         {/* Google Login Button */}
                         <div className="relative mt-4">
@@ -247,7 +254,26 @@ export default function Login() {
                                 LOGIN
                             </button>
                         </form>
+                             <img
+                                                    // data-aos="fade-down"
+                                                    className="absolute z-0 top-10 right-0 w-16 hscreen"
+                                                    src={`${Image_Url}basket.svg`}
+                                                    alt="bgGradient"
+                                                />
+                                                <img
+                                                    // data-aos="fade-down"
+                                                    className="absolute z-0 top-30 left-0 w-12 hscreen"
+                                                    src={`${Image_Url}plate.svg`}
+                                                    alt="bgGradient"
+                                                />
+                                                <img
+                                                    // data-aos="fade-down"
+                                                    className="absolute z-0 bottom-0 right-20 w-20 hscreen"
+                                                    src={`${Image_Url}FooterAssets/footerCenterImg.svg`}
+                                                    alt="bgGradient"
+                                                />
                     </div>
+                    
                 )}
 
                 {/* ---------- Forgot Password ---------- */}

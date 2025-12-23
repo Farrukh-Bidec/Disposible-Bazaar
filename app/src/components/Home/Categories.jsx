@@ -122,13 +122,18 @@ function Categories() {
                 </ul>
             </div>
             <div className="pt-10">
-                <div className="flex justify-center items-center px-2 lg:px-20">
-                    {isLoading ? (
-                        <Loader />
-                    ) : (
-                        <CategorySlider products={categoryList} />
-                    )}
-                </div>
+             <div className="flex justify-center items-center px-2 lg:px-20">
+    {isLoading ? (
+        <Loader />
+    ) : categoryList.length > 0 ? (
+        <CategorySlider products={categoryList} />
+    ) : (
+        <p className="text-gray-400 text-lg font-medium">
+            No product found
+        </p>
+    )}
+</div>
+
             </div>
         </div>
     );

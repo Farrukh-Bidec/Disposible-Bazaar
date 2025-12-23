@@ -244,7 +244,7 @@ function InquiryForm() {
 
                     {/* File Upload */}
                     <div className="py-10 flex flex-col w-full">
-                        <label className="font-medium">Upload Your Artwork (Optional)</label>
+                        <label className="font-medium">Upload Your Artwork </label>
                         <div className="flex flex-col my-2 relative w-full h-60 items-center justify-center border-2 border-dashed rounded-lg border-gray-300">
                             <button
                                 type="button"

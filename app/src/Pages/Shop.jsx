@@ -238,14 +238,14 @@ function Shop() {
               </button>
             </div>
 
-            {/* LOADING / NO PRODUCTS / PRODUCTS LIST UI SAME */}
+            {/* LOADING /  PRODUCTS LIST UI SAME */}
             {loading ? (
               <div className="flex justify-center py-10">
                 <Loader />
               </div>
             ) : filteredProduct.length === 0 ? (
               <div className="flex justify-center items-center h-screen">
-                <h3 className="text-4xl font-bazaar">No products found</h3>
+                <h2 className="text-4xl font-bazaar">Loading ...</h2>
               </div>
             ) : (
               <>

@@ -40,9 +40,7 @@ const Homes = () => {
 
   return (
     <div className="bg-[#20202c] overflow-hidden py-24 md:py-28">
-          {/* <Suspense fallback={null}> */}
     <CustomSeo id={7}/>
-    {/* </Suspense> */}
       <ToastContainer autoClose={500} />
       <HeroSlider />
       <Products />

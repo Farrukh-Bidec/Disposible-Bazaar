@@ -116,6 +116,7 @@ useEffect(() => {
           <Link href="/bundle/">Bundle</Link> / {productDetail?.name}
         </p>
       </div>
+      {console.log("ppp",productDetail)}
 
       <main>
         <section className="flex lg:flex-row flex-col gap-8">

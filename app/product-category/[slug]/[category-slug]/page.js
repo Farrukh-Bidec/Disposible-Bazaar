@@ -316,7 +316,7 @@ function CategoryDetail({ params }) {
                                 </div>
                             ) : filteredProduct.length === 0 ? (
                                 <div className="flex justify-center h-screen items-center py-10">
-                                                   <h2 className="text-4xl font-bazaar">Loading ...</h2>
+                                                   <h2 className="text-4xl font-bazaar">No products found</h2>
 
                                 </div>
                             ) : (

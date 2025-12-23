@@ -129,7 +129,7 @@ function Categories() {
         <CategorySlider products={categoryList} />
     ) : (
         <p className="text-gray-400 text-lg font-medium">
-            No product found
+            No products found
         </p>
     )}
 </div>

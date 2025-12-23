@@ -1,31 +1,32 @@
 "use client";
 
-import React, { useEffect } from "react";
-import Categories from "../components/Home/Categories";
-import Products from "../components/Home/Products";
+import React, { useEffect, Suspense, lazy } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Introduction from "../components/Home/Introduction";
-import Quality from "../components/Home/Quality";
-import Deals from "../components/Home/Deals";
-import Blogs from "../components/Home/Blogs";
-import InstaFeed from "../components/Home/InstaFeed";
-import CircleSlider from "../components/Home/circleSlider";
-import Premium from "../components/Home/premium";
-import HeroSlider from "../components/Home/HeroSlider";
 import { useUser } from "../Context/UserContext";
 import CustomSeo from "../components/CustomSeo";
 import "../../globals.css";
-// import dynamic from "next/dynamic";
+
+// Lazy load components
+const Categories = lazy(() => import("../components/Home/Categories"));
+const Products = lazy(() => import("../components/Home/Products"));
+const Introduction = lazy(() => import("../components/Home/Introduction"));
+const Quality = lazy(() => import("../components/Home/Quality"));
+const Deals = lazy(() => import("../components/Home/Deals"));
+const Blogs = lazy(() => import("../components/Home/Blogs"));
+const InstaFeed = lazy(() => import("../components/Home/InstaFeed"));
+const CircleSlider = lazy(() => import("../components/Home/circleSlider"));
+const Premium = lazy(() => import("../components/Home/premium"));
+const HeroSlider = lazy(() => import("../components/Home/HeroSlider"));
 
 
 const Homes = () => {
   const { user } = useUser();
 
   useEffect(() => {
-    AOS.init({ duration: 2000, delay: 0 });
+    AOS.init({ duration: 800, delay: 0 });
   }, []);
 
   useEffect(() => {
@@ -36,22 +37,22 @@ const Homes = () => {
     }
   }, [user]);
 
-  // const CustomSeo = dynamic(() => import("../components/CustomSeo"), { ssr: false });
-
   return (
     <div className="bg-[#20202c] overflow-hidden py-24 md:py-28">
     <CustomSeo id={7}/>
       <ToastContainer autoClose={500} />
-      <HeroSlider />
-      <Products />
-      <CircleSlider />
-      <Categories />
-      <Introduction />
-      <Quality />
-      <Premium />
-      <Deals />
-      <InstaFeed />
-      <Blogs />
+      <Suspense fallback={<div>Loading...</div>}>
+        <HeroSlider />
+        <Products />
+        <CircleSlider />
+        <Categories />
+        <Introduction />
+        <Quality />
+        <Premium />
+        <Deals />
+        <InstaFeed />
+        <Blogs />
+      </Suspense>
     </div>
   );
 };

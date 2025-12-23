@@ -9,6 +9,16 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import Header from "../app/src/components/Header/Header";
 import Footer from "../app/src/components/Footer/Footer";
 
+export const metadata: Metadata = {
+  title: "Disposable Bazaar",
+  description: "Quality disposable products",
+  other: {
+    "link": [
+      { rel: "preload", href: "https://ecommerce-inventory.thegallerygen.com/public/Frontend/Assets/HomeAssets/HeroSecton/Banner1.png", as: "image" }
+    ]
+  }
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

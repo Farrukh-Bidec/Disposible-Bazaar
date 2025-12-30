@@ -1,6 +1,6 @@
 import './globals.css'
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import React, { Suspense } from 'react';
 import { CartProvider } from "../app/src/Context/CartContext";
 import { WishlistProvider } from "../app/src/Context/WishlistContext";
 import { UserProvider } from "../app/src/Context/UserContext";
@@ -33,9 +33,11 @@ export default function RootLayout({
             <CartProvider>
               <BundleProvider>
                 <WishlistProvider>
-                  <Header />
-                  
-                  {children} 
+                  <Suspense fallback={null}>
+                    <Header />
+                  </Suspense>
+
+                  {children}
 
                   <Footer />
                 </WishlistProvider>

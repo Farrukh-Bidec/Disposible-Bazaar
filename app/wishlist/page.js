@@ -35,15 +35,15 @@ export async function generateMetadata() {
 
 
 
+import { Suspense } from "react";
 import Wishlist from "../src/Pages/Wishlist";
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 export default function Page() {
   return (
-
-    <Wishlist />
-
-
+    <Suspense fallback={<div>Loading...</div>}>
+      <Wishlist />
+    </Suspense>
   );
 }
 

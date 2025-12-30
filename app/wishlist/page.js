@@ -37,11 +37,11 @@ export async function generateMetadata() {
 
 import Wishlist from "../src/Pages/Wishlist";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 export default function Page() {
   return (
 
-  <Wishlist />
+    <Wishlist />
 
 
   );

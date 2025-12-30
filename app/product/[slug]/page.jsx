@@ -1,6 +1,6 @@
 "use client";
-import React, {  useEffect, useRef, useState } from 'react';
-import {  useParams, useRouter, usePathname } from 'next/navigation';
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams, useRouter, usePathname } from 'next/navigation';
 import axios from '../../src/Utils/axios';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -16,12 +16,13 @@ import CustomDetailSeo from '../../src/components/CustomDetailSeo';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for Toastify
 import DecodeTextEditor from '../../src/components/DecodeTextEditor';
-import  CartModal from '../../src/components/cart/CartModal';
+import CartModal from '../../src/components/cart/CartModal';
 import { FiX } from 'react-icons/fi';
+// import { headers } from 'next/headers';
 
 function ShopDetails() {
-  const { slug } = useParams(); // ✅ Correct slug
-  const router = useRouter();
+    const { slug } = useParams(); // ✅ Correct slug
+    const router = useRouter();
 
     const [productDetail, setProductDetail] = useState([]);
     const [productVariants, setProductVariants] = useState([]);
@@ -53,11 +54,11 @@ function ShopDetails() {
     const [IsCustomizeable, setIsCustomizeable] = useState([])
     const navigate = useRouter()
     const dropdownRef = useRef(null);
-const [productUrl, setProductUrl] = useState('');
+    const [productUrl, setProductUrl] = useState('');
     // Close dropdown if clicked outside
-   
+
     useEffect(() => {
-            function handleClickOutside(event) {
+        function handleClickOutside(event) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setBrandsOpen(false);
             }
@@ -69,103 +70,105 @@ const [productUrl, setProductUrl] = useState('');
         };
     }, []);
 
-  const fetchData = async () => {
-    if (!slug) return;
-    setIsLoading(true);
+    const fetchData = async () => {
+        if (!slug) return;
+        setIsLoading(true);
 
-    try {
-      const response = await axios.public.post("product/s/details", {
-        slug: slug,
-      });
+        try {
+            const response = await axios.public.post("product/s/details", {
+                slug: slug,
+            });
 
-      const resData = response.data.data;
-      setProductDetail(resData);
-      setProductImages(resData.product.product_image);
-      setSelectedImage(resData.product.product_image[0]?.image);
+            const resData = response.data.data;
+            setProductDetail(resData);
+            setProductImages(resData.product.product_image);
+            setSelectedImage(resData.product.product_image[0]?.image);
 
-      setRecomendedProducts(resData.recommended_products);
+            setRecomendedProducts(resData.recommended_products);
 
-      setBrands(resData.product.product_brands.filter((b) => b.status === 1));
+            setBrands(resData.product.product_brands.filter((b) => b.status === 1));
 
-      const firstBrand = resData.product.product_brands.find(
-        (b) => b.status === 1
-      );
-      setSelectedBrands(firstBrand?.name);
-      setSelectedBrandId(firstBrand?.id);
+            const firstBrand = resData.product.product_brands.find(
+                (b) => b.status === 1
+            );
+            setSelectedBrands(firstBrand?.name);
+            setSelectedBrandId(firstBrand?.id);
 
-      setProductVariants(resData.product.product_variants);
-      setSelectedProductVariants(
-        resData.product.product_variants.filter(
-          (v) => v.brand_id === firstBrand?.id
-        )
-      );
+            setProductVariants(resData.product.product_variants);
+            setSelectedProductVariants(
+                resData.product.product_variants.filter(
+                    (v) => v.brand_id === firstBrand?.id
+                )
+            );
 
-      setProductLids(resData.product.product_lid_options);
-      setProductId(resData.product.id);
+            setProductLids(resData.product.product_lid_options);
+            setProductId(resData.product.id);
 
-      const firstVariant = resData.product.product_variants[0];
-      if (firstVariant) {
-        setQuantity(firstVariant.pack_size);
-        setSelectedVariantId(firstVariant.id);
-        setSelectedVariantPrice(firstVariant.price_per_piece);
-        setSelectedVariant(firstVariant.pack_size);
-      }
-    } catch (error) {
-      console.log("Product Fetch Error →", error);
+            const firstVariant = resData.product.product_variants.filter(
+                (v) => v.brand_id === firstBrand?.id
+            )[0];
+            if (firstVariant) {
+                setQuantity(firstVariant.pack_size);
+                setSelectedVariantId(firstVariant.id);
+                setSelectedVariantPrice(Number(firstVariant.price_per_piece ?? firstVariant.price ?? 0));
+                setSelectedVariant(firstVariant.pack_size);
+            }
+        } catch (error) {
+            console.log("Product Fetch Error →", error);
+        }
+
+        setIsLoading(false);
+    };
+
+
+    const fetchReviews = async () => {
+        try {
+            const res = await axios.public.get(`product_reviews/${slug}`);
+            setProductReview(res.data);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+        fetchReviews();
+    }, [slug]);
+
+    //   const handleWishlist = async (id) => {
+    //     if (!user) {
+    //       router.push("/login");
+    //       return;
+    //     }
+
+    //     try {
+    //       const check = await axios.protected.get(`/user/wishlist/${id}/check`);
+    //       if (check.data.exists) return toast.error("Already in wishlist");
+
+    //       await axios.protected.post(`/user/wishlist/${id}/add`);
+    //       addToWishlist();
+    //       toast.success("Added to wishlist");
+    //     } catch (e) {
+    //       toast.error("Error adding to wishlist");
+    //     }
+    //   };
+
+
+
+
+    // Ensure the URL ends with a slash
+
+
+    const pathname = usePathname();   // <-- ADD THIS
+
+    let path = pathname;
+    if (!path.endsWith('/')) {
+        path += '/';
     }
+    // const { slug } = useParams();
 
-    setIsLoading(false);
-  };
-
-
-  const fetchReviews = async () => {
-    try {
-      const res = await axios.public.get(`product_reviews/${slug}`);
-      setProductReview(res.data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-    fetchReviews();
-  }, [slug]);
-
-//   const handleWishlist = async (id) => {
-//     if (!user) {
-//       router.push("/login");
-//       return;
-//     }
-
-//     try {
-//       const check = await axios.protected.get(`/user/wishlist/${id}/check`);
-//       if (check.data.exists) return toast.error("Already in wishlist");
-
-//       await axios.protected.post(`/user/wishlist/${id}/add`);
-//       addToWishlist();
-//       toast.success("Added to wishlist");
-//     } catch (e) {
-//       toast.error("Error adding to wishlist");
-//     }
-//   };
-
-
-
-
-// Ensure the URL ends with a slash
-
-
-const pathname = usePathname();   // <-- ADD THIS
-
-let path = pathname;
-if (!path.endsWith('/')) {
-    path += '/';
-}
-// const { slug } = useParams();
-
-// Extract product slug/id
-const id = path.split("/product/")[1] || '';
+    // Extract product slug/id
+    const id = path.split("/product/")[1] || '';
 
     const fetchDataById = async (id) => {
 
@@ -202,7 +205,7 @@ const id = path.split("/product/")[1] || '';
                 console.log(true);
                 setSelectedProductVariants(resData.product.product_variants.filter(i => i.brand_id === seletedBrandId))
             }
-            const firstVariant = resData.product.product_variants[0]; c
+            const firstVariant = resData.product.product_variants.filter(i => i.brand_id === seletedBrandId)[0];
 
             setIsCustomizeable(productDetail.product?.childProducts?.length > 0)
 
@@ -211,7 +214,7 @@ const id = path.split("/product/")[1] || '';
                 setQuantity(firstVariant.pack_size);
                 setSelectedVariantId(firstVariant.id); // Set the default selected variant
                 setSelectedVariant(firstVariant.pack_size)
-                setSelectedVariantPrice(firstVariant.price_per_piece);
+                setSelectedVariantPrice(Number(firstVariant.price_per_piece ?? firstVariant.price ?? 0));
             }
             const price = quantity && selectedVariantPrice && (quantity * subQuantity * selectedVariantPrice)
             // console.log('Price', selectedVariantPrice);
@@ -286,11 +289,11 @@ const id = path.split("/product/")[1] || '';
 
     //     fetchData();
     // };
-   const handleWishlist = async (id) => {
-    if (!user) {
-      router.push("/login");   // ✅ FIXED
-      return;
-    }
+    const handleWishlist = async (id) => {
+        if (!user) {
+            router.push("/login");   // ✅ FIXED
+            return;
+        }
 
         try {
             // Make a request to check if the item is already in the wishlist
@@ -300,8 +303,9 @@ const id = path.split("/product/")[1] || '';
             if (wishlistResponse.data.exists) {
                 toast.error('Product already added to wishlist');
             } else {
-                // If product is not in wishlist, proceed to add it
-                const response = await axios.protected.post(`/user/wishlist/${id}/add`);
+                const response = await axios.protected.post(`/user/wishlist/${id}/add`, null, {
+                    headers: { Accept: "application/json" }
+                });
                 if (response.status === 200) {
                     addToWishlist(); // Call to update wishlist count in context
                     toast.success('Product added to wishlist');
@@ -327,7 +331,7 @@ const id = path.split("/product/")[1] || '';
             setQuantity(firstVariant.pack_size);
             setSelectedVariantId(firstVariant.id); // Set the default selected variant
             setSelectedVariant(firstVariant.pack_size)
-            setSelectedVariantPrice(firstVariant.price_per_piece);
+            setSelectedVariantPrice(Number(firstVariant.price_per_piece ?? firstVariant.price ?? 0));
         }
     };
 
@@ -337,76 +341,76 @@ const id = path.split("/product/")[1] || '';
 
     // Handle Add to Cart Logic
     const handleAddCart = (product) => {
+        // ❗Check if pieces/variant is not selected
+        if (!selectedVariantId) {
+            toast.warning("Please select pieces before adding to cart!");
+            return;
+        }
+
         const product_id = product.id;
         const product_name = product.name;
-        const pack_size = selectedVariant;
-        const product_quantity = subQuantity;
-        const total_pieces = selectedVariant * subQuantity;
-        const price_per_piece = selectedVariantPrice;
 
-        // Calculate base total
-        const baseTotal = (quantity * subQuantity * selectedVariantPrice) + (quantity * subQuantity * selectedLidPrice);
+        const selectedVar = productVariants.find(v => v.id === selectedVariantId);
+        const variantPrice = selectedVar ? Number(selectedVar.price_per_piece ?? selectedVar.price ?? 0) : 0;
 
-        // Apply discount if available
+        const pack_size = Number(selectedVariant);
+        const product_quantity = Number(subQuantity);
+        const total_pieces = pack_size * product_quantity;
+
+        const baseTotal = (pack_size * subQuantity * variantPrice) + (pack_size * subQuantity * Number(selectedLidPrice || 0));
         let finalTotal = baseTotal;
+
         const discountPercentage = parseFloat(product?.activeDiscount?.discount_percentage);
         if (!isNaN(discountPercentage) && discountPercentage > 0) {
-            finalTotal = baseTotal - (baseTotal * (discountPercentage / 100));
+            finalTotal -= baseTotal * (discountPercentage / 100);
         }
-        console.log('order-limit', product.order_limit)
+
         const product_total = finalTotal.toFixed(2);
-        // const product_total = ((quantity * subQuantity * selectedVariantPrice) + (quantity * subQuantity * selectedLidPrice)).toFixed();
-        const product_img = product.image_path;
-        const product_variants = selectedProductVariants;
-        // New
-        const product_lids = productLids ? productLids : null;
-        const lid = selectedLidId ? selectedLidId : null;
-        const lid_Price = selectedLidPrice ? selectedLidPrice : 0;
-        const product_color = null;
-        const product_size = null;
-        const product_options = null;
-        const option_Price = 0;
-        const logo = null;
-        const order_limit = product?.order_limit !== null ? product?.order_limit : 1000;
 
+        const product_img = selectedImage
+            ? selectedImage
+            : product.product_image?.[0]?.image;
 
-        // Add the product to the cart
-        // addToCart(product_id, product_name, product_quantity, pack_size, total_pieces, price_per_piece, product_img, product_total, product_variants, product_color, product_size, logo, product_options, product_lids, lid, lid_Price, option_Price, order_limit);
+        const lid = selectedLidId || null;
+        const lid_Price = selectedLidPrice ? Number(selectedLidPrice) : 0;
+
         addToCart(
             product_id,
             product_name,
             product_quantity,
             pack_size,
             total_pieces,
-            price_per_piece,
+            variantPrice,
             product_img,
             product_total,
-            product_variants,
-            product_color,
-            product_size,
-            logo,
-            product_options,
-            product_lids,
+            selectedProductVariants,
+            null,
+            null,
+            null,
+            null,
+            productLids,
             lid,
             lid_Price,
-            null,           // customizeDetail
-            option_Price,
-            false,          // bundle_status
-            order_limit
+            null,
+            0,
+            false,
+            product?.order_limit ?? 1000
         );
+
         setIsCartModalOpen(true);
-        // Show success toast
-        // toast.success(`${product.name} added to cart`);
+        toast.success(`${product.name} added to cart`);
     };
 
- useEffect(() => {
-  setProductUrl(window.location.href);
-}, []);
+    console.log("product detail");
 
-const whatsappNumber = "+923213850002";
-const inquiryMessage = encodeURIComponent(
-  `Hello! I am interested in the following product:\n\n${productDetail?.product?.name}\n\n${productUrl}`
-);
+    useEffect(() => {
+        setProductUrl(window.location.href);
+    }, []);
+
+    const whatsappNumber = "+923213850002";
+    const inquiryMessage = encodeURIComponent(
+        `Hello! I am interested in the following product:\n\n${productDetail?.product?.name}\n\n${productUrl}`
+    );
 
     if (isLoading) return <Loader />;
     return (
@@ -424,93 +428,93 @@ const inquiryMessage = encodeURIComponent(
             {/* {console.log('product', productDetail)} */}
             <ToastContainer autoClose={500} />
             {/* Breadcrumb and Title */}
-  <div className="flex flex-col py-5">
-  <p>
-    <Link href="/">Home</Link> /{" "}
-    <Link href="/shop/">Shop</Link> /{" "}
- <span
-  onClick={() => handleCategoryLink(productDetail?.product?.category)}
-  className="inline cursor-pointer"
->
-  {productDetail?.product?.category?.name || "Category Name"}
-</span>
+            <div className="flex flex-col py-5">
+                <p>
+                    <Link href="/">Home</Link> /{" "}
+                    <Link href="/shop/">Shop</Link> /{" "}
+                    <span
+                        onClick={() => handleCategoryLink(productDetail?.product?.category)}
+                        className="inline cursor-pointer"
+                    >
+                        {productDetail?.product?.category?.name || "Category Name"}
+                    </span>
 
-    {productDetail?.product?.subCategory?.name && (
-      <> / <Link href="/shop/">{productDetail.product?.subCategory.name || 'Category Name'}</Link></>
-    )}{" "}
-  / {productDetail?.product?.name || "Product Name"}
+                    {productDetail?.product?.subCategory?.name && (
+                        <> / <Link href="/shop/">{productDetail.product?.subCategory.name || 'Category Name'}</Link></>
+                    )}{" "}
+                    / {productDetail?.product?.name || "Product Name"}
 
-  </p>
-</div>
+                </p>
+            </div>
             <main className=''>
                 <section className='flex lg:flex-row flex-col gap-8'>
 
                     <div className="lg:w-3/5 md:h-[34rem] h-[20rem] flex flex-row md:gap-5 gap-2">
                         {/* Thumbnails */}
-                       <div className="w-1/5 flex flex-col gap-1">
+                        <div className="w-1/5 flex flex-col gap-1">
 
-  {/* CASE 1: productImages is undefined or null */}
-  {!Array.isArray(productImages) ? (
-    <p>No images found</p>
-  ) : productImages.length === 0 ? (
+                            {/* CASE 1: productImages is undefined or null */}
+                            {!Array.isArray(productImages) ? (
+                                <p>No images found</p>
+                            ) : productImages.length === 0 ? (
 
-    /* CASE 2: Array but empty */
-    <div className="w-full h-1/4 py-1">
-      <Image
-        src={`${Image_Url}defaultImage.svg`}
-        alt="Default Product Image"
-        width={500}
-        height={500}
-        className="w-full h-full bg-[#32303e] rounded-xl border-2 border-[#1E7773] object-cover cursor-pointer"
-      />
-    </div>
+                                /* CASE 2: Array but empty */
+                                <div className="w-full h-1/4 py-1">
+                                    <Image
+                                        src={`${Image_Url}defaultImage.svg`}
+                                        alt="Default Product Image"
+                                        width={500}
+                                        height={500}
+                                        className="w-full h-full bg-[#32303e] rounded-xl border-2 border-[#1E7773] object-cover cursor-pointer"
+                                    />
+                                </div>
 
-  ) : (
+                            ) : (
 
-    /* CASE 3: Array with images */
-    productImages.slice(0, 4).map((prod, index) => (
-      <div key={index} className="w-full h-1/4 py-1">
-        <Image
-          src={
-            prod?.image
-              ? `${Assets_Url.replace(/\/$/, "")}/${prod.image.replace(/^\/+/, "")}`
-              : `${Image_Url}defaultImage.svg`
-          }
-          alt={prod?.image_alt || "Product Image"}
-          width={500}
-          height={500}
-          className="w-full h-full bg-[#32303e] rounded-xl border-2 border-[#1E7773] object-cover cursor-pointer"
-          onClick={() => handleImageClick(prod?.image)}
-        />
-      </div>
-    ))
+                                /* CASE 3: Array with images */
+                                productImages.slice(0, 4).map((prod, index) => (
+                                    <div key={index} className="w-full h-1/4 py-1">
+                                        <Image
+                                            src={
+                                                prod?.image
+                                                    ? `${Assets_Url.replace(/\/$/, "")}/${prod.image.replace(/^\/+/, "")}`
+                                                    : `${Image_Url}defaultImage.svg`
+                                            }
+                                            alt={prod?.image_alt || "Product Image"}
+                                            width={500}
+                                            height={500}
+                                            className="w-full h-full bg-[#32303e] rounded-xl border-2 border-[#1E7773] object-cover cursor-pointer"
+                                            onClick={() => handleImageClick(prod?.image)}
+                                        />
+                                    </div>
+                                ))
 
-  )}
+                            )}
 
-</div>
+                        </div>
 
-{/* Large Image Display */}
-<div className="w-4/5 rounded-lg bg-[#32303e] relative min-h-[300px]">
-  {selectedImage ? (
-    <Image
-      src={
-        selectedImage
-          ? `${Assets_Url.replace(/\/$/, "")}/${selectedImage.replace(/^\/+/, "")}`
-          : `${Image_Url}defaultImage.svg`
-      }
-      alt={productImages?.[0]?.image_alt || "Product Image"}
-      fill
-      className="object-cover rounded-lg"
-    />
-  ) : (
-    <Image
-      src={`${Image_Url.replace(/\/$/, "")}/defaultImage.svg`}
-      alt={productImages?.[0]?.image_alt || "Product Image"}
-      fill
-      className="object-cover rounded-lg"
-    />
-  )}
-</div>
+                        {/* Large Image Display */}
+                        <div className="w-4/5 rounded-lg bg-[#32303e] relative min-h-[300px]">
+                            {selectedImage ? (
+                                <Image
+                                    src={
+                                        selectedImage
+                                            ? `${Assets_Url.replace(/\/$/, "")}/${selectedImage.replace(/^\/+/, "")}`
+                                            : `${Image_Url}defaultImage.svg`
+                                    }
+                                    alt={productImages?.[0]?.image_alt || "Product Image"}
+                                    fill
+                                    className="object-cover rounded-lg"
+                                />
+                            ) : (
+                                <Image
+                                    src={`${Image_Url.replace(/\/$/, "")}/defaultImage.svg`}
+                                    alt={productImages?.[0]?.image_alt || "Product Image"}
+                                    fill
+                                    className="object-cover rounded-lg"
+                                />
+                            )}
+                        </div>
 
 
 
@@ -518,38 +522,39 @@ const inquiryMessage = encodeURIComponent(
 
                     <div className="lg:w-2/5 flex flex-col gap-5 text-white h[300px]">
                         <div>
-    <p className='text-sm text-gray-300'>
-      {productDetail?.product?.stock_status === 1 ? "In Stock" : "Out Of Stock"}
-    </p>                         <h1 className='md:text-5xl text-3xl font-semibold'>
-  {productDetail?.product?.name || 'Product Name'}
-</h1>
+                            <p className='text-sm text-gray-300'>
+                                {productDetail?.product?.stock_status === 1 ? "In Stock" : "Out Of Stock"}
+                            </p>                         <h1 className='md:text-5xl text-3xl font-semibold'>
+                                {productDetail?.product?.name + '111' || 'Product Name'}
+                                {console.log(productDetail)}
+                            </h1>
 
                         </div>
-                 <div className="relative w-fit" ref={dropdownRef}>
-    <h3
-        onClick={() => setBrandsOpen(!brandsOpen)}
-        className="md:text-xl flex flex-row gap-4 cursor-pointer items-center text-md font-semibold border p-2 rounded-lg px-4"
-    >
-        Brand: {selectedBrands || "Brand Name"}
-        <FaAngleDown
-            className={`${brandsOpen ? "rotate-180" : ""} duration-300`}
-        />
-    </h3>
+                        <div className="relative w-fit" ref={dropdownRef}>
+                            <h3
+                                onClick={() => setBrandsOpen(!brandsOpen)}
+                                className="md:text-xl flex flex-row gap-4 cursor-pointer items-center text-md font-semibold border p-2 rounded-lg px-4"
+                            >
+                                Brand: {selectedBrands || "Brand Name"}
+                                <FaAngleDown
+                                    className={`${brandsOpen ? "rotate-180" : ""} duration-300`}
+                                />
+                            </h3>
 
-    {brandsOpen && (
-        <div className="absolute top-14 left-0 py-2 overflow-auto rounded-lg z-10 w-75 h-32 bg-white shadow-md border">
-            {brands.map((data) => (
-                <div
-                    key={data.id}
-                    onClick={() => handleSelectedBrand(data)}
-                    className="text-black px-4 py-2 text-md hover:bg-gray-200 cursor-pointer duration-100"
-                >
-                    {data.name}
-                </div>
-            ))}
-        </div>
-    )}
-</div>
+                            {brandsOpen && (
+                                <div className="absolute top-14 left-0 py-2 overflow-auto rounded-lg z-10 w-75 h-32 bg-white shadow-md border">
+                                    {brands.map((data) => (
+                                        <div
+                                            key={data.id}
+                                            onClick={() => handleSelectedBrand(data)}
+                                            className="text-black px-4 py-2 text-md hover:bg-gray-200 cursor-pointer duration-100"
+                                        >
+                                            {data.name}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
 
                         <p className='text-xl font-semibold'>
                             {/* {productVariants && productVariants.length > 0 ? (
@@ -560,7 +565,7 @@ const inquiryMessage = encodeURIComponent(
                             ) : (
                                 <span>No variants available</span>
                             )} */}
-                         Rs {selectedProductVariants[0]?.price} 
+                            Rs {selectedProductVariants[0]?.price}
                         </p>
 
                         <form onSubmit={handleSubmit} className='max-w-130  w-full flex flex-col gap-5 '>
@@ -580,29 +585,32 @@ const inquiryMessage = encodeURIComponent(
                                         <input onClick={() => setQuantity(100)} id="3" type="radio" name="option" />
                                         <label htmlFor="3">100 Pcs</label>
                                     </div> */}
-                                    {productVariants && productVariants.length > 0 ? (
-                                        productVariants.map((variant) => (
-                                       <div key={variant.id} className="flex flex-row items-center justify-center pr-3 gap-2">
-    <input
-        id={variant.id}
-        type="radio"
-        name="option"
-        value={variant.id} // optional but recommended
-        checked={selectedVariantId === variant.id}
-        onChange={() => {
-            setQuantity(variant.pack_size);
-            setSelectedVariantId(variant.id); // Set selected variant on change
-            setSelectedVariantPrice(variant.price_per_piece);
-            setSelectedVariant(variant.pack_size);
-        }}
-    />
-    <label htmlFor={variant.id}>{variant.pack_size} Pcs</label>
-</div>
-
+                                    {selectedProductVariants && selectedProductVariants.length > 0 ? (
+                                        selectedProductVariants.map((variant, index) => (
+                                            <div key={variant.id} className="flex flex-row items-center gap-2">
+                                                <input
+                                                    id={`variant-${variant.id}`}
+                                                    type="radio"
+                                                    name="variant"
+                                                    value={variant.id}
+                                                    checked={selectedVariantId === variant.id}
+                                                    defaultChecked={true}
+                                                    onChange={() => {
+                                                        setQuantity(variant.pack_size);
+                                                        setSelectedVariantId(variant.id);
+                                                        setSelectedVariantPrice(Number(variant.price_per_piece ?? variant.price ?? 0));
+                                                        setSelectedVariant(variant.pack_size);
+                                                    }}
+                                                />
+                                                <label htmlFor={`variant-${variant.id}`}>{variant.pack_size} Pcs</label>
+                                            </div>
                                         ))
                                     ) : (
-                                        <p>No variants available.</p> // Message if no variants exist
+                                        <p>No variants available.</p>
                                     )}
+
+
+
                                 </div>
                             </div>
 
@@ -710,38 +718,38 @@ const inquiryMessage = encodeURIComponent(
 
 
                         {/* <p>₨ {quantity && subQuantity && (quantity * subQuantity * productDetail.product?.current_sale_price)} / Per Pieces : {productDetail.product?.current_sale_price}</p> */}
-                       <div>
-  <p className='text-sm'>
-    <span className='text-lg text-bolder'>
-      ₨ {selectedLid
-        ? quantity && selectedVariantPrice && selectedLidPrice && ((quantity * subQuantity * selectedVariantPrice) + (quantity * subQuantity * selectedLidPrice))
-        : quantity && selectedVariantPrice && (quantity * subQuantity * selectedVariantPrice)}
-      /
-    </span>
-    Per Piece: ₨ {Number(selectedVariantPrice) + Number(selectedLidPrice)}
-  </p>
+                        <div>
+                            <p className='text-sm'>
+                                <span className='text-lg text-bolder'>
+                                    ₨ {selectedLid
+                                        ? quantity && selectedVariantPrice && selectedLidPrice && ((quantity * subQuantity * selectedVariantPrice) + (quantity * subQuantity * selectedLidPrice))
+                                        : quantity && selectedVariantPrice && (quantity * subQuantity * selectedVariantPrice)}
+                                    /
+                                </span>
+                                Per Piece: ₨ {Number(selectedVariantPrice) + Number(selectedLidPrice)}
+                            </p>
 
-  {productDetail?.product?.activeDiscount && (
-    <p className='text-sm'>
-      {Number(productDetail?.product?.activeDiscount?.discount_percentage)}% OFF (
-      {productDetail?.product?.activeDiscount?.name})
-    </p>
-  )}
-</div>
+                            {productDetail?.product?.activeDiscount && (
+                                <p className='text-sm'>
+                                    {Number(productDetail?.product?.activeDiscount?.discount_percentage)}% OFF (
+                                    {productDetail?.product?.activeDiscount?.name})
+                                </p>
+                            )}
+                        </div>
 
                         <div className="flex flex-row md:gap-5 gap-2 cursor-pointe">
-                            <button onClick={() => handleWishlist(productVariants[0].id)} className='p-2 pt-3 border-b-4 border-[#1E7773]  lg:text-[15px] font-bazaar cursor-pointer text-xs '>ADD TO WISHLIST</button>
+                            <button onClick={() => handleWishlist(productDetail.product.id)} className='p-2 pt-3 border-b-4 border-[#1E7773]  lg:text-[15px] font-bazaar cursor-pointer text-xs '>ADD TO WISHLIST</button>
                             <button className='p-3 border flex flex-row justify-between items-center gap-2  border-[#1E7773] w32 lg:text-[15px]  font-bazaar text-xs rounded-md'
                                 onClick={() => window.open(`https://wa.me/${whatsappNumber}?text=${inquiryMessage}`, '_blank')}>
-<FaWhatsapp size={25} className="text-[#1E7773]" />
-<p className="pt-2 text-[12px] cursor-pointer">ORDER ON WHATSAPP</p>                    
-        </button>
+                                <FaWhatsapp size={25} className="text-[#1E7773]" />
+                                <p className="pt-2 text-[12px] cursor-pointer">ORDER ON WHATSAPP</p>
+                            </button>
                         </div>
-                  {productDetail?.product?.childProducts?.length > 0 ? (
-  <Link href={`/customization/${productDetail?.product?.childProducts[0]?.slug}`}>
-    {/* <button className='p-3 pt-4 bg-[#1E7773] w-52 lg:text-[15px] font-bazaar text-xs rounded-md'>CUSTOMIZED PRINTING</button> */}
-  </Link>
-) : null}
+                        {productDetail?.product?.childProducts?.length > 0 ? (
+                            <Link href={`/customization/${productDetail?.product?.childProducts[0]?.slug}`}>
+                                {/* <button className='p-3 pt-4 bg-[#1E7773] w-52 lg:text-[15px] font-bazaar text-xs rounded-md'>CUSTOMIZED PRINTING</button> */}
+                            </Link>
+                        ) : null}
                         {/* <Link to={`/customization/${productDetail.product?.slug}`}>
                             <button className='p-3 pt-4 bg-[#1E7773] w-52 lg:text-[15px] font-bazaar text-xs rounded-md'>CUSTOMIZED PRINTING</button>
                         </Link> */}
@@ -759,40 +767,43 @@ const inquiryMessage = encodeURIComponent(
                     </div>
                     <div>
                         {productTextDetail === 'Description' && (
-                        <div className="flex flex-col gap-2">
-  {productDetail?.product?.description ? (
-    <DecodeTextEditor body={productDetail.product.description} />
-  ) : (
-    <p className="text-md">No Description Found</p>
-  )}
-</div>
+                            <div className="flex flex-col gap-2">
+                                {console.log("aa", productDetail)}
+
+                                {productDetail?.product?.description ? (
+                                    <DecodeTextEditor body={productDetail.product.description} />
+
+                                ) : (
+                                    <p className="text-md">No Description Found</p>
+                                )}
+                            </div>
                         )}
                         {productTextDetail === 'Additional information' && (
-                        <div className="flex flex-col gap-2">
-  {productDetail?.product?.additional_information ? (
-    <DecodeTextEditor body={productDetail.product.additional_information} />
-  ) : (
-    <p className="text-md">No Additional Information Found</p>
-  )}
-</div>
+                            <div className="flex flex-col gap-2">
+                                {productDetail?.product?.additional_information ? (
+                                    <DecodeTextEditor body={productDetail.product.additional_information} />
+                                ) : (
+                                    <p className="text-md">No Additional Information Found</p>
+                                )}
+                            </div>
 
                         )}
 
                         {productTextDetail === 'Watch Product Video' && (
-                          <div className="flex flex-col gap-2">
-  {productDetail?.product?.product_video_url ? (
-    <iframe
-      className="w-full h-96"
-      src={`https://www.youtube.com/embed/${productDetail.product.product_video_url.split('v=')[1]}`}
-      title="Product Video"
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    />
-  ) : (
-    <p>No Video Found</p>
-  )}
-</div>
+                            <div className="flex flex-col gap-2">
+                                {productDetail?.product?.product_video_url ? (
+                                    <iframe
+                                        className="w-full h-96"
+                                        src={`https://www.youtube.com/embed/${productDetail.product.product_video_url.split('v=')[1]}`}
+                                        title="Product Video"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    />
+                                ) : (
+                                    <p>No Video Found</p>
+                                )}
+                            </div>
 
                         )}
 
@@ -817,30 +828,30 @@ const inquiryMessage = encodeURIComponent(
 
 
 
-     
+
 
             </main>
             {/* Background Image */}
-  <div className="absolute top-[44rem] right-0 md:w-28 w-16 h-16 md:h-28 relative">
-    <Image
-        data-aos="fade-left"
-        src={`${Image_Url}plateRight.svg`}
-        alt="Plate"
-        fill
-        className="object-contain"
-    />
-</div>
-                    
+            <div className="absolute top-[44rem] right-0 md:w-28 w-16 h-16 md:h-28 relative">
+                <Image
+                    data-aos="fade-left"
+                    src={`${Image_Url}plateRight.svg`}
+                    alt="Plate"
+                    fill
+                    className="object-contain"
+                />
+            </div>
 
-<div className="absolute top-[100rem] left-0 lg:w-16 w-8 lg:h-16 h-8 relative">
-    <Image
-        data-aos="fade-right"
-        src={`${Image_Url}leftCup.svg`}
-        alt="Plate"
-        fill
-        className="object-contain"
-    />
-</div>
+
+            <div className="absolute top-[100rem] left-0 lg:w-16 w-8 lg:h-16 h-8 relative">
+                <Image
+                    data-aos="fade-right"
+                    src={`${Image_Url}leftCup.svg`}
+                    alt="Plate"
+                    fill
+                    className="object-contain"
+                />
+            </div>
 
 
             {/* <img

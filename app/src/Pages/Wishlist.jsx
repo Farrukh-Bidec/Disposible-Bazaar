@@ -26,7 +26,8 @@ function Wishlist() {
         const fetchData = async () => {
             try {
                 const response = await axios.protected.get('user/wishlist/get');
-                setWishList(response.data.data);
+                setWishList(response.data?.data);
+                console.log("wishlistdata" , wishlist);
             } catch (error) {
                 console.log(error);
             }
@@ -71,65 +72,68 @@ function Wishlist() {
 
 
 
-    // const handleAddCart = (product) => {
-    //     console.log(product);
+    const handleAddCart = (product) => {
+        console.log(product);
 
-    //     const product_id = variant.product.id;
-    //     const product_name = variant.product.name;
+        const product_id = product.id;
+        const product_name = product.name;
 
-    //     // Convert to number
-    //     const pack_size = Number(product.variants[0].pack_size);
-    //     const product_quantity = 1;
-    //     const total_pieces = pack_size; // total_pieces is the same as pack_size
+        // Convert to number
+        const pack_size = Number(product.variants[0].pack_size);
+        const product_quantity = 1;
+        const total_pieces = pack_size; // total_pieces is the same as pack_size
 
-    //     // Convert to number
-    //     const price_per_piece = Number(product.variants[0].price_per_piece);
+        // Convert to number
+        const price_per_piece = Number(product.variants[0].price_per_piece);
 
-    //     // Calculate total
-    //     const product_total = (price_per_piece * total_pieces).toFixed(2); // Format to 2 decimal places
+        // Calculate total
+        const product_total = (price_per_piece * total_pieces).toFixed(2); // Format to 2 decimal places
 
-    //     const product_img =variant.product.image_path;
-    //     const product_variants = product.variants;
+        const product_img = product.image_path;
+        const product_variants = product.variants;
 
-    //     // Add the product to the cart
-    //     addToCart(product_id, product_name, product_quantity, pack_size, total_pieces, price_per_piece, product_img, product_total, product_variants);
+        // Add the product to the cart
+        addToCart(product_id, product_name, product_quantity, pack_size, total_pieces, price_per_piece, product_img, product_total, product_variants);
 
-    //     // Show success toast
-    //     toast.success(`${product.name} added to cart`);
-    // };
-const handleAddCart = (variant) => {
-    console.log("VARIANT:", variant);
+        // Show success toast
+        toast.success(`${product.name} added to cart`);
+    };
+// const handleAddCart = (variant) => {
+//     console.log("VARIANT:", variant);
 
-    const product_id = variant.product.id;
-    const product_name = variant.product.name;
+//     const product_id = variant.product.id;
+//     const product_name = variant.product.name;
 
-    const product_quantity = 1;
+//     const product_quantity = 1;
+//     const pack_size = Number(variant.pack_size ?? 1);
 
-    // Wishlist variant me pack_size nahi hota
-    const total_pieces = 1;
 
-    const price_per_piece = Number(variant.price_per_peice || 0);
 
-    const product_total = Number(variant.price || 0).toFixed(2);
+//     // Wishlist variant me pack_size nahi hota
+//     const total_pieces = pack_size;
 
-    const product_img = variant.product.image_path;
+//     const price_per_piece = Number(variant.price_per_peice || 0);
 
-    const product_variants = [variant];
+//     const product_total = Number(variant.price || 0).toFixed(2);
 
-    addToCart(
-        product_id,
-        product_name,
-        product_quantity,
-        null,               // pack_size not available
-        total_pieces,
-        price_per_piece,
-        product_img,
-        product_total,
-        product_variants
-    );
+//     const product_img = variant.product.image_path;
 
-    toast.success(`${product_name} added to cart`);
-};
+//     const product_variants = [variant];
+
+//     addToCart(
+//         product_id,
+//         product_name,
+//         product_quantity,
+//         pack_size ,
+//         total_pieces,
+//         price_per_piece,
+//         product_img,
+//         product_total,
+//         product_variants
+//     );
+
+//     toast.success(`${product_name} added to cart`);
+// };
 
 
 
@@ -176,20 +180,20 @@ const handleAddCart = (variant) => {
 
 
 
-                                <img src={`${Assets_Url}${item.product_variant.product.image_path}`} alt={item.product_variant.product.name} className="w-28 h-28 border-2 border-[#1E7773] rounded-xl object-cover" />
+                                <img src={`${Assets_Url}${item.image_path}`} alt={item.name} className="w-28 h-28 border-2 border-[#1E7773] rounded-xl object-cover" />
                             </div>
 
                             <div className="col-span-6 text-xl font-semibold textright">
-                                <div className="ml5 w32">{item.product_variant.product.name}</div>
+                                <div className="ml5 w32">{item.name}</div>
                             </div>
                             <div className="col-span-2 text-2xl font-semibold text-left">
-                                Rs: {item.product_variant.price}
-                                <div className="text-xs text-gray-400">Per Pieces: {item.product_variant.price_per_peice}Rs</div>
+                                Rs: {item.variants[0].price}
+                                <div className="text-xs text-gray-400">Per Pieces: {item.variants[0]?.price_per_piece}Rs</div>
                             </div>
                             <div className="col-span-2 text-md">
                                 <button
                                     className="bg-[#1E7773] w-32 rounded-lg font-bazaar cursor-pointer p-2 pt-3"
-                                    onClick={() => handleAddCart(item.product_variant)}
+                                    onClick={() => handleAddCart(item)}
                                 >
                                     ADD TO CART
                                 </button>
@@ -198,21 +202,21 @@ const handleAddCart = (variant) => {
                     ))}
                 </div>
                 {/* mobile responsive */}
-                <div className="md:hidden flex flex flex-col itemsbetween text-white py-4 lg:w-4/5 w-full">
+                <div className="md:hidden flex  flex-col itemsbetween text-white py-4 lg:w-4/5 w-full">
                     {wishlist.map((item, index) => (
                         <div key={index} className="flex  gap-4 py-8 border-b border-gray-600 justify-center items-center">
                             <div className="flex items-center">
                                 <button className="mr-2 text-white"><RxCross2 /></button>
-                                <img src={`${Assets_Url}${item.product_variant.product.image_path}`} alt={item.product_variant.product.name} className="w-40 h-32 border-2 border-[#1E7773] rounded-xl object-cover" />
+                                <img src={`${Assets_Url}${item.image_path}`} alt={item.name} className="w-40 h-32 border-2 border-[#1E7773] rounded-xl object-cover" />
                             </div>
                             <div className="flex flex-col  gap-2 px4">
-                                <div>{item.product_variant.product.name}</div>
+                                <div>{item.name}</div>
                                 <div className="flex flex-row justify-between items-center">
                                     <div className="md:text-2xl text-lg font-semibold text-start">
-                                        Rs:  {item.product_variant.price}
-                                        <div className="text-xs text-gray-400">Per Pieces: {item.product_variant.price_per_peice}Rs</div>
+                                        Rs:  {item.variants[0]?.price}
+                                        <div className="text-xs text-gray-400">Per Pieces: {item.variants[0]?.price_per_peice}Rs</div>
                                     </div>
-                                    <button className='bg-[#1E7773] w12 text-xl cursor-pointer rounded-lg font-bazaar p1 p-3' onClick={() => handleAddCart(product)}><HiShoppingCart /></button>
+                                    <button className='bg-[#1E7773] w12 text-xl cursor-pointer rounded-lg font-bazaar p1 p-3' onClick={() => handleAddCart(item)}><HiShoppingCart /></button>
                                 </div>
                             </div>
                         </div>

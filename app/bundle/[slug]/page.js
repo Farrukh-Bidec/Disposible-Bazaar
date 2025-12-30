@@ -98,7 +98,7 @@ useEffect(() => {
   // ----------------------------------------
   //   📲 WhatsApp Share
   // ----------------------------------------
-  const whatsappNumber = "+92 3213850002";
+  const whatsappNumber = "+923213850002";
   const productUrl = typeof window !== "undefined" ? window.location.href : "";
 
   const inquiryMessage = encodeURIComponent(

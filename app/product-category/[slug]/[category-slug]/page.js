@@ -124,7 +124,7 @@ function CategoryDetail({ params }) {
         setSearchTerm(searchTermFromURL || "");
     }, [searchTermFromURL]);
 
-    // Update filter when slug changes
+    // Update   when slug changes
     useEffect(() => {
         setFilter((prev) => ({
             ...prev,

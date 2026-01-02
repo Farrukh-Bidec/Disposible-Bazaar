@@ -1,0 +1,6 @@
+# robots.txt for https://pob-delta.vercel.app/
+
+User-agent: *
+Disallow:
+
+# Sitemap: https://pob-delta.vercel.app/sitemap.xml

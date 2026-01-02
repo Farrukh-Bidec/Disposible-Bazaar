@@ -53,19 +53,19 @@ export default function FooterBottom() {
                 {/* Social (Mobile Only) */}
                 <ul className="block md:hidden flex flex-row justify-center gap-2">
                     <li className="bg-white text-[#1E7773] p-2 rounded-full">
-                        <a href="https://www.facebook.com/DisposableBazar/"><LuFacebook /></a>
+                        <a aria-label='Facebook' href="https://www.facebook.com/DisposableBazar/"><LuFacebook /></a>
                     </li>
                     <li className="bg-white text-[#1E7773] p-2 rounded-full">
-                        <a href="https://www.instagram.com/disposablebazaar/"><FaInstagram /></a>
+                        <a aria-label='Instagram' href="https://www.instagram.com/disposablebazaar/"><FaInstagram /></a>
                     </li>
                     <li className="bg-white text-[#1E7773] p-2 rounded-full">
-                        <a href="https://www.tiktok.com/@disposablebazaar"><RiTiktokLine /></a>
+                        <a aria-label='Tiktok' href="https://www.tiktok.com/@disposablebazaar"><RiTiktokLine /></a>
                     </li>
                     <li className="bg-white text-[#1E7773] p-2 rounded-full">
-                        <a href="https://www.youtube.com/@disposablebazaar"><FiYoutube /></a>
+                        <a aria-label='Youtube' href="https://www.youtube.com/@disposablebazaar"><FiYoutube /></a>
                     </li>
                     <li className="bg-white text-[#1E7773] p-2 rounded-full">
-                        <a href="https://pk.linkedin.com/company/disposablebazaar"><FaLinkedinIn /></a>
+                        <a aria-label='Linkedin' href="https://pk.linkedin.com/company/disposablebazaar"><FaLinkedinIn /></a>
                     </li>
                 </ul>
 

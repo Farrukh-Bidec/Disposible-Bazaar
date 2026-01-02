@@ -98,27 +98,27 @@ function ContactUs() {
                 <h3 className='font-bazaar text-xl text-center py-5'>Follow Us:</h3>
                 <ul className="flex flex-row justify-center gap-3 py3 text-sm cursor-pointer">
                     <li className="bg-[#1E7773] text-white p-2 rounded-full">
-                        <a href="https://www.facebook.com/DisposableBazar/">
+                        <a aria-label='Facebook' href="https://www.facebook.com/DisposableBazar/">
                             <LuFacebook className="text-white  text-2xl" />
                         </a>
                     </li>
                     <li className="bg-[#1E7773] text-white p-2 rounded-full">
-                        <a href="https://www.instagram.com/disposablebazaar/">
+                        <a aria-label='Instagram' href="https://www.instagram.com/disposablebazaar/">
                             <FaInstagram className="text-white  text-2xl" />
                         </a>
                     </li>
                     <li className="bg-[#1E7773] text-white p-2 rounded-full">
-                        <a href="https://www.youtube.com/@disposablebazaar">
+                        <a aria-label='Youtube' href="https://www.youtube.com/@disposablebazaar">
                             <FiYoutube className="text-white  text-2xl" />
                         </a>
                     </li>
                     <li className="bg-[#1E7773] text-white p-2 rounded-full">
-                        <a href="https://www.tiktok.com/@disposablebazaar">
+                        <a aria-label='Tiktok' href="https://www.tiktok.com/@disposablebazaar">
                             <RiTiktokLine className="text-white  text-2xl" />
                         </a>
                     </li>
                     <li className="bg-[#1E7773] text-white p-2 rounded-full">
-                        <a href="https://pk.linkedin.com/company/disposablebazaar">
+                        <a aria-label='Linkedin' href="https://pk.linkedin.com/company/disposablebazaar">
                             <FaLinkedinIn className="text-white  text-2xl" />
                         </a>
                     </li>

@@ -74,7 +74,7 @@ function Blogs() {
             </div>
 
             <div data-aos='fade-up' className="flex justify-center md:pt-10">
-                <Link href='/blog/'>
+                <Link href='/blog/' aria-label="Read More">
                     <button className='font-bazaar bg-[#1E7773] text-white  p-3 pt-3 rounded-lg cursor-pointer px-5 md:mt-5'>READ MORE</button>
                 </Link>
             </div>

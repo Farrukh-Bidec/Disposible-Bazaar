@@ -164,27 +164,27 @@ function Header() {
                 <div className="flex flex-row lg:justify-between justify-center">
                     <ul className="lg:flex hidden  flex-row gap-1 text-sm cursor-pointer">
                         <li className="p-2 rounded-lg duration-300">
-                            <a href="https://www.facebook.com/DisposableBazar/">
+                            <a href="https://www.facebook.com/DisposableBazar/" aria-label="Facebook">
                                 <LuFacebook className="text-white text-md" />
                             </a>
                         </li>
                         <li className="p-2 rounded-lg duration-300">
-                            <a href="https://www.instagram.com/disposablebazaar/">
+                            <a href="https://www.instagram.com/disposablebazaar/" aria-label="Instagram">
                                 <FaInstagram className="text-white text-md" />
                             </a>
                         </li>
                         <li className="p-2 rounded-lg duration-300">
-                            <a href="https://www.youtube.com/@disposablebazaar">
+                            <a href="https://www.youtube.com/@disposablebazaar" aria-label="Youtube">
                                 <FiYoutube className="text-white text-md" />
                             </a>
                         </li>
                         <li className="p-2 rounded-lg duration-300">
-                            <a href="https://www.tiktok.com/@disposablebazaar">
+                            <a href="https://www.tiktok.com/@disposablebazaar" aria-label="Tiktok">
                                 <RiTiktokLine className="text-white text-md" />
                             </a>
                         </li>
                         <li className="bg-[#1E7773] text-white p-2 rounded-full">
-                            <a href="https://pk.linkedin.com/company/disposablebazaar">
+                            <a href="https://pk.linkedin.com/company/disposablebazaar" aria-label="Linkedin">
                                 <FaLinkedinIn className="text-white text-md" />
                             </a>
                         </li>
@@ -387,169 +387,184 @@ function Header() {
                             <button
                                 className="rounded-r-lg bg-[#1E7773] border-2 border-[#1E7773] p-2 px-4 text-white"
                                 type="submit"
+                                aria-label="Search"
                             >
                                 <CiSearch size={24} />
                             </button>
                         </form>
 
                         <ul className="flex flex-wrap gap- 2xl:gap-4 justify-between text-sm  cursor-pointer pt-3 font-semibold">
-                            <Link href="/">
-                                <li
-                                    className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 ${pathname === "/" ? "text-[#1E7773]" : "text-black"
-                                        }`}
-                                >
+                            <li
+                                className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 ${pathname === "/" ? "text-[#1E7773]" : "text-black"
+                                    }`}
+                            >
+                                <Link href="/">
+
                                     Home
-                                </li>
-                            </Link>
+                                </Link>
+                            </li>
                             {/* Shop */}
-                            <Link href="/shop">
-                                <li
-                                    className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
-                        ${pathname.startsWith("/shop") ? "text-[#1E7773]" : "text-black"}`}
-                                >
+                            <li
+                                className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
+                                        ${pathname.startsWith("/shop") ? "text-[#1E7773]" : "text-black"}`}
+                            >
+                                <Link href="/shop">
                                     Shop All
-                                </li>
-                            </Link>
-                            {kraftCategory && (
-                                <li
-                                    className="relative font-bold px-2 cursor-pointer flex items-center gap-1"
-                                    onMouseEnter={() => {
-                                        // Show immediately
-                                        setShowKraftDropdown(true);
-                                        // Cancel any hide timeout if it exists
-                                        if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
-                                    }}
-                                    onMouseLeave={() => {
-                                        // Hide after delay
-                                        dropdownTimeout.current = setTimeout(() => {
-                                            setShowKraftDropdown(false);
-                                        }, 500); // 500ms delay
-                                    }}
-                                >
+                                </Link>
+                            </li>
+                            <li>
 
-                                    <span
-                                        onClick={() => handleCategoryLink(kraftCategory)}
-                                        className={`hover:text-[#1E7773] duration-300 ${pathname.includes(kraftCategory.slug)
-                                            ? "text-[#1E7773]"
-                                            : "text-black"
-                                            }`}
+                                {kraftCategory && (
+                                    <li
+                                        className="relative font-bold px-2 cursor-pointer flex items-center gap-1"
+                                        onMouseEnter={() => {
+                                            // Show immediately
+                                            setShowKraftDropdown(true);
+                                            // Cancel any hide timeout if it exists
+                                            if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
+                                        }}
+                                        onMouseLeave={() => {
+                                            // Hide after delay
+                                            dropdownTimeout.current = setTimeout(() => {
+                                                setShowKraftDropdown(false);
+                                            }, 500); // 500ms delay
+                                        }}
                                     >
-                                        {kraftCategory.name}
-                                    </span>
-                                    {/* NEW Badge */}
-                                    <span className="text-[9px] px-1.5 py-[1px] rounded bg-red-500 text-white animate-pulse">
-                                        NEW
-                                    </span>
 
-                                    <PiCaretDownThin size={14} />
+                                        <span
+                                            onClick={() => handleCategoryLink(kraftCategory)}
+                                            className={`hover:text-[#1E7773] duration-300 ${pathname.includes(kraftCategory.slug)
+                                                ? "text-[#1E7773]"
+                                                : "text-black"
+                                                }`}
+                                        >
+                                            {kraftCategory.name}
+                                        </span>
+                                        {/* NEW Badge */}
+                                        <span className="text-[9px] px-1.5 py-[1px] rounded bg-red-500 text-white animate-pulse">
+                                            NEW
+                                        </span>
 
-                                    {showKraftDropdown && kraftCategory.subCategories?.length > 0 && (
-                                        <div className="absolute top-full left-0 mt-2 bg-white text-black shadow-lg rounded-md w-56 z-50">
-                                            {kraftCategory.subCategories.map((sub) => (
-                                                <div
-                                                    key={sub.id}
-                                                    onClick={() => handleCategoryLink(sub)}
-                                                    className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
-                                                >
-                                                    {sub.name}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </li>
+                                        <PiCaretDownThin size={14} />
 
-                            )}
+                                        {showKraftDropdown && kraftCategory.subCategories?.length > 0 && (
+                                            <div className="absolute top-full left-0 mt-2 bg-white text-black shadow-lg rounded-md w-56 z-50">
+                                                {kraftCategory.subCategories.map((sub) => (
+                                                    <div
+                                                        key={sub.id}
+                                                        onClick={() => handleCategoryLink(sub)}
+                                                        className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                                                    >
+                                                        {sub.name}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </li>
+
+                                )}
+                            </li>
+
 
 
                             {/* Custom Packaging */}
-                            <button onClick={() => setIsCustomBtn(!isCustomBtn)}>
-                                <li
-                                    className={`hover:text-[#1E7773] font-bold px-2 cursor-pointer rounded-lg duration-300 
-                        ${pathname.startsWith("/custom") || pathname.startsWith("/inquiryform")
-                                            ? "text-[#1E7773]" : "text-black"}`}
-                                >
+                            <li
+                                className={`hover:text-[#1E7773] font-bold px-2 cursor-pointer rounded-lg duration-300 
+                                   ${pathname.startsWith("/custom") || pathname.startsWith("/inquiryform")
+                                        ? "text-[#1E7773]" : "text-black"}`}
+                            >
+                                <button onClick={() => setIsCustomBtn(!isCustomBtn)}>
+
                                     Custom Packaging
-                                </li>
+                                </button>
 
-                                {isCustomBtn && (
-                                    <div
-                                        ref={dropdownRef}
-                                        className="absolute flex flex-col gap-3 bg-white rounded-lg p-2 mt-2 shadow"
-                                    >
-                                        <Link href="/inquiryform">
-                                            <li
-                                                className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
+                            </li>
+
+                            <li>
+                            {isCustomBtn && (
+                                <div
+                                    ref={dropdownRef}
+                                    className="absolute flex flex-col gap-3 bg-white rounded-lg p-2 mt-2 shadow"
+                                >
+                                    <Link href="/inquiryform">
+                                        <li
+                                            className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
                                     ${pathname === "/inquiryform" ? "text-[#1E7773]" : "text-black"}`}
-                                            >
-                                                Inquiry Form
-                                            </li>
-                                        </Link>
+                                        >
+                                            Inquiry Form
+                                        </li>
+                                    </Link>
 
-                                        <Link href="/customization">
-                                            <li
-                                                className={`hover:text-[#1E7773]  font-bold px-2 rounded-lg duration-300 
+                                    <Link href="/customization">
+                                        <li
+                                            className={`hover:text-[#1E7773]  font-bold px-2 rounded-lg duration-300 
                                     ${pathname === "/customization" ? "text-[#1E7773]" : "text-black"}`}
-                                            >
-                                                Custom Packaging
-                                            </li>
-                                        </Link>
-                                    </div>
-                                )}
-                            </button>
+                                        >
+                                            Custom Packaging
+                                        </li>
+                                    </Link>
+                                </div>
+                            )}
+                            </li>
 
                             {/* Bundles */}
-                            <Link href="/bundles">
                                 <li
                                     className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
-                        ${pathname === "/bundles" ? "text-[#1E7773]" : "text-black"}`}
+                                        ${pathname === "/bundles" ? "text-[#1E7773]" : "text-black"}`}
                                 >
+                                        <Link href="/bundles">
                                     Bundles
-                                </li>
                             </Link>
+                                </li>
 
                             {/* About */}
-                            <Link href="/about-us">
                                 <li
                                     className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
-                        ${pathname === "/about-us" ? "text-[#1E7773]" : "text-black"}`}
+                                        ${pathname === "/about-us" ? "text-[#1E7773]" : "text-black"}`}
                                 >
+                                        <Link href="/about-us">
                                     About Us
-                                </li>
                             </Link>
+                                </li>
 
                             {/* Reviews */}
-                            <Link href="/reviews">
                                 <li
                                     className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
-                        ${pathname === "/reviews" ? "text-[#1E7773]" : "text-black"}`}
+                                        ${pathname === "/reviews" ? "text-[#1E7773]" : "text-black"}`}
                                 >
+                                        <Link href="/reviews">
                                     Reviews
-                                </li>
                             </Link>
+                                </li>
 
                             {/* Blog */}
-                            <Link href="/blog">
                                 <li
                                     className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
                         ${pathname === "/blog" ? "text-[#1E7773]" : "text-black"}`}
                                 >
+                            <Link href="/blog">
+
                                     Blog
-                                </li>
                             </Link>
 
+                                </li>
+
                             {/* Contact */}
-                            <Link href="/contact-us">
                                 <li
                                     className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
                         ${pathname === "/contact-us" ? "text-[#1E7773]" : "text-black"}`}
                                 >
+                            <Link href="/contact-us">
+
                                     Contact Us
-                                </li>
                             </Link>
+
+                                </li>
                         </ul>
                     </div>
                 </div>
                 <ul className="lg:flex hidden flex flex-row items-center justify-center gap-2 text-sm  cursor-pointer">
+                    <li>
                     {user && (
                         <Link href="/wishlist">
                             <li className="relative">
@@ -561,9 +576,10 @@ function Header() {
                                 )}
                             </li>
                         </Link>
-                    )}
+                    )}</li>
+                    <li>
                     {!user ? (
-                        <Link href="/register/">
+                        <Link href="/register/" aria-label="User_profile" >
                             <CiUser className="text-black text-3xl" />
                         </Link>
                     ) : (
@@ -577,6 +593,8 @@ function Header() {
                             />
                         </Link>
                     )}
+                    </li>
+                    <li>
                     <Link href="/cart/">
                         {/* <li className='flex'>
                             <RiShoppingBasket2Line className='bg-[#1E7773] rounded-lg text-white p-1 text-3xl' />
@@ -593,6 +611,7 @@ function Header() {
                             </p>
                         </li>
                     </Link>
+                </li>
                 </ul>
             </div>
             {/* Mobile Menu */}
@@ -606,7 +625,7 @@ function Header() {
                         type="text"
                         placeholder="Search Products.."
                     />
-                    <button className="border rounded-r-lg bg-[#1E7773] p-2 px-4 cursor-pointer text-white text-2xl hover:px-6 duration-300">
+                    <button className="border rounded-r-lg bg-[#1E7773] p-2 px-4 cursor-pointer text-white text-2xl hover:px-6 duration-300" aria-label="Search">
                         <CiSearch />
                     </button>
                 </form>
@@ -620,7 +639,7 @@ function Header() {
                         </Link>
                     )}
                     {!user ? (
-                        <Link href="/register/" onClick={() => setMobMenu(false)}>
+                        <Link href="/register/" onClick={() => setMobMenu(false)} aria-label="User_profile">
                             <CiUser className="text-white text-3xl" />
                         </Link>
                     ) : (
@@ -730,6 +749,7 @@ function Header() {
                     href="https://wa.me/+923213850002"
                     target="_blank"
                     className="w-12 h-12 rounded-full bg-[#25D366] flex items-center justify-center shadow-lg hover:scale-110 transition"
+                    aria-label="WhatsApp"
                 >
                     <BsWhatsapp className="text-white text-[20px]  " />
                 </a>
@@ -738,6 +758,7 @@ function Header() {
                 <a
                     href="mailto:info@example.com"
                     className="w-12 h-12 rounded-full bg-[#1E90FF] flex items-center justify-center shadow-lg hover:scale-110 transition"
+                    aria-label="Email"
                 >
                     <MdEmail className="text-white text-[25px]" />
                 </a>

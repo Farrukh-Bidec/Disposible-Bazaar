@@ -12,11 +12,6 @@ import Footer from "../app/src/components/Footer/Footer";
 export const metadata: Metadata = {
   title: "Disposable Bazaar",
   description: "Quality disposable products",
-  other: {
-    link: [
-      "https://ecommerce-inventory.thegallerygen.com/public/Frontend/Assets/HomeAssets/HeroSecton/Banner1.png"
-    ]
-  }
 };
 
 

@@ -31,7 +31,7 @@ function HeroSection() {
         <div
             className="flex w-screen h-[600px] md:h-[700px] bg[#FFFDD0] overflow-y-hidden"
             style={{
-                backgroundImage: visibleItems ? `url(${Image_Url}${visibleItems})` : 'none',
+                backgroundImage: visibleItems ? `url('${Image_Url}${visibleItems}')` : 'none',
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',

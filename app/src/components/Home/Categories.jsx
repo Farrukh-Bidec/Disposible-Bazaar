@@ -118,21 +118,21 @@ function Categories() {
                     className="flex text-white cursor-pointer gap-5 text-lg justify-start items-center w-2/3 md:w-1/2 overflow-x-auto whitespace-nowrap scrollbar-hide"
                     style={{ scrollbarWidth: '2px' }}
                 >
-                    <CategorySliderTop categories={categories} category={category} handleCategory={handleCategory} />
+                   <li> <CategorySliderTop categories={categories} category={category} handleCategory={handleCategory} /></li>
                 </ul>
             </div>
             <div className="pt-10">
-             <div className="flex justify-center items-center px-2 lg:px-20">
-    {isLoading ? (
-        <Loader />
-    ) : categoryList.length > 0 ? (
-        <CategorySlider products={categoryList} />
-    ) : (
-        <p className="text-gray-400 text-lg font-medium">
-            No products found
-        </p>
-    )}
-</div>
+                <div className="flex justify-center items-center px-2 lg:px-20">
+                    {isLoading ? (
+                        <Loader />
+                    ) : categoryList.length > 0 ? (
+                        <CategorySlider products={categoryList} />
+                    ) : (
+                        <p className="text-gray-400 text-lg font-medium">
+                            No products found
+                        </p>
+                    )}
+                </div>
 
             </div>
         </div>
@@ -142,74 +142,45 @@ function Categories() {
 export default Categories;
 
 function CategorySliderTop({ categories, category, handleCategory }) {
-    useEffect(() => {
-        AOS.init({ duration: 1000, delay: 0 });
-    }, []);
+  useEffect(() => {
+    AOS.init({ duration: 1000, delay: 0 });
+  }, []);
 
-    return (
-        <div className="relative w-full">
-            <Swiper
-                breakpoints={{
-                    120: {
-                        slidesPerView: 1,
-                    },
-                    620: {
-                        slidesPerView: 2,
-                    },
-                }}
-                spaceBetween={0}
-                navigation={{
-                    nextEl: '.custom-next-top',
-                    prevEl: '.custom-prev-top',
-                }}
-                modules={[Pagination, Navigation]}
-                className="mySwiper w-[80%]"
+  return (
+    <div className="relative w-full">
+      <Swiper
+        breakpoints={{
+          120: { slidesPerView: 1 },
+          620: { slidesPerView: 2 },
+        }}
+        navigation={{
+          nextEl: '.custom-next-top',
+          prevEl: '.custom-prev-top',
+        }}
+        modules={[Pagination, Navigation]}
+        className="mySwiper w-[80%]"
+      >
+        {categories.map((product) => (
+          <SwiperSlide key={product.id}>
+            <button
+              onClick={() => handleCategory(product)}
+              className={`w-full text-center text-lg md:text-base font-medium py-4 border-b-2 border-transparent hover:text-gray-300 hover:border-b-gray-300 duration-300 ${
+                category === product.name.trim().toLowerCase()
+                  ? 'text-white border-b-white'
+                  : 'text-[#9F9F9F]'
+              }`}
             >
-                {categories.map((product) => (
-                    <SwiperSlide key={product.id}>
-                        <li
-                            onClick={() => handleCategory(product)}
-                            className={`cursor-pointer list-none text-center text-lg md:text-base font-medium py-4 border-b-2 border-transparent hover:text-gray-300 hover:border-b-gray-300 duration-300 ${category === product.name.trim().toLowerCase()
-                                ? 'text-white border-b-white'
-                                : 'text-[#9F9F9F]'
-                                }`}
-                        >
-                            {product.name}
-                        </li>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+              {product.name}
+            </button>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-            {/* Custom navigation buttons */}
-            <div className="absolute top-1/2 -translate-y-1/2 w-full justify-between px-6 z-10">
-                <div
-                    className="custom-prev-top swiper-button-prev mr-32"
-                    style={{
-                        // backgroundColor: '#1E7773',
-                        color: '#F5F5F5',
-                        borderRadius: '100%',
-                        width: '1.5rem',
-                        height: '1.5rem',
-                        display: 'flex',
-                        justifyContent: 'center',
-                    }}
-                >
-                </div>
-                <div
-                    className="custom-next-top swiper-button-next"
-                    style={{
-                        // backgroundColor: '#1E7773',
-                        color: '#F5F5F5',
-                        borderRadius: '100%',
-                        width: '1.5rem',
-                        height: '1.5rem',
-                        display: 'flex',
-                       
-                        justifyContent: 'center',
-                    }}
-                >
-                </div>
-            </div>
-        </div>
-    );
+      {/* Navigation buttons */}
+      <div className="absolute top-1/2 -translate-y-1/2 w-full justify-between px-6 z-10">
+        <div className="custom-prev-top swiper-button-prev mr-32" />
+        <div className="custom-next-top swiper-button-next" />
+      </div>
+    </div>
+  );
 }

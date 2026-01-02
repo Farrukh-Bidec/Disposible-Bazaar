@@ -66,12 +66,12 @@ function CustomHeroSection({
 
                 {path2 ? (
                     <p className="text-lg text-white">
-                        <Link href={"/"}>Home</Link> /{" "}
-                        <Link href={"/shop"}>{path}</Link> / {path2}
+                        <Link aria-label="Home" href={"/"}>Home</Link> /{" "}
+                        <Link aria-label={path} href={"/shop"}>{path}</Link> / {path2}
                     </p>
                 ) : (
                     <p className="text-lg text-white">
-                        <Link href={"/"}>Home</Link> / {path}
+                        <Link aria-label="Home" href={"/"}>Home</Link> / {path}
                     </p>
                 )}
             </div>

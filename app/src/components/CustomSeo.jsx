@@ -71,7 +71,7 @@ catch(err) { console.warn("Invalid schema JSON:", err.message); }
       )}
 
       {seoData.canonical_url && (
-        <link rel="canonical" href={seoData.canonical_url} />
+        <link rel="canonical" aria-label={seoData.canonical_url} href={seoData.canonical_url} />
       )}
 
       {seoData.robots_txt && (

@@ -40,7 +40,7 @@ export default function FooterBottom() {
                 <div className="w-full lg:w-[25%] text-start flex flex-col items-center md:items-start gap-2 text-md">
                     <img
                         className="cursor-pointer w-44 lg:w-64"
-                        src={`${Image_Url}/Logoo.png`}
+                        src={`${Image_Url}Logoo.png`}
                         alt=""
                     />
                     <p className="text-center md:text-start font-[400]">
@@ -101,11 +101,11 @@ export default function FooterBottom() {
                     <div className="flex flex-col gap-3 md:items-start items-center text-sm">
                         <ul className="flex flex-col gap-3 md:items-start items-center text-sm">
                             <li className="text-2xl font-light py-2 font-bazaar">Policy</li>
-                         
+
                             <li className="font-[400]"><Link href="/privacypolicy/">Privacy Policy</Link></li>
                             <li className="font-[400]"><Link href="/termsconditions/">Terms & Condition</Link></li>
                             <li className="font-[400]"><Link href="/returnpolicy/">Return Policy</Link></li>
-                        
+
                         </ul>
 
                         <p className="hidden md:block text-2xl font-light pt-4 font-bazaar">Follow Us</p>
@@ -135,7 +135,7 @@ export default function FooterBottom() {
                         <li className="flex flex-row gap-2 items-center font-[400]">
                             <MdEmail className="text-xl " /> info@disposablebazaar.com
                         </li>
-                        <li className="flex flex-row gap-2 items-center font-[400]"> 
+                        <li className="flex flex-row gap-2 items-center font-[400]">
                             <MdPhone className="text-xl" /> 0321-3850002
                         </li>
                     </ul>

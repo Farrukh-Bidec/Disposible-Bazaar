@@ -241,7 +241,7 @@ function Header() {
                         <Link href="/">
                             <Image
                                 className="cursor-pointer w-32 md:w-40"
-                                src={`${Image_Url}/DB-Logo-01.jpg`}
+                                src={`${Image_Url}DB-Logo-01.jpg`}
                                 alt="Logo"
                                 width={160}
                                 height={40}
@@ -253,7 +253,7 @@ function Header() {
                         >
                             <img
                                 className="cursor-pointer w-4"
-                                src={`${Image_Url}/HeaderAssets/category-icon.svg`}
+                                src={`${Image_Url}HeaderAssets/category-icon.svg`}
                                 alt=""
                             />{" "}
                             ALL CATEGORIES
@@ -418,50 +418,46 @@ function Header() {
                                     <li
                                         className="relative font-bold px-2 cursor-pointer flex items-center gap-1"
                                         onMouseEnter={() => {
-                                            // Show immediately
                                             setShowKraftDropdown(true);
-                                            // Cancel any hide timeout if it exists
                                             if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
                                         }}
                                         onMouseLeave={() => {
-                                            // Hide after delay
                                             dropdownTimeout.current = setTimeout(() => {
                                                 setShowKraftDropdown(false);
-                                            }, 500); // 500ms delay
+                                            }, 500);
                                         }}
                                     >
-
                                         <span
                                             onClick={() => handleCategoryLink(kraftCategory)}
                                             className={`hover:text-[#1E7773] duration-300 ${pathname.includes(kraftCategory.slug)
-                                                ? "text-[#1E7773]"
-                                                : "text-black"
+                                                    ? "text-[#1E7773]"
+                                                    : "text-black"
                                                 }`}
                                         >
                                             {kraftCategory.name}
                                         </span>
-                                        {/* NEW Badge */}
+
                                         <span className="text-[11px] font-semibold px-2 py-[2px] rounded bg-red-700 text-white animate-pulse">
                                             NEW
                                         </span>
 
-
                                         <PiCaretDownThin size={14} />
 
                                         {showKraftDropdown && kraftCategory.subCategories?.length > 0 && (
-                                            <div className="absolute top-full left-0 mt-2 bg-white text-black shadow-lg rounded-md w-56 z-50">
+                                            <ul className="absolute top-full left-0 mt-2 bg-white text-black shadow-lg rounded-md w-56 z-50">
                                                 {kraftCategory.subCategories.map((sub) => (
-                                                    <div
+                                                    <li
                                                         key={sub.id}
                                                         onClick={() => handleCategoryLink(sub)}
                                                         className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
                                                     >
                                                         {sub.name}
-                                                    </div>
+                                                    </li>
                                                 ))}
-                                            </div>
+                                            </ul>
                                         )}
                                     </li>
+
 
                                 )}
                             </li>
@@ -632,30 +628,30 @@ function Header() {
                 </form>
 
                 <ul className="flex flex-row items-center justify-center gap-5 text-sm cursor-pointer">
-                   <li>
-                     {user && (
-                        <Link href="/wishlist" onClick={() => setMobMenu(false)}>
-                            <li>
-                                <CiHeart className="text-white text-3xl" />
-                            </li>
-                        </Link>
-                    )}
+                    <li>
+                        {user && (
+                            <Link href="/wishlist" onClick={() => setMobMenu(false)}>
+                                <li>
+                                    <CiHeart className="text-white text-3xl" />
+                                </li>
+                            </Link>
+                        )}
                     </li>
                     <li>
-                    {!user ? (
-                        <Link href="/register/" onClick={() => setMobMenu(false)} aria-label="User_profile">
-                            <CiUser className="text-white text-3xl" />
-                        </Link>
-                    ) : (
-                        <Link href="/profile">
-                            <img
-                                src={user.profile_picture || dummyProfilePic}
-                                alt="Profile"
-                                className="w-10 h-10 rounded-full object-cover"
-                            // onClick={handleLogout}
-                            />
-                        </Link>
-                    )}
+                        {!user ? (
+                            <Link href="/register/" onClick={() => setMobMenu(false)} aria-label="User_profile">
+                                <CiUser className="text-white text-3xl" />
+                            </Link>
+                        ) : (
+                            <Link href="/profile">
+                                <img
+                                    src={user.profile_picture || dummyProfilePic}
+                                    alt="Profile"
+                                    className="w-10 h-10 rounded-full object-cover"
+                                // onClick={handleLogout}
+                                />
+                            </Link>
+                        )}
                     </li>
                     {/* <li><CiHeart className='text-white text-3xl' /></li>
 
@@ -670,78 +666,78 @@ function Header() {
         </li> */}
                 </ul>
 
-<ul className="flex flex-col gap-2 justify-between items-center text-md cursor-pointer pt-3 font-semibold">
-  
-  <li className="w-40">
-    <Link href="/" onClick={() => setMobMenu(false)}
-      className="block text-white hover:text-black hover:bg-white p-2 rounded-lg duration-300"
-    >
-      Home
-    </Link>
-  </li>
+                <ul className="flex flex-col gap-2 justify-between items-center text-md cursor-pointer pt-3 font-semibold">
 
-  <li className="w-40">
-    <Link href="/shop/" onClick={() => setMobMenu(false)}
-      className="block text-white hover:text-black hover:bg-white p-2 rounded-lg duration-300"
-    >
-      Shop All
-    </Link>
-  </li>
+                    <li className="w-40">
+                        <Link href="/" onClick={() => setMobMenu(false)}
+                            className="block text-white hover:text-black hover:bg-white p-2 rounded-lg duration-300"
+                        >
+                            Home
+                        </Link>
+                    </li>
 
-  {kraftCategory && (
-    <li className="w-full">
-      <button
-        onClick={() => toggleSubcategories(kraftCategory.id)}
-        className="flex justify-center mx-auto items-center w-40 text-white hover:text-black hover:bg-white p-2 rounded-lg duration-300"
-      >
-        <span className="flex items-center gap-2">
-          {kraftCategory.name}
-          <span className="text-[11px] font-semibold px-2 py-[2px] rounded bg-red-700 text-white animate-pulse">
-            NEW
-          </span>
-        </span>
-        <PiCaretDownThin />
-      </button>
+                    <li className="w-40">
+                        <Link href="/shop/" onClick={() => setMobMenu(false)}
+                            className="block text-white hover:text-black hover:bg-white p-2 rounded-lg duration-300"
+                        >
+                            Shop All
+                        </Link>
+                    </li>
 
-      {expandedCategories.includes(kraftCategory.id) && (
-        <ul className="mt-1 bg-white text-black rounded-lg">
-          {kraftCategory.subCategories?.map((sub) => (
-            <li key={sub.id}>
-              <button
-                onClick={() => {
-                  handleCategoryLink(sub);
-                  setMobMenu(false);
-                }}
-                className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-              >
-                {sub.name}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </li>
-  )}
+                    {kraftCategory && (
+                        <li className="w-full">
+                            <button
+                                onClick={() => toggleSubcategories(kraftCategory.id)}
+                                className="flex justify-center mx-auto items-center w-40 text-white hover:text-black hover:bg-white p-2 rounded-lg duration-300"
+                            >
+                                <span className="flex items-center gap-2">
+                                    {kraftCategory.name}
+                                    <span className="text-[11px] font-semibold px-2 py-[2px] rounded bg-red-700 text-white animate-pulse">
+                                        NEW
+                                    </span>
+                                </span>
+                                <PiCaretDownThin />
+                            </button>
 
-  {[
-    { href: "/bundles/", label: "Bundles" },
-    { href: "/customization/", label: "Custom Packaging" },
-    { href: "/about-us/", label: "About Us" },
-    { href: "/reviews/", label: "Reviews" },
-    { href: "/blog/", label: "Blog" },
-    { href: "/contact-us/", label: "Contact Us" },
-  ].map((item) => (
-    <li key={item.href} className="w-40">
-      <Link
-        href={item.href}
-        onClick={() => setMobMenu(false)}
-        className="block text-white hover:text-black hover:bg-white p-2 rounded-lg duration-300"
-      >
-        {item.label}
-      </Link>
-    </li>
-  ))}
-</ul>
+                            {expandedCategories.includes(kraftCategory.id) && (
+                                <ul className="mt-1 bg-white text-black rounded-lg">
+                                    {kraftCategory.subCategories?.map((sub) => (
+                                        <li key={sub.id}>
+                                            <button
+                                                onClick={() => {
+                                                    handleCategoryLink(sub);
+                                                    setMobMenu(false);
+                                                }}
+                                                className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                                            >
+                                                {sub.name}
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </li>
+                    )}
+
+                    {[
+                        { href: "/bundles/", label: "Bundles" },
+                        { href: "/customization/", label: "Custom Packaging" },
+                        { href: "/about-us/", label: "About Us" },
+                        { href: "/reviews/", label: "Reviews" },
+                        { href: "/blog/", label: "Blog" },
+                        { href: "/contact-us/", label: "Contact Us" },
+                    ].map((item) => (
+                        <li key={item.href} className="w-40">
+                            <Link
+                                href={item.href}
+                                onClick={() => setMobMenu(false)}
+                                className="block text-white hover:text-black hover:bg-white p-2 rounded-lg duration-300"
+                            >
+                                {item.label}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
 
             </div>
             <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">

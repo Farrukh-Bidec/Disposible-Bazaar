@@ -34,7 +34,7 @@ function Quality() {
       <div
         className="flex items-center md:h-screen"
         style={{
-          backgroundImage: `url(${Image_Url}${visibleItems})`,
+          backgroundImage: visibleItems ? `url('${Image_Url}${visibleItems}')` : 'none',
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -53,7 +53,7 @@ function Quality() {
           </p>
           <button
             className="bg-white text-black p-2 cursor-pointer font-bold font-bazaar rounded-md text-[13px] mt-2 w-28"
-onClick={() => router.push("/product-category/dips-and-cups/juice-cup/")}
+            onClick={() => router.push("/product-category/dips-and-cups/juice-cup/")}
 
 
           >

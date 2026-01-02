@@ -5,7 +5,7 @@ import { Image_Url } from '../../const';
 import AOS from "aos";
 import 'aos/dist/aos.css';
 
-function   CircleSlider() {
+function CircleSlider() {
     const [rotation, setRotation] = useState();
     const [translateLeft, setTranslateLeft] = useState(0);
     const [translateRight, setTranslateRight] = useState(500);
@@ -59,7 +59,7 @@ function   CircleSlider() {
     return (
         <div className="pt-20 md:pt-32">
             <div className="relative w-full md:h-[450px] h-64 flex justify-center items-start" style={{
-                backgroundImage: `url(${Image_Url}CircleSliderAssets/sliderBg.svg)`,
+                backgroundImage: `url('${Image_Url}CircleSliderAssets/sliderBg.svg')`,
                 backgroundPosition: 'center',
                 backgroundSize: 'cover', // or 'cover' depending on your design
                 backgroundRepeat: 'no-repeat',

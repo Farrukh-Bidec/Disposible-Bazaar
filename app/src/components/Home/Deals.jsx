@@ -8,7 +8,7 @@ function Deals() {
     return (
         <div className="flex justify-center md:py-20">
             <div className="flex md:items-start items-center  md:py-24 md:w-[85%] w-[95%] md:h-[75vh] h-[250px]  justify-end relative rounded-2xl" style={{
-                backgroundImage: `url(${Image_Url}HomeAssets/Deals/Banner.png)`,
+                backgroundImage: `url('${Image_Url}HomeAssets/Deals/Banner.png')`,
                 backgroundSize: 'cover',        // Cover the entire element
                 backgroundRepeat: 'no-repeat',  // Prevent repeating the image
                 backgroundPosition: 'center',   // Center the image in the element
@@ -23,7 +23,7 @@ function Deals() {
                     <p className='md:hidden block md:text-lg text-xs'>Enjoy incredible savings on our top-quality plastic containers!
                     </p>
                     <Link href='/shop/'>
-                    <button className=' font-bazaar bg-[#1E7773] text-white md:w-44 md:text-[16px] text-xs p-3 cursor-pointer rounded-lg px5 mt5'>EXPLORE OFFERS   </button>
+                        <button className=' font-bazaar bg-[#1E7773] text-white md:w-44 md:text-[16px] text-xs p-3 cursor-pointer rounded-lg px5 mt5'>EXPLORE OFFERS   </button>
                     </Link>
 
                 </div>

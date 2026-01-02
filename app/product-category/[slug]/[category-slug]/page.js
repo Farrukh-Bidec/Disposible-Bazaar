@@ -66,7 +66,6 @@ function CategoryDetail({ params }) {
                 const response = await axios.public.get('product/category');
                 const categoryData = response.data.data;
                 setCategories(categoryData);
-                setFilteredCategories(categoryData);
             } catch (error) {
                 console.log(error);
             }
@@ -103,7 +102,7 @@ function CategoryDetail({ params }) {
                     price_from: filter.price_from,
                     price_to: filter.price_to,
                     sort_by: filter.sort_by,
-                    category_id: 21,
+                    category_id: cat?.id || 0,
                     name: searchTerm,
                 },
             });
@@ -254,7 +253,7 @@ function CategoryDetail({ params }) {
                             ? `${Category?.name}`
                             : "Discover Our Product Range"
                     }
-                    heroImage={Category ? Category?.hero_banner_image : ""}
+                    heroImage={Category?.hero_banner_image || Category?.image || ""}
                     path="Shop"
                     path2={Category ? `${Category?.name}` : "Category Name"}
 
@@ -316,7 +315,7 @@ function CategoryDetail({ params }) {
                                 </div>
                             ) : filteredProduct.length === 0 ? (
                                 <div className="flex justify-center h-screen items-center py-10">
-                                                   <h2 className="text-4xl font-bazaar">No products found</h2>
+                                    <h2 className="text-4xl font-bazaar">No products found</h2>
 
                                 </div>
                             ) : (
@@ -497,11 +496,11 @@ cursor-pointer rounded-lg`}
                 {Category && (
                     <div className="flex flex-wrap justify-start gap-4 w-full p-5 items-start  md:px-24">
                         <div>
-                            <img  src={
-                                    Category?.image
-                                        ? `${Assets_Url}${Category.image}`
-                                        : ""
-                                }
+                            <img src={
+                                Category?.image
+                                    ? `${Assets_Url}${Category.image}`
+                                    : ""
+                            }
                                 alt={Category?.name || "Category Image"}
                                 className="w-96 h-96 object-contain rounded-lg"
                                 onError={(e) => {

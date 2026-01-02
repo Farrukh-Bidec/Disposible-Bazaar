@@ -6,7 +6,7 @@ import PriceRange from "../../src/components/Shop/PriceRange";
 import PriceRangeMob from "../../src/components/Shop/PriceRangeMob";
 import { Assets_Url, Image_Not_Found, Image_Url } from "../../src/const";
 import { RiFilter3Line } from "react-icons/ri";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useSearchParams, useRouter, usePathname, useParams } from "next/navigation";
 import axios from "../../src/Utils/axios";
 import { Loader } from "../../src/components/Loader";
 import { useCart } from "../../src/Context/CartContext";
@@ -21,14 +21,9 @@ import DecodeTextEditor from "../../src/components/DecodeTextEditor";
 const CustomizationCategory = ({ params }) => {
   const router = useRouter();
   const queryParams = useSearchParams();
-  const pathname = usePathname() || "";
-
-  let path = pathname;
-  if (!path.endsWith("/")) {
-    path += "/";
-  }
-
-  const category = path.split("/product-category/")[1] || "";
+  const { slug } = useParams();
+  const category = slug || "";
+  const categoryIdFromURL = queryParams.get("id");
   const searchTermFromURL = queryParams.get("q") || "";
 
   // -----------------------------
@@ -99,7 +94,7 @@ const CustomizationCategory = ({ params }) => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const cat = categories.find((c) => c.slug === category);
+      const cat = categories.find((c) => c.slug === category || (categoryIdFromURL && c.id == categoryIdFromURL));
 
       if (!cat) {
         setFilteredProduct([]);
@@ -202,7 +197,7 @@ const CustomizationCategory = ({ params }) => {
 
       <CustomHeroSection
         heading={Category?.name || "Discover Our Product Range"}
-        heroImage={Category?.hero_banner_image || ""}
+        heroImage={Category?.hero_banner_image || Category?.image || ""}
         path="Shop"
         path2={Category?.name || "Category Name"}
       />
@@ -244,12 +239,12 @@ const CustomizationCategory = ({ params }) => {
               <>
                 <div
                   className={`py-10 grid ${grid === 4
-                      ? "grid-cols-4"
-                      : grid === 3
-                        ? "grid-cols-3"
-                        : grid === 2
-                          ? "grid-cols-2"
-                          : "grid-cols-1"
+                    ? "grid-cols-4"
+                    : grid === 3
+                      ? "grid-cols-3"
+                      : grid === 2
+                        ? "grid-cols-2"
+                        : "grid-cols-1"
                     } gap-4`}
                 >
                   {filteredProduct.slice(0, visibleProducts).map((product, index) => (
@@ -377,29 +372,29 @@ cursor-pointer rounded-lg"
 
 
 
-         
-                        <div className="mt-25 w-full md:w-1/2">
-                            <h2 className="text-5xl text-white font-semibold font-poppins">
-                                {Category?.name || "Category Name"}
-                            </h2>
-                            {/* < body={blog?.body} /> */}
-                            <div
-                                className={`text-white mt-6 transition-all duration-300 ${expanded ? "max-h-full overflow-visible" : "max-h-23 overflow-hidden"
-                                    }`}
-                            >
-                                <DecodeTextEditor body={Category.note} />
-                            </div>
+
+          <div className="mt-25 w-full md:w-1/2">
+            <h2 className="text-5xl text-white font-semibold font-poppins">
+              {Category?.name || "Category Name"}
+            </h2>
+            {/* < body={blog?.body} /> */}
+            <div
+              className={`text-white mt-6 transition-all duration-300 ${expanded ? "max-h-full overflow-visible" : "max-h-23 overflow-hidden"
+                }`}
+            >
+              <DecodeTextEditor body={Category.note} />
+            </div>
 
 
-                            <button
-                                onClick={() => setExpanded(!expanded)}
-                                className="mt-2 text-white hover:text-[#8E2C62] cursor-pointer text-sm font-bold transition-colors py-2 px-4 bg-green-500 border border-green-600 rounded-md"
-                            >
-                                {expanded ? "Read Less" : "Read More"}
-                            </button>
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="mt-2 text-white hover:text-[#8E2C62] cursor-pointer text-sm font-bold transition-colors py-2 px-4 bg-green-500 border border-green-600 rounded-md"
+            >
+              {expanded ? "Read Less" : "Read More"}
+            </button>
 
 
-                        </div>
+          </div>
         </div>
       )}
 

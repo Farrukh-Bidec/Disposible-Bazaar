@@ -110,7 +110,7 @@ function Blog() {
                         {blogs.length > 0 ? (
                             blogs.map((data) => (
                                 <div className='max-w-[380px] w-[270px] md:w-[350px]' key={data.id}>
-                                    <Link href={`/${data.slug}`} data-aos="fade-up" className="flex flex-col gap-2 py-4 justify-center items-start">
+                                    <Link href={`/${data.slug}`} data-aos="fade-up" className="flex flex-col gap-2 py-4 justify-center items-start" aria-label="Blog">
                                         <img className="rounded-xl w-[270px] h-[270px] md:w-[350px] md:h-[350px] object-cover" src={`${Assets_Url}${data.main_image}`} alt={data.title} />
                                         <p className="md:text-md text-[12px] md:text-sm text-start text-[#898989]">{data.category} | {new Date(data.date).toDateString()}</p>
                                         <p className="md:text-xl text-xs text-start font-semibold">{data.title}</p>

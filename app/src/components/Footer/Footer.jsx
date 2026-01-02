@@ -26,14 +26,14 @@ function Footer() {
             setEmail('');
             setMessage('Subscription successful!');
             setTimeout(() => {
-               setMessage('') 
+                setMessage('')
             }, 2000);
         } catch (error) {
             setEmail('');
             setMessage(error.response?.data?.message);
             setTimeout(() => {
-                setMessage('') 
-             }, 2000);
+                setMessage('')
+            }, 2000);
         } finally {
             setLoading(false);
         }
@@ -61,7 +61,7 @@ function Footer() {
     return (
         <div className="relative bg-[#20202c] pt-20 text-black font-bold flex flex-col justify-center items-center "
             style={{
-                backgroundImage: `url('${Image_Url}${visibleItems}')`,
+                backgroundImage: visibleItems ? `url('${Image_Url}${visibleItems}')` : 'none',
                 backgroundSize: 'cover',        // Cover the entire element
                 backgroundRepeat: 'no-repeat',  // Prevent repeating the image
                 backgroundPosition: 'top',
@@ -97,10 +97,10 @@ function Footer() {
             </div>
             <p className='border-t w-full'></p>
             <FooterBottom />
-<p className='bg-[#1b6b67] w-full text-center py-2 text-white'>
-  © {new Date().getFullYear()} 
-  <span className="md:text-xl font-[500]"> Disposable Bazaar</span> All Rights Reserved.
-</p>
+            <p className='bg-[#1b6b67] w-full text-center py-2 text-white'>
+                © {new Date().getFullYear()}
+                <span className="md:text-xl font-[500]"> Disposable Bazaar</span> All Rights Reserved.
+            </p>
         </div>
     );
 }

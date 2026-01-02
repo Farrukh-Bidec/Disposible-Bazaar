@@ -220,8 +220,8 @@ function Header() {
             </div>
             <div className="w-full flex justify-around items-center py-2 bg-white">
                 <ul className=" lg:hidden flex">
-                    <Link href="/cart/">
-                        <li className="flex">
+                    <li className="flex">
+                        <Link href="/cart/">
                             <RiShoppingBasket2Line className="bg-[#1E7773] rounded-lg text-white p-1 text-3xl" />
                             <p className="text-xs px-2  text-black">
                                 {" "}
@@ -230,8 +230,8 @@ function Header() {
                                 </span>{" "}
                                 <br /> {totalItems} items - Rs {subtotal}{" "}
                             </p>
-                        </li>
-                    </Link>
+                        </Link>
+                    </li>
                 </ul>
                 <div
                     className={`relative ${showMegaMenu ? "text-[#227c85]" : "text-black"
@@ -441,9 +441,10 @@ function Header() {
                                             {kraftCategory.name}
                                         </span>
                                         {/* NEW Badge */}
-                                        <span className="text-[9px] px-1.5 py-[1px] rounded bg-red-500 text-white animate-pulse">
+                                        <span className="text-[11px] font-semibold px-2 py-[2px] rounded bg-red-700 text-white animate-pulse">
                                             NEW
                                         </span>
+
 
                                         <PiCaretDownThin size={14} />
 
@@ -481,137 +482,137 @@ function Header() {
                             </li>
 
                             <li>
-                            {isCustomBtn && (
-                                <div
-                                    ref={dropdownRef}
-                                    className="absolute flex flex-col gap-3 bg-white rounded-lg p-2 mt-2 shadow"
-                                >
-                                    <Link href="/inquiryform">
-                                        <li
-                                            className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
+                                {isCustomBtn && (
+                                    <div
+                                        ref={dropdownRef}
+                                        className="absolute flex flex-col gap-3 bg-white rounded-lg p-2 mt-2 shadow"
+                                    >
+                                        <Link href="/inquiryform">
+                                            <li
+                                                className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
                                     ${pathname === "/inquiryform" ? "text-[#1E7773]" : "text-black"}`}
-                                        >
-                                            Inquiry Form
-                                        </li>
-                                    </Link>
+                                            >
+                                                Inquiry Form
+                                            </li>
+                                        </Link>
 
-                                    <Link href="/customization">
-                                        <li
-                                            className={`hover:text-[#1E7773]  font-bold px-2 rounded-lg duration-300 
+                                        <Link href="/customization">
+                                            <li
+                                                className={`hover:text-[#1E7773]  font-bold px-2 rounded-lg duration-300 
                                     ${pathname === "/customization" ? "text-[#1E7773]" : "text-black"}`}
-                                        >
-                                            Custom Packaging
-                                        </li>
-                                    </Link>
-                                </div>
-                            )}
+                                            >
+                                                Custom Packaging
+                                            </li>
+                                        </Link>
+                                    </div>
+                                )}
                             </li>
 
                             {/* Bundles */}
-                                <li
-                                    className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
+                            <li
+                                className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
                                         ${pathname === "/bundles" ? "text-[#1E7773]" : "text-black"}`}
-                                >
-                                        <Link href="/bundles">
+                            >
+                                <Link href="/bundles">
                                     Bundles
-                            </Link>
-                                </li>
+                                </Link>
+                            </li>
 
                             {/* About */}
-                                <li
-                                    className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
+                            <li
+                                className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
                                         ${pathname === "/about-us" ? "text-[#1E7773]" : "text-black"}`}
-                                >
-                                        <Link href="/about-us">
+                            >
+                                <Link href="/about-us">
                                     About Us
-                            </Link>
-                                </li>
+                                </Link>
+                            </li>
 
                             {/* Reviews */}
-                                <li
-                                    className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
+                            <li
+                                className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
                                         ${pathname === "/reviews" ? "text-[#1E7773]" : "text-black"}`}
-                                >
-                                        <Link href="/reviews">
+                            >
+                                <Link href="/reviews">
                                     Reviews
-                            </Link>
-                                </li>
+                                </Link>
+                            </li>
 
                             {/* Blog */}
-                                <li
-                                    className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
+                            <li
+                                className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
                         ${pathname === "/blog" ? "text-[#1E7773]" : "text-black"}`}
-                                >
-                            <Link href="/blog">
+                            >
+                                <Link href="/blog">
 
                                     Blog
-                            </Link>
+                                </Link>
 
-                                </li>
+                            </li>
 
                             {/* Contact */}
-                                <li
-                                    className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
+                            <li
+                                className={`hover:text-[#1E7773] font-bold px-2 rounded-lg duration-300 
                         ${pathname === "/contact-us" ? "text-[#1E7773]" : "text-black"}`}
-                                >
-                            <Link href="/contact-us">
+                            >
+                                <Link href="/contact-us">
 
                                     Contact Us
-                            </Link>
+                                </Link>
 
-                                </li>
+                            </li>
                         </ul>
                     </div>
                 </div>
                 <ul className="lg:flex hidden flex flex-row items-center justify-center gap-2 text-sm  cursor-pointer">
                     <li>
-                    {user && (
-                        <Link href="/wishlist">
-                            <li className="relative">
-                                <CiHeart className="text-black text-3xl" />
-                                {wishlistCount > 0 && ( // Only show the count if it's greater than 0
-                                    <p className="absolute flex justify-center items-center -right-1 -top-1 bg-[#1E7773] rounded-full h-4 w-4 text-white text-[9px]">
-                                        {wishlistCount}
-                                    </p>
-                                )}
-                            </li>
-                        </Link>
-                    )}</li>
+                        {user && (
+                            <Link href="/wishlist">
+                                <li className="relative">
+                                    <CiHeart className="text-black text-3xl" />
+                                    {wishlistCount > 0 && ( // Only show the count if it's greater than 0
+                                        <p className="absolute flex justify-center items-center -right-1 -top-1 bg-[#1E7773] rounded-full h-4 w-4 text-white text-[9px]">
+                                            {wishlistCount}
+                                        </p>
+                                    )}
+                                </li>
+                            </Link>
+                        )}</li>
                     <li>
-                    {!user ? (
-                        <Link href="/register/" aria-label="User_profile" >
-                            <CiUser className="text-black text-3xl" />
-                        </Link>
-                    ) : (
-                        <Link href="/profile">
-                            <img
-                                // src={user ? `${Profile_Assets_Url}${user.photo}` : dummyProfilePic}
-                                src={user?.photo ? `${Profile_Assets_Url}/${user.photo}` : dummyProfilePic}
-                                alt="Profile"
-                                className="w-10 h-10 rounded-full object-cover"
-                            // onClick={handleLogout}
-                            />
-                        </Link>
-                    )}
+                        {!user ? (
+                            <Link href="/register/" aria-label="User_profile" >
+                                <CiUser className="text-black text-3xl" />
+                            </Link>
+                        ) : (
+                            <Link href="/profile">
+                                <img
+                                    // src={user ? `${Profile_Assets_Url}${user.photo}` : dummyProfilePic}
+                                    src={user?.photo ? `${Profile_Assets_Url}/${user.photo}` : dummyProfilePic}
+                                    alt="Profile"
+                                    className="w-10 h-10 rounded-full object-cover"
+                                // onClick={handleLogout}
+                                />
+                            </Link>
+                        )}
                     </li>
                     <li>
-                    <Link href="/cart/">
-                        {/* <li className='flex'>
+                        <Link href="/cart/">
+                            {/* <li className='flex'>
                             <RiShoppingBasket2Line className='bg-[#1E7773] rounded-lg text-white p-1 text-3xl' />
                             <p className='text-xs px-2'> <span className='text-[15px] font-semibold'>My Cart</span> <br /> 0 items-Rs0.00 </p>
                         </li> */}
-                        <li className="flex">
-                            <RiShoppingBasket2Line className="bg-[#1E7773] rounded-lg text-white p-1 text-3xl" />
-                            <p className="text-xs px-2 text-zinc-950">
-                                <span className="text-[15px] font-semibold">
-                                    My Cart
-                                </span>{" "}
-                                <br />
-                                {totalItems} items - Rs {subtotal}
-                            </p>
-                        </li>
-                    </Link>
-                </li>
+                            <li className="flex">
+                                <RiShoppingBasket2Line className="bg-[#1E7773] rounded-lg text-white p-1 text-3xl" />
+                                <p className="text-xs px-2 text-zinc-950">
+                                    <span className="text-[15px] font-semibold">
+                                        My Cart
+                                    </span>{" "}
+                                    <br />
+                                    {totalItems} items - Rs {subtotal}
+                                </p>
+                            </li>
+                        </Link>
+                    </li>
                 </ul>
             </div>
             {/* Mobile Menu */}
@@ -631,13 +632,16 @@ function Header() {
                 </form>
 
                 <ul className="flex flex-row items-center justify-center gap-5 text-sm cursor-pointer">
-                    {user && (
+                   <li>
+                     {user && (
                         <Link href="/wishlist" onClick={() => setMobMenu(false)}>
                             <li>
                                 <CiHeart className="text-white text-3xl" />
                             </li>
                         </Link>
                     )}
+                    </li>
+                    <li>
                     {!user ? (
                         <Link href="/register/" onClick={() => setMobMenu(false)} aria-label="User_profile">
                             <CiUser className="text-white text-3xl" />
@@ -652,6 +656,7 @@ function Header() {
                             />
                         </Link>
                     )}
+                    </li>
                     {/* <li><CiHeart className='text-white text-3xl' /></li>
 
                     <Link onClick={() => setMobMenu(false)} to='/register'>
@@ -665,82 +670,79 @@ function Header() {
         </li> */}
                 </ul>
 
-                <ul className="flex flex-col gap-2 justify-between items-center text-md cursor-pointer pt-3 font-semibold">
-                    <Link onClick={() => setMobMenu(false)} href="/">
-                        <li className="text-white hover:text-black w-40 hover:bg-white p-2 rounded-lg duration-300">
-                            Home
-                        </li>
-                    </Link>
-                    <Link onClick={() => setMobMenu(false)} href="/shop/">
-                        <li className="text-white hover:text-black w-40 hover:bg-white p-2 rounded-lg duration-300">
-                            Shop All
-                        </li>
-                    </Link>
-                    {kraftCategory && (
-                        <li className="w-full">
-                            <button
-                                onClick={() => toggleSubcategories(kraftCategory.id)}
-                                className="flex justify-center mx-auto items-center w-40 text-white hover:text-black hover:bg-white p-2 rounded-lg duration-300 text-center"
-                            >
-                                <span className="flex items-center gap-2">
-                                    {kraftCategory.name}
-                                    <span className="text-[9px] px-1.5 py-[1px] rounded bg-red-500 text-white animate-pulse">
-                                        NEW
-                                    </span>
-                                </span>
-                                <PiCaretDownThin />
-                            </button>
+<ul className="flex flex-col gap-2 justify-between items-center text-md cursor-pointer pt-3 font-semibold">
+  
+  <li className="w-40">
+    <Link href="/" onClick={() => setMobMenu(false)}
+      className="block text-white hover:text-black hover:bg-white p-2 rounded-lg duration-300"
+    >
+      Home
+    </Link>
+  </li>
 
-                            {expandedCategories.includes(kraftCategory.id) && (
-                                <div className="flex flex-col bg-white text-black rounded-lg mt-1 ">
-                                    {kraftCategory.subCategories?.map((sub) => (
-                                        <div
-                                            key={sub.id}
-                                            onClick={() => {
-                                                handleCategoryLink(sub);
-                                                setMobMenu(false);
-                                            }}
-                                            className="text-black px-4 py-2 text-sm hover:bg-gray-100"
-                                        >
-                                            {sub.name}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </li>
-                    )}
+  <li className="w-40">
+    <Link href="/shop/" onClick={() => setMobMenu(false)}
+      className="block text-white hover:text-black hover:bg-white p-2 rounded-lg duration-300"
+    >
+      Shop All
+    </Link>
+  </li>
 
-                    <Link onClick={() => setMobMenu(false)} href="/bundles/">
-                        <li className="text-white hover:text-black w-40 hover:bg-white p-2 rounded-lg duration-300">
-                            Bundles
-                        </li>
-                    </Link>
-                    <Link onClick={() => setMobMenu(false)} href="/customization/">
-                        <li className="text-white text-[15px] hover:text-black w-40 hover:bg-white p-2 rounded-lg duration-300">
-                            Custom Packaging
-                        </li>
-                    </Link>
-                    <Link onClick={() => setMobMenu(false)} href="/about-us/">
-                        <li className="text-white hover:text-black w-40 hover:bg-white p-2 rounded-lg duration-300">
-                            About Us
-                        </li>
-                    </Link>
-                    <Link onClick={() => setMobMenu(false)} href="/reviews/">
-                        <li className="text-white hover:text-black w-40 hover:bg-white p-2 rounded-lg duration-300">
-                            Reviews
-                        </li>
-                    </Link>
-                    <Link onClick={() => setMobMenu(false)} href="/blog/">
-                        <li className="text-white hover:text-black w-40 hover:bg-white p-2 rounded-lg duration-300">
-                            Blog
-                        </li>
-                    </Link>
-                    <Link onClick={() => setMobMenu(false)} href="/contact-us/">
-                        <li className="text-white hover:text-black w-40 hover:bg-white p-2 rounded-lg duration-300">
-                            Contact Us
-                        </li>
-                    </Link>
-                </ul>
+  {kraftCategory && (
+    <li className="w-full">
+      <button
+        onClick={() => toggleSubcategories(kraftCategory.id)}
+        className="flex justify-center mx-auto items-center w-40 text-white hover:text-black hover:bg-white p-2 rounded-lg duration-300"
+      >
+        <span className="flex items-center gap-2">
+          {kraftCategory.name}
+          <span className="text-[11px] font-semibold px-2 py-[2px] rounded bg-red-700 text-white animate-pulse">
+            NEW
+          </span>
+        </span>
+        <PiCaretDownThin />
+      </button>
+
+      {expandedCategories.includes(kraftCategory.id) && (
+        <ul className="mt-1 bg-white text-black rounded-lg">
+          {kraftCategory.subCategories?.map((sub) => (
+            <li key={sub.id}>
+              <button
+                onClick={() => {
+                  handleCategoryLink(sub);
+                  setMobMenu(false);
+                }}
+                className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+              >
+                {sub.name}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  )}
+
+  {[
+    { href: "/bundles/", label: "Bundles" },
+    { href: "/customization/", label: "Custom Packaging" },
+    { href: "/about-us/", label: "About Us" },
+    { href: "/reviews/", label: "Reviews" },
+    { href: "/blog/", label: "Blog" },
+    { href: "/contact-us/", label: "Contact Us" },
+  ].map((item) => (
+    <li key={item.href} className="w-40">
+      <Link
+        href={item.href}
+        onClick={() => setMobMenu(false)}
+        className="block text-white hover:text-black hover:bg-white p-2 rounded-lg duration-300"
+      >
+        {item.label}
+      </Link>
+    </li>
+  ))}
+</ul>
+
             </div>
             <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
 

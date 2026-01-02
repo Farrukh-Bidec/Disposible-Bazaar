@@ -28,12 +28,12 @@ function HeroSection() {
 
 
     return (
-          <div
+        <div
             className="flex w-screen h-[600px] md:h-[700px] bg[#FFFDD0] overflow-y-hidden"
             style={{
-                backgroundImage: `url(${Image_Url}${visibleItems})`,
+                backgroundImage: visibleItems ? `url(${Image_Url}${visibleItems})` : 'none',
                 backgroundPosition: 'center',
-                backgroundSize: 'cover', 
+                backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
             }}
         >

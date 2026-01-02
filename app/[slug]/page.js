@@ -209,10 +209,10 @@ const BlogSidebar = ({ toggleSidebar, isSidebarOpen, onCategorySelect, categorie
         <div className="mb-6 p-4 rounded-lg w-full">
           <h3 className='font-bazaar text-xl text-white mb-4'>SHARE ARTICLE</h3>
           <ul className='flex flex-row gap-4'>
-            <li className='text-white p-2 rounded-full hover:bg-[#1E7773]'><a href="https://www.facebook.com/DisposableBazar/"><FaFacebookF /></a></li>
-            <li className='text-white p-2 rounded-full hover:bg-[#1E7773]'><a href="https://www.instagram.com/disposablebazaar/"><FaInstagram /></a></li>
-            <li className='text-white p-2 rounded-full hover:bg-[#1E7773]'><a href="https://www.tiktok.com/@disposablebazaar"><FaTiktok /></a></li>
-            <li className='text-white p-2 rounded-full hover:bg-[#1E7773]'><a href="https://www.youtube.com/@disposablebazaar"><FaYoutube /></a></li>
+            <li className='text-white p-2 rounded-full hover:bg-[#1E7773]'><a aria-label='Facebook' href="https://www.facebook.com/DisposableBazar/"><FaFacebookF /></a></li>
+            <li className='text-white p-2 rounded-full hover:bg-[#1E7773]'><a aria-label='Instagram' href="https://www.instagram.com/disposablebazaar/"><FaInstagram /></a></li>
+            <li className='text-white p-2 rounded-full hover:bg-[#1E7773]'><a aria-label='Tiktok' href="https://www.tiktok.com/@disposablebazaar"><FaTiktok /></a></li>
+            <li className='text-white p-2 rounded-full hover:bg-[#1E7773]'><a aria-label='Youtube' href="https://www.youtube.com/@disposablebazaar"><FaYoutube /></a></li>
           </ul>
         </div>
       </div>

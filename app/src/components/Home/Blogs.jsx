@@ -61,11 +61,11 @@ function Blogs() {
 
             <div className="grid grid-cols-2 lg:grid-cols-3 justify-center items-center md:gap10 gap-4 md:py-10 py-5">
                 {blogs.slice(0, visibleItems).map((data, index) => (
-                    <Link href={`/${data.slug}`} key={index} data-aos="fade-up" className="flex flex-col gap-2 py-4 w-[180px] md:w-[380px] justify-center items-start">
-                        <img className="rounded-2xl w-[180px] h-[180px] md:w-[380px] md:h-[380px]" src={`${Assets_Url}${data.main_image}`} alt={data.title} 
-                        onError={(e) => {
-                            e.currentTarget.src = Image_Not_Found; // Path to your dummy image
-                          }}
+                    <Link href={`/${data.slug}`} key={index} data-aos="fade-up" className="flex flex-col gap-2 py-4 w-[180px] md:w-[380px] justify-center items-start" aria-label={`Read ${data.title}`}>
+                        <img className="rounded-2xl w-[180px] h-[180px] md:w-[380px] md:h-[380px]" src={`${Assets_Url}${data.main_image}`} alt={data.title}
+                            onError={(e) => {
+                                e.currentTarget.src = Image_Not_Found; // Path to your dummy image
+                            }}
                         />
                         <p className="my-2 md:text-md text-[12px] md:text-sm text-start text-[#898989]">{data.category} | {new Date(data.date).toDateString()}</p>
                         <p className="md:text-xl text-xs text-start font-semibold">{data.title}</p>
@@ -74,7 +74,7 @@ function Blogs() {
             </div>
 
             <div data-aos='fade-up' className="flex justify-center md:pt-10">
-                <Link href='/blog/' aria-label="Read More">
+                <Link href='/blog/' aria-label="Read all latest blog posts">
                     <button className='font-bazaar bg-[#1E7773] text-white  p-3 pt-3 rounded-lg cursor-pointer px-5 md:mt-5'>READ MORE</button>
                 </Link>
             </div>

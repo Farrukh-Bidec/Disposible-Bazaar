@@ -287,6 +287,7 @@ function Header() {
                     <button
                         onClick={toggleMenu}
                         className="flex lg:hidden p-2 rounded text-3xl text-black"
+                        aria-label="Toggle menu"
                     >
                         <CgMenuRight />
                     </button>
@@ -430,8 +431,8 @@ function Header() {
                                         <span
                                             onClick={() => handleCategoryLink(kraftCategory)}
                                             className={`hover:text-[#1E7773] duration-300 ${pathname.includes(kraftCategory.slug)
-                                                    ? "text-[#1E7773]"
-                                                    : "text-black"
+                                                ? "text-[#1E7773]"
+                                                : "text-black"
                                                 }`}
                                         >
                                             {kraftCategory.name}
@@ -692,9 +693,10 @@ function Header() {
                             >
                                 <span className="flex items-center gap-2">
                                     {kraftCategory.name}
-                                    <span className="text-[11px] font-semibold px-2 py-[2px] rounded bg-red-700 text-white animate-pulse">
+                                    <span className="text-[11px] font-bold px-2 py-[2px] rounded bg-red-700 text-black animate-pulse">
                                         NEW
                                     </span>
+
                                 </span>
                                 <PiCaretDownThin />
                             </button>

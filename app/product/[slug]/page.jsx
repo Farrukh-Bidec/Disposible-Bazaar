@@ -86,13 +86,10 @@ function ShopDetails() {
 
             setRecomendedProducts(resData.recommended_products);
 
-            setBrands(resData.product.product_brands.filter((b) => b.status === 1));
-
-            const firstBrand = resData.product.product_brands.find(
-                (b) => b.status === 1
-            );
-            setSelectedBrands(firstBrand?.name);
-            setSelectedBrandId(firstBrand?.id);
+            setBrands(resData?.product?.product_brands?.filter((b) => b.status === 1) || []);
+            const firstBrand = resData?.product?.product_brands?.find((b) => b.status === 1);
+            setSelectedBrands(firstBrand?.name || '');
+            setSelectedBrandId(firstBrand?.id || null);
 
             setProductVariants(resData.product.product_variants);
             setSelectedProductVariants(
@@ -178,10 +175,8 @@ function ShopDetails() {
                 slug: id,
             });
             const resData = response.data.data
-            console.log("resdata", resData);
             // console.log("is_customizeable", resData.product.product.childProducts[0]);
             const hasChildProducts = productDetail.product?.childProducts?.length > 0;
-            console.log("resData?.product?.childProducts", resData?.product?.childProducts);
 
             if (hasChildProducts) {
                 console.log("resData Show button");
@@ -191,21 +186,23 @@ function ShopDetails() {
 
 
             setProductDetail(resData);
-            setSelectedImage(resData?.product.product_image[0].image || ''); // Set initial image
-            setProductImages(resData?.product.product_image)
-            setRecomendedProducts(resData.recommended_products)
-            setBrands(resData.product.product_brands.filter(i => i.status === 1))
-            setSelectedBrands(resData.product.product_brands.filter(i => i.status === 1)[0]?.name)
-            setSelectedBrandId(resData.product.product_brands.filter(i => i.status === 1)[0]?.id)
-            setProductVariants(resData.product.product_variants)
-            setProductLids(resData.product.product_lid_options)
-            setProductId(resData.product.id)
-            const seletedBrandId = resData.product.product_brands.filter(i => i.status === 1)[0]?.id
-            if (resData.product.product_variants.filter(i => i.brand_id === seletedBrandId)) {
+            setSelectedImage(resData?.product?.product_image?.[0]?.image || ''); // Set initial image
+            setProductImages(resData?.product?.product_image || [])
+            setRecomendedProducts(resData?.recommended_products || [])
+            const productBrands = resData?.product?.product_brands || [];
+            setBrands(productBrands.filter(i => i.status === 1))
+            const selectedBrand = productBrands.find(i => i.status === 1);
+            setSelectedBrands(selectedBrand?.name)
+            setSelectedBrandId(selectedBrand?.id)
+            setProductVariants(resData?.product?.product_variants || [])
+            setProductLids(resData?.product?.product_lid_options || [])
+            setProductId(resData?.product?.id)
+            const seletedBrandId = selectedBrand?.id
+            if (seletedBrandId && resData?.product?.product_variants?.filter(i => i.brand_id === seletedBrandId)) {
                 console.log(true);
                 setSelectedProductVariants(resData.product.product_variants.filter(i => i.brand_id === seletedBrandId))
             }
-            const firstVariant = resData.product.product_variants.filter(i => i.brand_id === seletedBrandId)[0];
+            const firstVariant = resData?.product?.product_variants?.find(i => i.brand_id === seletedBrandId);
 
             setIsCustomizeable(productDetail.product?.childProducts?.length > 0)
 
@@ -461,7 +458,7 @@ function ShopDetails() {
                                 /* CASE 2: Array but empty */
                                 <div className="w-full h-1/4 py-1">
                                     <Image
-                                        src={`${Image_Url}defaultImage.svg`}
+                                        src={`https://ecommerce-inventory.thegallerygen.com${productDetail?.product?.image_path}`}
                                         alt="Default Product Image"
                                         width={500}
                                         height={500}
@@ -496,68 +493,73 @@ function ShopDetails() {
                         {/* Large Image Display */}
                         <div className="w-4/5 rounded-lg bg-[#32303e] relative min-h-[300px]">
                             {selectedImage ? (
-                                <Image
-                                    src={
-                                        selectedImage
-                                            ? `${Assets_Url.replace(/\/$/, "")}/${selectedImage.replace(/^\/+/, "")}`
-                                            : `${Image_Url}defaultImage.svg`
-                                    }
-                                    alt={productImages?.[0]?.image_alt || "Product Image"}
-                                    fill
-                                    className="object-cover rounded-lg"
-                                />
-                            ) : (
-                                <Image
-                                    src={`${Image_Url.replace(/\/$/, "")}/defaultImage.svg`}
-                                    alt={productImages?.[0]?.image_alt || "Product Image"}
-                                    fill
-                                    className="object-cover rounded-lg"
-                                />
+                                <>
+                                    {/* DEBUG: Log the image URL construction */}
+                                    {console.log("DEBUG: selectedImage raw:", selectedImage)}
+                                    {console.log("DEBUG: Constructed URL:", `${Assets_Url.replace(/\/$/, "")}/${selectedImage.replace(/^\/+/, "")}`)}
+                                    <Image
+                                        src={
+                                            selectedImage
+                                                ? `${Assets_Url.replace(/\/$/, "")}/${selectedImage.replace(/^\/+/, "")}`
+                                                : `${Image_Url}defaultImage.svg`
+                                        }
+                                        alt={productImages?.[0]?.image_alt || "Product Image"}
+                                        fill
+                                        className="object-cover rounded-lg"
+                                    />
+                                    </>
+                                    ) : (
+                                    <img
+                                        src={`https://ecommerce-inventory.thegallerygen.com${productDetail?.product?.image_path}`}
+                                        alt={productImages?.[0]?.image_alt || "Product Image"}
+                                        fill
+                                        className="object-cover rounded-lg"
+                                    />
                             )}
-                        </div>
-
-
-
-                    </div>
-
-                    <div className="lg:w-2/5 flex flex-col gap-5 text-white h[300px]">
-                        <div>
-                            <p className='text-sm text-gray-300'>
-                                {productDetail?.product?.stock_status === 1 ? "In Stock" : "Out Of Stock"}
-                            </p>                         <h1 className='md:text-5xl text-3xl font-semibold'>
-                                {productDetail?.product?.name + '111' || 'Product Name'}
-                                {console.log(productDetail)}
-                            </h1>
-
-                        </div>
-                        <div className="relative w-fit" ref={dropdownRef}>
-                            <h3
-                                onClick={() => setBrandsOpen(!brandsOpen)}
-                                className="md:text-xl flex flex-row gap-4 cursor-pointer items-center text-md font-semibold border p-2 rounded-lg px-4"
-                            >
-                                Brand: {selectedBrands || "Brand Name"}
-                                <FaAngleDown
-                                    className={`${brandsOpen ? "rotate-180" : ""} duration-300`}
-                                />
-                            </h3>
-
-                            {brandsOpen && (
-                                <div className="absolute top-14 left-0 py-2 overflow-auto rounded-lg z-10 w-75 h-32 bg-white shadow-md border">
-                                    {brands.map((data) => (
-                                        <div
-                                            key={data.id}
-                                            onClick={() => handleSelectedBrand(data)}
-                                            className="text-black px-4 py-2 text-md hover:bg-gray-200 cursor-pointer duration-100"
-                                        >
-                                            {data.name}
-                                        </div>
-                                    ))}
                                 </div>
-                            )}
+                                
+
+
                         </div>
 
-                        <p className='text-xl font-semibold'>
-                            {/* {productVariants && productVariants.length > 0 ? (
+                        <div className="lg:w-2/5 flex flex-col gap-5 text-white h[300px]">
+                            <div>
+                                <p className='text-sm text-gray-300'>
+                                    {productDetail?.product?.stock_status === 1 ? "In Stock" : "Out Of Stock"}
+                                </p>                         <h1 className='md:text-5xl text-3xl font-semibold'>
+                                    {productDetail?.product?.name + '111' || 'Product Name'}
+                                    {console.log(productDetail)}
+                                </h1>
+
+                            </div>
+                            <div className="relative w-fit" ref={dropdownRef}>
+                                <h3
+                                    onClick={() => setBrandsOpen(!brandsOpen)}
+                                    className="md:text-xl flex flex-row gap-4 cursor-pointer items-center text-md font-semibold border p-2 rounded-lg px-4"
+                                >
+                                    Brand: {selectedBrands || "Brand Name"}
+                                    <FaAngleDown
+                                        className={`${brandsOpen ? "rotate-180" : ""} duration-300`}
+                                    />
+                                </h3>
+
+                                {brandsOpen && (
+                                    <div className="absolute top-14 left-0 py-2 overflow-auto rounded-lg z-10 w-75 h-32 bg-white shadow-md border">
+                                        {brands.map((data) => (
+                                            <div
+                                                key={data.id}
+                                                onClick={() => handleSelectedBrand(data)}
+                                                className="text-black px-4 py-2 text-md hover:bg-gray-200 cursor-pointer duration-100"
+                                            >
+                                                {data.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            <p className='text-xl font-semibold'>
+                                {/* {productVariants && productVariants.length > 0 ? (
                                 <>
                                     Rs {productVariants[0].price} - {productVariants[productVariants.length - 1].price}
                                     ₨ {quantity && selectedVariantPrice && (quantity * subQuantity * selectedVariantPrice)}
@@ -565,15 +567,15 @@ function ShopDetails() {
                             ) : (
                                 <span>No variants available</span>
                             )} */}
-                            Rs {selectedProductVariants[0]?.price}
-                        </p>
+                                Rs {selectedProductVariants[0]?.price}
+                            </p>
 
-                        <form onSubmit={handleSubmit} className='max-w-130  w-full flex flex-col gap-5 '>
-                            {/* Quantity Selection */}
-                            <div className="my-form border w-full border-[#1E7773] rounded-full flex items-stretch">
-                                <p className="my-form-heading bg-[#1E7773] rounded-l-full h-full p-1 px-5 flex items-center">Pieces</p>
-                                <div className="flex flex-wrap gap-4 justify-start p-1 px-2 items-center">
-                                    {/* <div className="flex flex-row items-center justify-center gap-2">
+                            <form onSubmit={handleSubmit} className='max-w-130  w-full flex flex-col gap-5 '>
+                                {/* Quantity Selection */}
+                                <div className="my-form border w-full border-[#1E7773] rounded-full flex items-stretch">
+                                    <p className="my-form-heading bg-[#1E7773] rounded-l-full h-full p-1 px-5 flex items-center">Pieces</p>
+                                    <div className="flex flex-wrap gap-4 justify-start p-1 px-2 items-center">
+                                        {/* <div className="flex flex-row items-center justify-center gap-2">
                                         <input onClick={() => setQuantity(25)} defaultChecked id="1" type="radio" name="option" />
                                         <label htmlFor="1">25 Pcs</label>
                                     </div>
@@ -585,78 +587,78 @@ function ShopDetails() {
                                         <input onClick={() => setQuantity(100)} id="3" type="radio" name="option" />
                                         <label htmlFor="3">100 Pcs</label>
                                     </div> */}
-                                    {selectedProductVariants && selectedProductVariants.length > 0 ? (
-                                        selectedProductVariants.map((variant, index) => (
-                                            <div key={variant.id} className="flex flex-row items-center gap-2">
-                                                <input
-                                                    id={`variant-${variant.id}`}
-                                                    type="radio"
-                                                    name="variant"
-                                                    value={variant.id}
-                                                    checked={selectedVariantId === variant.id}
-                                                    defaultChecked={true}
-                                                    onChange={() => {
-                                                        setQuantity(variant.pack_size);
-                                                        setSelectedVariantId(variant.id);
-                                                        setSelectedVariantPrice(Number(variant.price_per_piece ?? variant.price ?? 0));
-                                                        setSelectedVariant(variant.pack_size);
-                                                    }}
-                                                />
-                                                <label htmlFor={`variant-${variant.id}`}>{variant.pack_size} Pcs</label>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p>No variants available.</p>
-                                    )}
+                                        {selectedProductVariants && selectedProductVariants.length > 0 ? (
+                                            selectedProductVariants.map((variant, index) => (
+                                                <div key={variant.id} className="flex flex-row items-center gap-2">
+                                                    <input
+                                                        id={`variant-${variant.id}`}
+                                                        type="radio"
+                                                        name="variant"
+                                                        value={variant.id}
+                                                        checked={selectedVariantId === variant.id}
+                                                        defaultChecked={true}
+                                                        onChange={() => {
+                                                            setQuantity(variant.pack_size);
+                                                            setSelectedVariantId(variant.id);
+                                                            setSelectedVariantPrice(Number(variant.price_per_piece ?? variant.price ?? 0));
+                                                            setSelectedVariant(variant.pack_size);
+                                                        }}
+                                                    />
+                                                    <label htmlFor={`variant-${variant.id}`}>{variant.pack_size} Pcs</label>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p>No variants available.</p>
+                                        )}
 
 
 
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className='flex flex-row gap-3'>
-                                {/* <div className="border border-[#1E7773] rounded-md flex flex-row justify-between items-center px-2 w-24 h-10">
+                                <div className='flex flex-row gap-3'>
+                                    {/* <div className="border border-[#1E7773] rounded-md flex flex-row justify-between items-center px-2 w-24 h-10">
                                     <button disabled={subQuantity === 1} onClick={() => setSubQuantity(subQuantity - 1)}>-</button>
                                     <p className=''>{subQuantity}</p>
                                     <button disabled={subQuantity >= productDetail.product?.order_limit} onClick={() => setSubQuantity(subQuantity + 1)}>+</button>
                                 </div> */}
-                                <div className="border border-[#1E7773] rounded-md flex flex-row justify-between items-center px-2 w-24 h-10">
-                                    <button
-                                        disabled={subQuantity === 1}
-                                        onClick={() => setSubQuantity(subQuantity - 1)}
-                                    >
-                                        -
-                                    </button>
+                                    <div className="border border-[#1E7773] rounded-md flex flex-row justify-between items-center px-2 w-24 h-10">
+                                        <button
+                                            disabled={subQuantity === 1}
+                                            onClick={() => setSubQuantity(subQuantity - 1)}
+                                        >
+                                            -
+                                        </button>
 
-                                    <p>{subQuantity}</p>
+                                        <p>{subQuantity}</p>
 
-                                    <button
-                                        onClick={() => {
-                                            const limit = productDetail.product?.order_limit !== null ? productDetail.product?.order_limit : 1000;
-                                            if (subQuantity < limit) {
-                                                setSubQuantity(subQuantity + 1);
-                                            } else {
-                                                toast.warning(`Maximum order limit (${limit}) reached!`);
-                                            }
-                                        }}
-                                    >
-                                        +
+                                        <button
+                                            onClick={() => {
+                                                const limit = productDetail.product?.order_limit !== null ? productDetail.product?.order_limit : 1000;
+                                                if (subQuantity < limit) {
+                                                    setSubQuantity(subQuantity + 1);
+                                                } else {
+                                                    toast.warning(`Maximum order limit (${limit}) reached!`);
+                                                }
+                                            }}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+
+                                    <button className='p-2 pt-3 px-20  bg-[#1E7773] cursor-pointer w-full lg:text-[15px] font-bazaar text-xs rounded-md'
+                                        onClick={() => handleAddCart(productDetail.product)}>
+                                        ADD TO CART
                                     </button>
                                 </div>
 
-                                <button className='p-2 pt-3 px-20  bg-[#1E7773] cursor-pointer w-full lg:text-[15px] font-bazaar text-xs rounded-md'
-                                    onClick={() => handleAddCart(productDetail.product)}>
-                                    ADD TO CART
-                                </button>
-                            </div>
-
-                            {/* Product Lids Selection*/}
-                            {productLids && productLids.length > 0 && (
-                                <>
-                                    <div className=" my-form border rounded-lg h32 w-6/7 md:w-96 border-[#1E7773]">
-                                        <p className="bg-[#1E7773] rounded-t-lg py-0.5 px-5">Lids</p>
-                                        <div className="flex flex-wrap gap-4 justify-start p-3 items-center">
-                                            {/* <div className="flex flex-row items-center justify-center gap-2">
+                                {/* Product Lids Selection*/}
+                                {productLids && productLids.length > 0 && (
+                                    <>
+                                        <div className=" my-form border rounded-lg h32 w-6/7 md:w-96 border-[#1E7773]">
+                                            <p className="bg-[#1E7773] rounded-t-lg py-0.5 px-5">Lids</p>
+                                            <div className="flex flex-wrap gap-4 justify-start p-3 items-center">
+                                                {/* <div className="flex flex-row items-center justify-center gap-2">
                                         <input onClick={() => setQuantity(25)} defaultChecked id="1" type="radio" name="option" />
                                         <label htmlFor="1">25 Pcs</label>
                                     </div>
@@ -668,92 +670,92 @@ function ShopDetails() {
                                         <input onClick={() => setQuantity(100)} id="3" type="radio" name="option" />
                                         <label htmlFor="3">100 Pcs</label>
                                     </div> */}
-                                            <input
-                                                onClick={() => {
-                                                    // setQuantity(lid.pack_size);
-                                                    setSelectedLidId(null); // Set selected lid on click
-                                                    setSelectedLidPrice(null);
-                                                    setSelectedLid(null);
-                                                    setSelectedImage(productDetail?.product?.product_image[0]?.image);
-                                                    // console.log(selectedLidId, "-", lid.id)
-                                                }}
-                                                id={123}
-                                                type="radio"
-                                                name="lid"
-                                                checked={selectedLidId === null}
-                                            />
-                                            <label htmlFor={123}>No Lids</label>
-                                            {productLids && productLids.length > 0 ? (
-                                                productLids.map((lid) => (
-                                                    <div key={lid.id} className="flex flex-row items-center justify-center pr-3 gap-2">
-                                                        <input
-                                                            onClick={() => {
-                                                                // setQuantity(lid.pack_size);
-                                                                setSelectedLidId(lid.id); // Set selected lid on click
-                                                                setSelectedLidPrice(lid.price);
-                                                                setSelectedLid(lid.name);
-                                                                setSelectedImage(lid.image);
-                                                                console.log(selectedLidId, "-", lid.id)
-                                                            }}
-                                                            id={lid.id}
-                                                            type="radio"
-                                                            name="lid"
-                                                            checked={selectedLidId === lid.id}
-                                                        />
-                                                        <label htmlFor={lid.id}>{lid.name} Pcs</label>
-                                                    </div>
-                                                ))
-                                            ) : (
-                                                <p>No lids available.</p> // Message if no variants exist
-                                            )}
+                                                <input
+                                                    onClick={() => {
+                                                        // setQuantity(lid.pack_size);
+                                                        setSelectedLidId(null); // Set selected lid on click
+                                                        setSelectedLidPrice(null);
+                                                        setSelectedLid(null);
+                                                        setSelectedImage(productDetail?.product?.product_image[0]?.image);
+                                                        // console.log(selectedLidId, "-", lid.id)
+                                                    }}
+                                                    id={123}
+                                                    type="radio"
+                                                    name="lid"
+                                                    checked={selectedLidId === null}
+                                                />
+                                                <label htmlFor={123}>No Lids</label>
+                                                {productLids && productLids.length > 0 ? (
+                                                    productLids.map((lid) => (
+                                                        <div key={lid.id} className="flex flex-row items-center justify-center pr-3 gap-2">
+                                                            <input
+                                                                onClick={() => {
+                                                                    // setQuantity(lid.pack_size);
+                                                                    setSelectedLidId(lid.id); // Set selected lid on click
+                                                                    setSelectedLidPrice(lid.price);
+                                                                    setSelectedLid(lid.name);
+                                                                    setSelectedImage(lid.image);
+                                                                    console.log(selectedLidId, "-", lid.id)
+                                                                }}
+                                                                id={lid.id}
+                                                                type="radio"
+                                                                name="lid"
+                                                                checked={selectedLidId === lid.id}
+                                                            />
+                                                            <label htmlFor={lid.id}>{lid.name} Pcs</label>
+                                                        </div>
+                                                    ))
+                                                ) : (
+                                                    <p>No lids available.</p> // Message if no variants exist
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                    {(selectedLidId && selectedVariant > 0) && <p className='text-sm'>Lids Pieces {selectedVariant}</p>}
-                                </>
-                            )}
+                                        {(selectedLidId && selectedVariant > 0) && <p className='text-sm'>Lids Pieces {selectedVariant}</p>}
+                                    </>
+                                )}
 
 
-                        </form>
+                            </form>
 
 
 
-                        {/* <p>₨ {quantity && subQuantity && (quantity * subQuantity * productDetail.product?.current_sale_price)} / Per Pieces : {productDetail.product?.current_sale_price}</p> */}
-                        <div>
-                            <p className='text-sm'>
-                                <span className='text-lg text-bolder'>
-                                    ₨ {selectedLid
-                                        ? quantity && selectedVariantPrice && selectedLidPrice && ((quantity * subQuantity * selectedVariantPrice) + (quantity * subQuantity * selectedLidPrice))
-                                        : quantity && selectedVariantPrice && (quantity * subQuantity * selectedVariantPrice)}
-                                    /
-                                </span>
-                                Per Piece: ₨ {Number(selectedVariantPrice) + Number(selectedLidPrice)}
-                            </p>
-
-                            {productDetail?.product?.activeDiscount && (
+                            {/* <p>₨ {quantity && subQuantity && (quantity * subQuantity * productDetail.product?.current_sale_price)} / Per Pieces : {productDetail.product?.current_sale_price}</p> */}
+                            <div>
                                 <p className='text-sm'>
-                                    {Number(productDetail?.product?.activeDiscount?.discount_percentage)}% OFF (
-                                    {productDetail?.product?.activeDiscount?.name})
+                                    <span className='text-lg text-bolder'>
+                                        ₨ {selectedLid
+                                            ? quantity && selectedVariantPrice && selectedLidPrice && ((quantity * subQuantity * selectedVariantPrice) + (quantity * subQuantity * selectedLidPrice))
+                                            : quantity && selectedVariantPrice && (quantity * subQuantity * selectedVariantPrice)}
+                                        /
+                                    </span>
+                                    Per Piece: ₨ {Number(selectedVariantPrice) + Number(selectedLidPrice)}
                                 </p>
-                            )}
-                        </div>
 
-                        <div className="flex flex-row md:gap-5 gap-2 cursor-pointe">
-                            <button onClick={() => handleWishlist(productDetail.product.id)} className='p-2 pt-3 border-b-4 border-[#1E7773]  lg:text-[15px] font-bazaar cursor-pointer text-xs '>ADD TO WISHLIST</button>
-                            <button className='p-3 border flex flex-row justify-between items-center gap-2  border-[#1E7773] w32 lg:text-[15px]  font-bazaar text-xs rounded-md'
-                                onClick={() => window.open(`https://wa.me/${whatsappNumber}?text=${inquiryMessage}`, '_blank')}>
-                                <FaWhatsapp size={25} className="text-[#1E7773]" />
-                                <p className="pt-2 text-[12px] cursor-pointer">ORDER ON WHATSAPP</p>
-                            </button>
-                        </div>
-                        {productDetail?.product?.childProducts?.length > 0 ? (
-                            <Link href={`/customization/${productDetail?.product?.childProducts[0]?.slug}`}>
-                                {/* <button className='p-3 pt-4 bg-[#1E7773] w-52 lg:text-[15px] font-bazaar text-xs rounded-md'>CUSTOMIZED PRINTING</button> */}
-                            </Link>
-                        ) : null}
-                        {/* <Link to={`/customization/${productDetail.product?.slug}`}>
+                                {productDetail?.product?.activeDiscount && (
+                                    <p className='text-sm'>
+                                        {Number(productDetail?.product?.activeDiscount?.discount_percentage)}% OFF (
+                                        {productDetail?.product?.activeDiscount?.name})
+                                    </p>
+                                )}
+                            </div>
+
+                            <div className="flex flex-row md:gap-5 gap-2 cursor-pointe">
+                                <button onClick={() => handleWishlist(productDetail.product.id)} className='p-2 pt-3 border-b-4 border-[#1E7773]  lg:text-[15px] font-bazaar cursor-pointer text-xs '>ADD TO WISHLIST</button>
+                                <button className='p-3 border flex flex-row justify-between items-center gap-2  border-[#1E7773] w32 lg:text-[15px]  font-bazaar text-xs rounded-md'
+                                    onClick={() => window.open(`https://wa.me/${whatsappNumber}?text=${inquiryMessage}`, '_blank')}>
+                                    <FaWhatsapp size={25} className="text-[#1E7773]" />
+                                    <p className="pt-2 text-[12px] cursor-pointer">ORDER ON WHATSAPP</p>
+                                </button>
+                            </div>
+                            {productDetail?.product?.childProducts?.length > 0 ? (
+                                <Link href={`/customization/${productDetail?.product?.childProducts[0]?.slug}`}>
+                                    {/* <button className='p-3 pt-4 bg-[#1E7773] w-52 lg:text-[15px] font-bazaar text-xs rounded-md'>CUSTOMIZED PRINTING</button> */}
+                                </Link>
+                            ) : null}
+                            {/* <Link to={`/customization/${productDetail.product?.slug}`}>
                             <button className='p-3 pt-4 bg-[#1E7773] w-52 lg:text-[15px] font-bazaar text-xs rounded-md'>CUSTOMIZED PRINTING</button>
                         </Link> */}
-                    </div>
+                        </div>
                 </section>
 
                 {/* Product Description and Additional Information */}

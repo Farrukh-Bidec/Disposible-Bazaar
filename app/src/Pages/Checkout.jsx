@@ -21,7 +21,6 @@ import Invoice from "./Invoice";
 // import { address } from "framer-motion/m";
 import InvoicePopup from "../components/InvoicePopup";
 // import {  useNavigate } from "react-router-dom";
-import { useRouter } from "next/navigation";
 
 import JSConfetti from "js-confetti";
 import "../components/confettiCard/styles.css";
@@ -52,6 +51,7 @@ function Checkout() {
     const [special_instruction, setSpecialInstructions] = useState("");
     const [asGuest, setAsGuest] = useState(1);
     const [isInvoice, setIsInvoice] = useState(false);
+    const [invoicedetails, setInvoicedetails] = useState(null);
     const [errors, setErrors] = useState({});
     const searchInputRef = useRef(null);
     const canvasRef = useRef();
@@ -322,7 +322,8 @@ function Checkout() {
             setSpecialInstructions("");
             setDiscount("");
 
-            navigate("thankyou", { state: orderDetails });
+            setInvoicedetails(orderDetails);
+            setIsInvoice(true);
         }
     } catch (error) {
         console.log("Form submission error:", error);

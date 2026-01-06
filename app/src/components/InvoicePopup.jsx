@@ -1,41 +1,28 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useRef } from "react";
 import html2canvas from "html2canvas";
 import { Assets_Url } from "../const";
 import { CiCamera } from "react-icons/ci";
 import Link from "next/link";
 
-const InvoicePopup = ({ setIsInvoice, isInvoice }) => {
-  const router = useRouter();
+const InvoicePopup = ({ setIsInvoice, isInvoice, invoicedetails }) => {
   const invoiceRef = useRef(null);
-  const [orderDetails, setOrderDetails] = useState(null);
-
-  // Load order details from localStorage (simulate location.state)
-  // useEffect(() => {
-  //   const savedOrder = localStorage.getItem("orderDetails");
-  //   if (savedOrder) {
-  //     setOrderDetails(JSON.parse(savedOrder));
-  //   } else {
-  //     router.push("/shop/"); // redirect if no order found
-  //   }
-  // }, [router]);
 
   // Capture screenshot
   const captureScreenshot = () => {
     if (!invoiceRef.current) return;
     html2canvas(invoiceRef.current, { useCORS: true, scale: 2 }).then((canvas) => {
       const link = document.createElement("a");
-      link.download = `disposable_bazaar_${orderDetails?.orderId}.png`;
+      link.download = `disposable_bazaar_${invoicedetails?.orderId}.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
     });
   };
 
-  if (!orderDetails) return null; // Wait until order details are loaded
+  if (!invoicedetails) return null; // Wait until order details are loaded
 
   return (
-    <div className="fixed inset-0  flex flex-col items-center justify-center z-50 py-24 lg:mt-8">
+    <div className="fixed inset-0  flex flex-col items-center justify-center z-50 py-24 lg:mt-8 h-screen">
       <div ref={invoiceRef} className="bg-[#20202C] text-black w-full min-h-screen overflow-y-auto relative">
         {/* Header */}
         <div className="bg-[#1E7773] h-[100px] md:h-[150px] flex flex-col justify-center items-center text-white text-center py-8">
@@ -53,16 +40,16 @@ const InvoicePopup = ({ setIsInvoice, isInvoice }) => {
             <h2 className="text-2xl font-bazaar">
               Contact <span className="text-[#1E7773]">Information</span>
             </h2>
-            <p className="text-md font-medium">Email: {orderDetails?.email}</p>
-            <p className="text-md font-medium">Phone: {orderDetails?.deliveryInfo?.number}</p>
-            <p className="text-md font-medium">Address: {orderDetails?.deliveryInfo?.address}</p>
+            <p className="text-md font-medium">Email: {invoicedetails?.email}</p>
+            <p className="text-md font-medium">Phone: {invoicedetails?.deliveryInfo?.number}</p>
+            <p className="text-md font-medium">Address: {invoicedetails?.deliveryInfo?.address}</p>
 
             <h2 className="text-2xl font-bazaar">
               Order <span className="text-[#1E7773]">Details</span>
             </h2>
-            <p className="text-md font-medium">Order ID: {orderDetails?.orderId}</p>
-            <p className="text-md font-medium">Order Date: {orderDetails?.orderDate}</p>
-            <p className="text-md font-medium">Total Amount: Rs: {orderDetails?.grandTotal}</p>
+            <p className="text-md font-medium">Order ID: {invoicedetails?.orderId}</p>
+            <p className="text-md font-medium">Order Date: {invoicedetails?.orderDate}</p>
+            <p className="text-md font-medium">Total Amount: Rs: {invoicedetails?.grandTotal}</p>
           </div>
 
           {/* Divider */}
@@ -77,7 +64,7 @@ const InvoicePopup = ({ setIsInvoice, isInvoice }) => {
 
           {/* Items */}
           <div className="w-full md:w-1/2 px-10 overflow-y-auto max-h-[340px] flex flex-col items-center justify-between gap-4">
-            {orderDetails?.items.map((item, index) => (
+            {invoicedetails?.items.map((item, index) => (
               <div key={index} className="flex w-full flex-row items-center justify-between gap-2">
                 <div>
                   <img
@@ -113,7 +100,7 @@ const InvoicePopup = ({ setIsInvoice, isInvoice }) => {
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
             <Link href="/shop/">
-              <button className="bg-[#1E7773] text-white px-4 py-2 rounded-full shadow-lg hover:bg-[#145a58] transition">
+              <button onClick={() => setIsInvoice(false)} className="bg-[#1E7773] text-white px-4 py-2 rounded-full shadow-lg hover:bg-[#145a58] transition">
                 Continue Shopping →
               </button>
             </Link>

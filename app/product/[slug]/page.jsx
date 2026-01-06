@@ -330,8 +330,8 @@ function ShopDetails() {
             router.push("/login");
             return;
         }
-
-        const variantId = selectedVariantId || (selectedProductVariants[0]?.id || productVariants[0]?.id);
+        console.log("pd",productDetail);
+        const variantId = productDetail.product.id
         if (!variantId) {
             toast.error("No product variant available");
             return;

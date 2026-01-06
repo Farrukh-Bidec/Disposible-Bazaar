@@ -37,8 +37,7 @@ const Products = () => {
   }, []);
 
   const handleCategoryLink = (product) => {
-    // In Next.js, you navigate using router.push
-    router.push(`/product-category/${product.slug}`);
+    router.push(`/product-category/${product.slug}?id=${product.id}`);
   };
 
   return (

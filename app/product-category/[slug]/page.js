@@ -35,7 +35,8 @@ const CustomizationCategory = ({ params }) => {
   // -----------------------------
 
   const [grid, setGrid] = useState(3);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isCategoriesLoaded, setIsCategoriesLoaded] = useState(false);
   const [visibleProducts, setVisibleProducts] = useState(12);
   const [filteredProduct, setFilteredProduct] = useState([]);
   const [categoryDetail, setCategoryDetail] = useState([]);
@@ -58,6 +59,7 @@ const CustomizationCategory = ({ params }) => {
 
   console.log("category slug", category);
 
+  //Cateogry fetch
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,6 +68,8 @@ const CustomizationCategory = ({ params }) => {
         setCategories(categoryData);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsCategoriesLoaded(true);
       }
     };
     fetchData();
@@ -92,6 +96,7 @@ const CustomizationCategory = ({ params }) => {
 
   // Fetch data API
   const fetchData = async () => {
+    if (!isCategoriesLoaded) return;
     setLoading(true);
     try {
       const cat = categories.find((c) => c.slug === category || (categoryIdFromURL && c.id == categoryIdFromURL));
@@ -168,15 +173,18 @@ const CustomizationCategory = ({ params }) => {
     const variant = selectedProduct.product_variants?.[0];
     if (!variant) return;
 
+    const pack_size = Number(variant.pack_size || 1);
+    const total_pieces = pack_size * quantity;
+
     addToCart(
       selectedProduct.id,
       selectedProduct.name,
       quantity,
-      Number(variant.pack_size),
-      Number(variant.pack_size),
+      pack_size,
+      total_pieces,
       Number(variant.price_per_piece),
       selectedProduct.product_image?.[0]?.image,
-      (variant.price_per_piece * variant.pack_size * quantity).toFixed(2),
+      (variant.price_per_piece * total_pieces).toFixed(2),
       selectedProduct.product_variants
     );
 
@@ -233,7 +241,7 @@ const CustomizationCategory = ({ params }) => {
               </div>
             ) : filteredProduct.length === 0 ? (
               <div className="flex justify-center h-screen items-center">
-                <h2 className="text-4xl font-bazaar">No product found</h2>
+                <h2 className="text-4xl font-bazaar">No products found</h2>
               </div>
             ) : (
               <>
@@ -403,10 +411,17 @@ cursor-pointer rounded-lg"
 ======================= */}
       {showQtyModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
-          <div className="bg-white p-6 rounded-xl shadow-lg w-[300px] text-center">
-            <h3 className="text-lg font-semibold mb-4 text-gray-800">
-              Select Quantity
-            </h3>
+          <div className="bg-white p-6 rounded-xl shadow-lg w-[350px] text-center">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold text-gray-800">
+                Add to Cart
+              </h3>
+              <FiX className="cursor-pointer text-gray-500" onClick={() => setShowQtyModal(false)} />
+            </div>
+
+            <div className="mb-4">
+              <p className="text-gray-600 font-medium">{selectedProduct?.name}</p>
+            </div>
 
             <div className="flex items-center justify-center   space-x-6 mb-6">
               <button

@@ -23,150 +23,216 @@ import CartModal from '../components/cart/CartModal';
 import CustomDetailSeo from '../components/CustomDetailSeo';
 
 export default function CustomDetails() {
-  const [productDetail, setProductDetail] = useState([]);
-  const [recomendedProducts, setRecomendedProducts] = useState([]);
-  const [productImages, setProductImages] = useState([]);
-  const [productOptions, setProductOptions] = useState([]);
-  const [productVariants, setProductVariants] = useState([]);
-  const [productPackageOptions, setProductPackageOptions] = useState([]);
-  const [productLid, setProductLid] = useState([]);
-  const [selectedImage, setSelectedImage] = useState('');
-  const [subQuantity, setSubQuantity] = useState(1);
-  const [productTextDetail, setProductTextDetail] = useState('Description');
-  const [piecesDropdown, setPiecesDropdown] = useState(false);
-  const [lidsDropdown, setLidsDropdown] = useState(false);
-  const [optionsDropdown, setOptionsDropdown] = useState(false);
-  const [selectedPackSize, setSelectedPackSize] = useState('');
-  const [selectedPackPrice, setSelectedPackPrice] = useState();
-  const [selectedOption, setSelectedOption] = useState('');
-  const [selectedLid, setSelectedLid] = useState('');
-  const [selectedProductVariants, setSelectedProductVariants] = useState([]);
-  const [brands, setBrands] = useState([]);
-  const [selectedBrands, setSelectedBrands] = useState();
-  const [selectedBrandId, setSelectedBrandId] = useState();
-  const [brandsOpen, setBrandsOpen] = useState(false);
-  const [selectedLidPrice, setSelectedLidPrice] = useState();
-  const [selectedLidId, setSelectedLidId] = useState(null);
-  const [sizeDropdown, setSizeDropdown] = useState(false);
-  const [selectedSize, setSelectedSize] = useState('');
-  const [colors, setColors] = useState(false);
-  const [selectedColor, setSelectedColor] = useState('');
-  const [selectedOptionPrice, setSelectedOptionPrice] = useState();
-  const [designText, setDesignText] = useState('Add Your Design');
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [logoImage, setLogoImage] = useState(null);
-  const [customizeDetail, setCustomizeDetail] = useState('');
-  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+    const [productDetail, setProductDetail] = useState([]);
+    const [recomendedProducts, setRecomendedProducts] = useState([]);
+    const [productImages, setProductImages] = useState([]);
+    const [productOptions, setProductOptions] = useState([]);
+    const [productVariants, setProductVariants] = useState([]);
+    const [productPackageOptions, setProductPackageOptions] = useState([]);
+    const [productLid, setProductLid] = useState([]);
+    const [selectedImage, setSelectedImage] = useState('');
+    const [subQuantity, setSubQuantity] = useState(1);
+    const [productTextDetail, setProductTextDetail] = useState('Description');
+    const [piecesDropdown, setPiecesDropdown] = useState(false);
+    const [lidsDropdown, setLidsDropdown] = useState(false);
+    const [optionsDropdown, setOptionsDropdown] = useState(false);
+    const [selectedPackSize, setSelectedPackSize] = useState('');
+    const [selectedPackPrice, setSelectedPackPrice] = useState();
+    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedLid, setSelectedLid] = useState('');
+    const [selectedProductVariants, setSelectedProductVariants] = useState([]);
+    const [brands, setBrands] = useState([]);
+    const [selectedBrands, setSelectedBrands] = useState();
+    const [selectedBrandId, setSelectedBrandId] = useState();
+    const [brandsOpen, setBrandsOpen] = useState(false);
+    const [selectedLidPrice, setSelectedLidPrice] = useState();
+    const [selectedLidId, setSelectedLidId] = useState(null);
+    const [sizeDropdown, setSizeDropdown] = useState(false);
+    const [selectedSize, setSelectedSize] = useState('');
+    const [colors, setColors] = useState(false);
+    const [selectedColor, setSelectedColor] = useState('');
+    const [selectedOptionPrice, setSelectedOptionPrice] = useState();
+    const [designText, setDesignText] = useState('Add Your Design');
+    const [uploadedFile, setUploadedFile] = useState(null);
+    const [logoImage, setLogoImage] = useState(null);
+    const [customizeDetail, setCustomizeDetail] = useState('');
+    const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+    const [isWishlisted, setIsWishlisted] = useState(false);
+    const [wishlistId, setWishlistId] = useState(null);
 
-  const { addToWishlist } = useWishlist();
-  const { addToCart } = useCart();
-  const { user } = useUser();
-  const router = useRouter();
-  const pathname = usePathname();
+    const { addToWishlist, removeFromWishlist } = useWishlist();
+    const { addToCart } = useCart();
+    const { user } = useUser();
+    const router = useRouter();
+    const pathname = usePathname();
 
-  const whatsappNumber = "+923213850002";
-  const productUrl = typeof window !== 'undefined' ? window.location.href : '';
-  const inquiryMessage = encodeURIComponent(
-    `Hello! I am interested in the following product:\n\n${productDetail.product?.name}\n\n ${productUrl}`
-  );
+    const whatsappNumber = "+923213850002";
+    const productUrl = typeof window !== 'undefined' ? window.location.href : '';
+    const inquiryMessage = encodeURIComponent(
+        `Hello! I am interested in the following product:\n\n${productDetail.product?.name}\n\n ${productUrl}`
+    );
 
-  // Extract slug from pathname
-  const pathParts = (pathname || '').split('/customization/');
-  const id = pathParts.length > 1 ? pathParts[1].replace(/\/$/, '') : null;
+    // Extract slug from pathname
+    const pathParts = (pathname || '').split('/customization/');
+    const id = pathParts.length > 1 ? pathParts[1].replace(/\/$/, '') : null;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.public.post(`product/customize/s/details`, { slug: id });
-        const resData = response.data.data;
-        setProductDetail(resData);
-        setProductImages(resData?.product.product_image);
-        setProductOptions(resData.product.product_options);
-        setProductPackageOptions(resData.product.packaging_options);
-        setSelectedOption(resData.product.packaging_options[0]);
-        setBrands(resData.product.product_brands.filter(i => i.status === 1));
-        setSelectedBrands(resData.product.product_brands.filter(i => i.status === 1)[0]?.name);
-        setSelectedBrandId(resData.product.product_brands.filter(i => i.status === 1)[0]?.id);
-        setProductVariants(resData.product.product_variants);
-        const seletedBrandId = resData.product.product_brands.filter(i => i.status === 1)[0]?.id;
-        if (resData.product.product_variants.filter(i => i.brand_id === seletedBrandId)) {
-          setSelectedProductVariants(resData.product.product_variants.filter(i => i.brand_id === seletedBrandId));
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.public.post(`product/customize/s/details`, { slug: id });
+                const resData = response.data.data;
+                setProductDetail(resData);
+                setProductImages(resData?.product.product_image);
+                setProductOptions(resData.product.product_options);
+                setProductPackageOptions(resData.product.packaging_options);
+                setSelectedOption(resData.product.packaging_options[0]);
+                setBrands(resData.product.product_brands.filter(i => i.status === 1));
+                setSelectedBrands(resData.product.product_brands.filter(i => i.status === 1)[0]?.name);
+                setSelectedBrandId(resData.product.product_brands.filter(i => i.status === 1)[0]?.id);
+                setProductVariants(resData.product.product_variants);
+                const seletedBrandId = resData.product.product_brands.filter(i => i.status === 1)[0]?.id;
+                if (resData.product.product_variants.filter(i => i.brand_id === seletedBrandId)) {
+                    setSelectedProductVariants(resData.product.product_variants.filter(i => i.brand_id === seletedBrandId));
+                }
+                setSelectedPackSize(resData.product.product_variants[0].pack_size);
+                setSelectedPackPrice(resData.product.product_variants[0].price_per_piece);
+                setProductLid(resData.product?.product_lid_options);
+                setRecomendedProducts(resData.recommended_products);
+                setSelectedImage(resData?.product.product_image[0].image || '');
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        if (id) fetchData();
+    }, [id]);
+
+    // Check if current variant is in wishlist
+    useEffect(() => {
+        const checkWishlistStatus = async () => {
+            if (!user) return;
+            try {
+                const response = await axios.protected.get('user/wishlist/get');
+                const wishlistItems = response.data?.data || [];
+                // Assuming we check against the product id or variant id. 
+                // Based on Wishlist.jsx, items have variants. 
+                // We act on the first variant usually shown or the product itself.
+                // Let's match by product ID for simplicity as variants might change.
+                // Or if specific variant is needed:
+                const currentVariantId = selectedProductVariants[0]?.id || productVariants[0]?.id;
+
+                const foundItem = wishlistItems.find(item =>
+                    item.product_variant_id === currentVariantId || item.product_variant?.id === currentVariantId
+                    // Fallback check if API structure differs
+                );
+
+                if (foundItem) {
+                    setIsWishlisted(true);
+                    setWishlistId(foundItem.id);
+                } else {
+                    setIsWishlisted(false);
+                    setWishlistId(null);
+                }
+            } catch (error) {
+                console.log("Error checking wishlist:", error);
+            }
+        };
+
+        if (user && (selectedProductVariants.length > 0 || productVariants.length > 0)) {
+            checkWishlistStatus();
         }
-        setSelectedPackSize(resData.product.product_variants[0].pack_size);
-        setSelectedPackPrice(resData.product.product_variants[0].price_per_piece);
-        setProductLid(resData.product?.product_lid_options);
-        setRecomendedProducts(resData.recommended_products);
-        setSelectedImage(resData?.product.product_image[0].image || '');
-      } catch (error) {
-        console.log(error);
-      }
+    }, [user, selectedProductVariants, productVariants]);
+
+    const handleSubmit = (e) => e.preventDefault();
+    const handleImageClick = (image) => setSelectedImage(image);
+
+    const handleWishlist = async () => {
+        if (!user) {
+            router.push('/login/');
+            return;
+        }
+
+        // Use current variant ID
+        const variantId = selectedProductVariants[0]?.id || productVariants[0]?.id;
+        if (!variantId) {
+            toast.error("No product variant available");
+            return;
+        }
+
+        try {
+            if (isWishlisted && wishlistId) {
+                // Remove from wishlist
+                await axios.protected.post(`user/wishlist/delete/${wishlistId}`);
+                removeFromWishlist();
+                setIsWishlisted(false);
+                setWishlistId(null);
+                toast.success('Product removed from wishlist');
+            } else {
+                // Add to wishlist
+                // Check if already added (double check)
+                const wishlistResponse = await axios.protected.get(`/user/wishlist/${variantId}/check`);
+                if (wishlistResponse.data.exists) {
+                    toast.error('Product already added to wishlist');
+                    setIsWishlisted(true);
+                    return;
+                }
+
+                const response = await axios.protected.post(`/user/wishlist/${variantId}/add`);
+                if (response.status === 200) {
+                    addToWishlist();
+                    toast.success('Product added to wishlist');
+                    // Re-fetch to get the new wishlist ID
+                    const listRes = await axios.protected.get('user/wishlist/get');
+                    const found = listRes.data?.data?.find(item => item.product_variant_id === variantId || item.product_variant?.id === variantId);
+                    if (found) {
+                        setWishlistId(found.id);
+                        setIsWishlisted(true);
+                    }
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error('An error occurred while updating wishlist');
+        }
     };
-    if (id) fetchData();
-  }, [id]);
 
-  const handleSubmit = (e) => e.preventDefault();
-  const handleImageClick = (image) => setSelectedImage(image);
-
-  const handleWishlist = async (id) => {
-    if (!user) {
-      router.push('/login/');
-      return;
-    }
-    try {
-      const wishlistResponse = await axios.protected.get(`/user/wishlist/${id}/check`);
-      if (wishlistResponse.data.exists) {
-        toast.error('Product already added to wishlist');
-      } else {
-        const response = await axios.protected.post(`/user/wishlist/${id}/add`);
-        if (response.status === 200) {
-          addToWishlist();
-          toast.success('Product added to wishlist');
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        const allowedExtensions = ["pdf", "ai", "cdr", "psd"];
+        const fileExtension = file.name.split(".").pop().toLowerCase();
+        if (!allowedExtensions.includes(fileExtension)) {
+            toast.error("Only PDF, AI, CDR, or PSD files are allowed.");
+            e.target.value = "";
+            return;
         }
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error('An error occurred while adding to wishlist');
-    }
-  };
+        if (file) {
+            setUploadedFile(file);
+            setDesignText('Design uploaded!');
+        }
+    };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const allowedExtensions = ["pdf", "ai", "cdr", "psd"];
-    const fileExtension = file.name.split(".").pop().toLowerCase();
-    if (!allowedExtensions.includes(fileExtension)) {
-      toast.error("Only PDF, AI, CDR, or PSD files are allowed.");
-      e.target.value = "";
-      return;
-    }
-    if (file) {
-      setUploadedFile(file);
-      setDesignText('Design uploaded!');
-    }
-  };
+    const convertFileToBase64 = (file) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+    });
 
-  const convertFileToBase64 = (file) => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
+    // Add to cart logic (same as before, unchanged)
+    const handleAddCart = async (product) => {
+        // ... copy your full handleAddCart logic exactly as is ...
+    };
 
-  // Add to cart logic (same as before, unchanged)
-  const handleAddCart = async (product) => {
-    // ... copy your full handleAddCart logic exactly as is ...
-  };
+    const handleSelectedBrand = (data) => {
+        setSelectedBrands(data.name);
+        setSelectedBrandId(data.id);
+        setSelectedProductVariants(productVariants.filter(i => i.brand_id === data.id));
+        setSelectedPackSize(productVariants.filter(i => i.brand_id === data.id)[0].pack_size);
+        setSelectedPackPrice(productVariants.filter(i => i.brand_id === data.id)[0].price_per_piece);
+    };
 
-  const handleSelectedBrand = (data) => {
-    setSelectedBrands(data.name);
-    setSelectedBrandId(data.id);
-    setSelectedProductVariants(productVariants.filter(i => i.brand_id === data.id));
-    setSelectedPackSize(productVariants.filter(i => i.brand_id === data.id)[0].pack_size);
-    setSelectedPackPrice(productVariants.filter(i => i.brand_id === data.id)[0].price_per_piece);
-  };
-
-  const handleCategoryLink = (item) => {
-    router.push(`/customization-category/${item.slug}`);
-  };
+    const handleCategoryLink = (item) => {
+        router.push(`/customization-category/${item.slug}`);
+    };
 
     return (
         <div className="relative py-32 px-10 text-white overflow-hidden">
@@ -188,7 +254,7 @@ export default function CustomDetails() {
                     className="inline cursor-pointer  "
                 >
                     {/* <Link to={`/product-category/${productDetail?.product?.category?.slug}`}> */}
-                        {productDetail.product?.category?.name || "Category Name"}
+                    {productDetail.product?.category?.name || "Category Name"}
                     {/* </Link> */}
                 </span> / {productDetail.product?.subCategory?.name ? <> <Link to='/'> {productDetail.product?.subCategory.name || 'Category Name'} </Link> /</> : ""} {productDetail.product?.name || 'Product Name'}</p>
                 {/* <h3 className="py-10 font-bazaar md:text-6xl text-5xl">INQUIRY FORM</h3> */}
@@ -240,23 +306,23 @@ export default function CustomDetails() {
                         {/* <h3 className='md:text-xl text-md font-semibold'>
                             Brand : {productDetail.product?.brand_name || 'Brand Name'}
                         </h3> */}
-                       <div onClick={() => setBrandsOpen(!brandsOpen)} className="relative ...">
-  Brand : {selectedBrands || 'Brand Name'}
-  <FaAngleDown className={`${brandsOpen ? 'rotate-180' : ''} duration-300`} />
-  {brandsOpen && (
-    <div className="absolute top-12 left-0 py-2 overflow-auto rounded-lg z-10 w-full h-32 bg-white">
-      {brands.map((data) => (
-        <div
-          key={data.id}
-          onClick={() => handleSelectedBrand(data)}
-          className="text-black px-4 py-1 text-md hover:bg-gray-200 duration-100"
-        >
-          {data.name}
-        </div>
-      ))}
-    </div>
-  )}
-</div>
+                        <div onClick={() => setBrandsOpen(!brandsOpen)} className="relative ...">
+                            Brand : {selectedBrands || 'Brand Name'}
+                            <FaAngleDown className={`${brandsOpen ? 'rotate-180' : ''} duration-300`} />
+                            {brandsOpen && (
+                                <div className="absolute top-12 left-0 py-2 overflow-auto rounded-lg z-10 w-full h-32 bg-white">
+                                    {brands.map((data) => (
+                                        <div
+                                            key={data.id}
+                                            onClick={() => handleSelectedBrand(data)}
+                                            className="text-black px-4 py-1 text-md hover:bg-gray-200 duration-100"
+                                        >
+                                            {data.name}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
 
                         <p className='text-xl font-semibold'>
                             {selectedProductVariants && selectedProductVariants.length > 0 ? (
@@ -265,10 +331,10 @@ export default function CustomDetails() {
                                 //     {/* ₨ {quantity && selectedVariantPrice && (quantity * subQuantity * selectedVariantPrice)} */}
                                 // </>
                                 <p>
-    Rs {selectedProductVariants[0].price}
-    {selectedProductVariants.length > 1 &&
-      ` - Rs ${selectedProductVariants[selectedProductVariants.length - 1].price}`}
-  </p>
+                                    Rs {selectedProductVariants[0].price}
+                                    {selectedProductVariants.length > 1 &&
+                                        ` - Rs ${selectedProductVariants[selectedProductVariants.length - 1].price}`}
+                                </p>
                             ) : (
                                 <span>No variants available</span>
                             )}
@@ -289,19 +355,19 @@ export default function CustomDetails() {
                                         {lidsDropdown && (
                                             <div className="md:w-28 w-40 rounded-md my-2 h-32 absolute z-10 overflow-auto bg-white text-black">
                                                 <div
-                                                        key={123}
-                                                        className="p-2 cursor-pointer hover:bg-gray-200"
-                                                        onClick={() => {
-                                                            setSelectedLidId(null); // Set selected lid on click
-                                                            setSelectedLidPrice(null);
-                                                            setSelectedLid(null);
-                                                            setSelectedImage(productDetail?.product?.product_image[0]?.image);
-                                                            // console.log(selectedLidPrice);
+                                                    key={123}
+                                                    className="p-2 cursor-pointer hover:bg-gray-200"
+                                                    onClick={() => {
+                                                        setSelectedLidId(null); // Set selected lid on click
+                                                        setSelectedLidPrice(null);
+                                                        setSelectedLid(null);
+                                                        setSelectedImage(productDetail?.product?.product_image[0]?.image);
+                                                        // console.log(selectedLidPrice);
 
-                                                            setLidsDropdown(false); // Close dropdown after selection
-                                                        }}>
-                                                        No Lid  {/* Display the pack size option */}
-                                                    </div>
+                                                        setLidsDropdown(false); // Close dropdown after selection
+                                                    }}>
+                                                    No Lid  {/* Display the pack size option */}
+                                                </div>
                                                 {productLid.map((lid) => (
                                                     <div
                                                         key={lid.id}
@@ -392,7 +458,7 @@ export default function CustomDetails() {
                                                         setOptionsDropdown(false); // Close dropdown after selection
                                                     }}>
                                                     {variant.side_option
-                                                    + '-' + variant.print_location}  {/* Display the pack size option */}
+                                                        + '-' + variant.print_location}  {/* Display the pack size option */}
                                                 </div>
                                             ))}
                                         </div>
@@ -430,16 +496,16 @@ export default function CustomDetails() {
                                     <button disabled={subQuantity === 1} onClick={() => setSubQuantity(subQuantity - 1)}>-</button>
                                     <p className=''>{subQuantity}</p>
                                     <button
-                                    // onClick={() => setSubQuantity(subQuantity + 1)}
+                                        // onClick={() => setSubQuantity(subQuantity + 1)}
                                         onClick={() => {
-                                          const limit = productDetail.product?.order_limit !== null ? productDetail.product?.order_limit : 1000;
-                                          if (subQuantity < limit) {
-                                            setSubQuantity(subQuantity + 1);
-                                          } else {
-                                            toast.warning(`Maximum order limit (${limit}) reached!`);
-                                          }
+                                            const limit = productDetail.product?.order_limit !== null ? productDetail.product?.order_limit : 1000;
+                                            if (subQuantity < limit) {
+                                                setSubQuantity(subQuantity + 1);
+                                            } else {
+                                                toast.warning(`Maximum order limit (${limit}) reached!`);
+                                            }
                                         }}
-                                        >+</button>
+                                    >+</button>
                                 </div>
                                 <button className='p-2 pt-3 bg-[#1E7773] w-full lg:text-[15px] font-bazaar text-xs rounded-md' onClick={() => handleAddCart(productDetail.product?.id)}>
                                     ADD TO CART
@@ -447,18 +513,23 @@ export default function CustomDetails() {
                             </div>
                         </form>
                         <div>
-                        <p>
-                            ₨ {subQuantity && selectedPackPrice && selectedPackSize || selectedOptionPrice
-                                ? ((Number(subQuantity || 1) * Number(selectedPackSize || 1)) * (Number(selectedPackPrice || 1) + Number(selectedOptionPrice ? selectedOptionPrice : 0) + Number(selectedLidPrice ? selectedLidPrice : 0))).toFixed(2)
-                                : 0}
+                            <p>
+                                ₨ {subQuantity && selectedPackPrice && selectedPackSize || selectedOptionPrice
+                                    ? ((Number(subQuantity || 1) * Number(selectedPackSize || 1)) * (Number(selectedPackPrice || 1) + Number(selectedOptionPrice ? selectedOptionPrice : 0) + Number(selectedLidPrice ? selectedLidPrice : 0))).toFixed(2)
+                                    : 0}
 
-                            / Per Pieces: {(Number(selectedPackPrice || 0) + Number(selectedOptionPrice || 0)) + Number(selectedLidPrice || 0)}
-                        </p>
-                        {productDetail.product?.activeDiscount && ( <p className='text-sm '>{Number(productDetail.product?.activeDiscount?.discount_percentage)}% OFF ( {productDetail.product?.activeDiscount?.name} )</p>)}
+                                / Per Pieces: {(Number(selectedPackPrice || 0) + Number(selectedOptionPrice || 0)) + Number(selectedLidPrice || 0)}
+                            </p>
+                            {productDetail.product?.activeDiscount && (<p className='text-sm '>{Number(productDetail.product?.activeDiscount?.discount_percentage)}% OFF ( {productDetail.product?.activeDiscount?.name} )</p>)}
                         </div>
 
                         <div className="flex flex-row md:gap-5 gap-2">
-                            <button className='p-2 pt-3 border-b-4 border-[#1E7773] w-32 lg:text-[15px] font-bazaar text-xs' onClick={() => handleWishlist(productVariants[0].id)}>ADD TO WISHLIST</button>
+                            <button
+                                className={`p-2 pt-3 border-b-4 ${isWishlisted ? 'border-red-500 text-red-500' : 'border-[#1E7773]'} w-32 lg:text-[15px] font-bazaar text-xs`}
+                                onClick={handleWishlist}
+                            >
+                                {isWishlisted ? 'REMOVE FROM WISHLIST' : 'ADD TO WISHLIST'}
+                            </button>
                             <button className='p-3 border flex flex-row justify-between items-center gap-2  border-[#1E7773] w32 lg:text-[15px]  font-bazaar text-xs rounded-md' onClick={() => window.open(`https://wa.me/${whatsappNumber}?text=${inquiryMessage}`, '_blank')}><FaWhatsapp className='text-[#1E7773] text-2xl' /> <p className="pt-2">ORDER ON WHATSAPP</p></button>
                         </div>
                         {/* <button className='p-3 pt-3 bg-[#1E7773] w-52 lg:text-[15px] font-bazaar text-xs rounded-md'>CUSTOMIZED PRINTING</button> */}

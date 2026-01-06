@@ -115,6 +115,7 @@ export default function CustomDetails() {
       router.push('/login/');
       return;
     }
+    console.log("id",id);
     try {
       const wishlistResponse = await axios.protected.get(`/user/wishlist/${id}/check`);
       if (wishlistResponse.data.exists) {
@@ -606,7 +607,7 @@ export default function CustomDetails() {
                         </div>
 
                         <div className="flex flex-row md:gap-5 gap-2">
-                            <button className='p-2 pt-3 border-b-4 border-[#1E7773] w-32 lg:text-[15px] font-bazaar cursor-pointer text-xs' onClick={() => handleWishlist(productVariants[0].product?.id)}>ADD TO WISHLIST</button>
+                            <button className='p-2 pt-3 border-b-4 border-[#1E7773] w-32 lg:text-[15px] font-bazaar cursor-pointer text-xs' onClick={() => handleWishlist(productDetail.product.id )}>ADD TO WISHLIST</button>
                             <button className='p-3 border flex flex-row justify-between items-center gap-2  border-[#1E7773] w32 lg:text-[15px]  font-bazaar text-xs rounded-md' onClick={() => window.open(`https://wa.me/${whatsappNumber}?text=${inquiryMessage}`, '_blank')}><FaWhatsapp className='text-[#1E7773] text-2xl' /> <p className="pt-2 cursor-pointer">ORDER ON WHATSAPP</p></button>
                         </div>
                         {/* <button className='p-3 pt-3 bg-[#1E7773] w-52 lg:text-[15px] font-bazaar text-xs rounded-md'>CUSTOMIZED PRINTING</button> */}

@@ -756,16 +756,18 @@ function Header() {
 
                 {/* Email Button */}
                 <a
-                    href="mailto:info@example.com"
+                    href="mailto:info@disposablebazaar.com"
+                    target="_blank"
                     className="w-12 h-12 rounded-full bg-[#1E90FF] flex items-center justify-center shadow-lg hover:scale-110 transition"
                     aria-label="Email"
+                    title="This will open your email app"
                 >
                     <MdEmail className="text-white text-[25px]" />
                 </a>
 
             </div>
 
-        </div>
+        </div >
 
 
 

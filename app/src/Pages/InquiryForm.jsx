@@ -22,6 +22,7 @@ function InquiryForm() {
     const locationRef = useRef(null);
     const emailRef = useRef(null);
     const productRef = useRef(null);
+    const fileRef = useRef(null);
 
     const [productCategory, setProductCategory] = useState([]);
     const [isDropdown, setIsDropdown] = useState(false);
@@ -76,6 +77,12 @@ function InquiryForm() {
         if (!email) return scrollToField(emailRef, "Email is required");
         if (!selectedProductId)
             return scrollToField(productRef, "Please choose a product");
+
+        if (!file) {
+            toast.error("Must upload artwork first");
+            fileRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
 
         const formData = new FormData();
         formData.append("name", name);
@@ -210,14 +217,14 @@ function InquiryForm() {
                             Please choose a product <span className="text-red-500">*</span>
                         </label>
 
-                           <div
-                                                    onClick={() => setIsDropdown(!isDropdown)}
-                                                    className="flex justify-between items-center p-2 rounded-md px-3 my-2 border border-white bg-transparent cursor-pointer"
-                                                >
-                                                    <p>{selectedProduct}</p>
-                                                    <PiCaretDownThin size={20} />
-                                                </div>
-{/* 
+                        <div
+                            onClick={() => setIsDropdown(!isDropdown)}
+                            className="flex justify-between items-center p-2 rounded-md px-3 my-2 border border-white bg-transparent cursor-pointer"
+                        >
+                            <p>{selectedProduct}</p>
+                            <PiCaretDownThin size={20} />
+                        </div>
+                        {/* 
                         <div
                             ref={productRef}
                             onClick={() => setIsDropdown(!isDropdown)}
@@ -244,8 +251,8 @@ function InquiryForm() {
 
                     {/* File Upload */}
                     <div className="py-10 flex flex-col w-full">
-                        <label className="font-medium">Upload Your Artwork </label>
-                        <div className="flex flex-col my-2 relative w-full h-60 items-center justify-center border-2 border-dashed rounded-lg border-gray-300">
+                        <label className="font-medium">Upload Your Artwork <span className="text-red-500">*</span></label>
+                        <div ref={fileRef} className="flex flex-col my-2 relative w-full h-60 items-center justify-center border-2 border-dashed rounded-lg border-gray-300">
                             <button
                                 type="button"
                                 className="px-3 py-2 bg-teal-700 text-white rounded-md"

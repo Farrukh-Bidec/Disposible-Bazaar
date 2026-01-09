@@ -52,7 +52,7 @@ export default function CustomDetails() {
   const [selectedSize, setSelectedSize] = useState('');
   const [colors, setColors] = useState(false);
   const [selectedColor, setSelectedColor] = useState('');
-  const [selectedOptionPrice, setSelectedOptionPrice] = useState();
+  const [selectedOptionPrice, setSelectedOptionPrice] = useState(0);
   const [designText, setDesignText] = useState('Add Your Design');
   const [uploadedFile, setUploadedFile] = useState(null);
   const [logoImage, setLogoImage] = useState(null);

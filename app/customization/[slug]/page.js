@@ -52,7 +52,7 @@ export default function CustomDetails() {
   const [selectedSize, setSelectedSize] = useState('');
   const [colors, setColors] = useState(false);
   const [selectedColor, setSelectedColor] = useState('');
-  const [selectedOptionPrice, setSelectedOptionPrice] = useState(0);
+  const [selectedOptionPrice, setSelectedOptionPrice] = useState();
   const [designText, setDesignText] = useState('Add Your Design');
   const [uploadedFile, setUploadedFile] = useState(null);
   const [logoImage, setLogoImage] = useState(null);
@@ -604,7 +604,13 @@ export default function CustomDetails() {
 
                             / Per Pieces: {(Number(selectedPackPrice || 0) + Number(selectedOptionPrice || 0)) + Number(selectedLidPrice || 0)}
                         </p>
-                            lid price : {selectedOptionPrice * Number(selectedPackSize || 1)}
+{selectedOptionPrice ? (
+  <p>
+    Lid Price: {Number(selectedOptionPrice) * Number(selectedPackSize || 1)}
+  </p>
+) : (
+  <p className="text-gray-400 text-sm">Select a variant to see price</p>
+)}
                         {productDetail.product?.activeDiscount && ( <p className='text-sm '>{Number(productDetail.product?.activeDiscount?.discount_percentage)}% OFF ( {productDetail.product?.activeDiscount?.name} )</p>)}
                         </div>
 

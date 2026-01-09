@@ -537,10 +537,11 @@ export default function CustomDetails() {
                                                     className="p-2 cursor-pointer uppercase hover:bg-gray-200"
                                                     onClick={() => {
                                                         setSelectedOption(variant); // Set selected pack size
+                                                        setSelectedOptionPrice(variant.price);
                                                         setOptionsDropdown(false); // Close dropdown after selection
                                                     }}>
-                                                    {variant.side_option
-                                                    + '-' + variant.print_location}  {/* Display the pack size option */}
+                                                                        {variant.side_option
+                                                                        + '-' + variant.print_location}  {/* Display the pack size option */}
                                                 </div>
                                             ))}
                                         </div>
@@ -603,6 +604,7 @@ export default function CustomDetails() {
 
                             / Per Pieces: {(Number(selectedPackPrice || 0) + Number(selectedOptionPrice || 0)) + Number(selectedLidPrice || 0)}
                         </p>
+                            lid price : {selectedOptionPrice * Number(selectedPackSize || 1)}
                         {productDetail.product?.activeDiscount && ( <p className='text-sm '>{Number(productDetail.product?.activeDiscount?.discount_percentage)}% OFF ( {productDetail.product?.activeDiscount?.name} )</p>)}
                         </div>
 

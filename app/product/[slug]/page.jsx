@@ -667,7 +667,7 @@ function ShopDetails() {
                                                         setSelectedVariant(variant.pack_size);
                                                     }}
                                                 />
-                                                <label htmlFor={`variant-${variant.id}`}>{variant.pack_size} Pcs</label>
+                                                <label htmlFor={`variant-${variant.id}`}>{variant.pack_size} - {variant.name}</label>
                                             </div>
                                         ))
                                     ) : (

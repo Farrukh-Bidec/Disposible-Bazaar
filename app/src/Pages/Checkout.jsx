@@ -718,7 +718,7 @@ function Checkout() {
                                                             className="text-black"
                                                         >
                                                             {variant.pack_size}{" "}
-                                                            Pcs
+                                                        - {variant.name}
                                                         </option>
                                                     )
                                                 )}
@@ -759,7 +759,8 @@ function Checkout() {
                                         </div>
 
                                         <div className="border border-gray-300 w-16 rounded-lg text-sm text-center py-1">
-                                            {product.total_pieces} Pcs
+                                            {product.total_pieces} 
+- {product.name}
                                         </div>
                                         <p className="flex flex-col gap-0 text-xs">
                                             Rs: {product.product_total}

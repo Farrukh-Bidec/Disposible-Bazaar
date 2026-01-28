@@ -590,7 +590,7 @@ function ShopDetails() {
                             <p className='text-sm text-gray-300'>
                                 {productDetail?.product?.stock_status === 1 ? "In Stock" : "Out Of Stock"}
                             </p>                         <h1 className='md:text-5xl text-3xl font-semibold'>
-                                {productDetail?.product?.name + '111' || 'Product Name'}
+                                {productDetail?.product?.name + '' || 'Product Name'}
                                 {console.log(productDetail)}
                             </h1>
 

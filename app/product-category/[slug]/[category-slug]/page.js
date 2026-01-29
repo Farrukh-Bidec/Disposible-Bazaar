@@ -342,7 +342,7 @@ function CategoryDetail({ params }) {
                                                             className="relative p-5 flex flex-col justify-center items-center"
                                                         >
                                                             <img
-                                                                className=" w-full h-full block group-hover:hidden rounded-xl object-cover"
+                                                                className=" w-full h-[200px] block group-hover:hidden rounded-xl object-cover"
                                                                 src={
                                                                     product.product_image
                                                                         ? `${Assets_Url}${product.product_image[0]?.image}`
@@ -358,7 +358,7 @@ function CategoryDetail({ params }) {
                                                                 }}
                                                                 loading="lazy"
                                                             />
-                                                            <img className=" w-full h-full hidden group-hover:block rounded-xl object-cover"
+                                                            <img className=" w-full h-[200px] hidden group-hover:block rounded-xl object-cover"
                                                                 src={
                                                                     product.product_image
                                                                         ? `${Assets_Url}${product.product_image[1]?.image}`

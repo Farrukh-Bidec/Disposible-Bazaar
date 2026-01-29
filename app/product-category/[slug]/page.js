@@ -261,7 +261,7 @@ const CustomizationCategory = ({ params }) => {
 
                         <Link href={`/product/${product.slug}`} className="block p-5">
                           <img
-                            className="w-full h-full rounded-xl group-hover:hidden object-cover"
+                            className="w-full h-full h-[200px] rounded-xl group-hover:hidden object-cover"
                             src={
                               product.product_image?.[0]?.image
                                 ? `${Assets_Url}${product.product_image[0].image}`
@@ -269,7 +269,7 @@ const CustomizationCategory = ({ params }) => {
                             }
                           />
                           <img
-                            className="w-full h-full hidden group-hover:block rounded-xl object-cover"
+                            className="w-full h-full h-[200px] hidden group-hover:block rounded-xl object-cover"
                             src={
                               product.product_image?.[1]?.image
                                 ? `${Assets_Url}${product.product_image[1].image}`

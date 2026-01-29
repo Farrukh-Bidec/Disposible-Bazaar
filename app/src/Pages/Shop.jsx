@@ -241,18 +241,18 @@ function Shop() {
             ) : (
               <>
                 <div
-                  className={`py-10 grid ${
-                    grid === 4
+                  className={`py-10 grid ${grid === 4
                       ? "grid-cols-4"
                       : grid === 3
-                      ? "grid-cols-3"
-                      : grid === 2
-                      ? "grid-cols-2"
-                      : "grid-cols-1"
-                  } gap-4`}
+                        ? "grid-cols-3"
+                        : grid === 2
+                          ? "grid-cols-2"
+                          : "grid-cols-1"
+                    } gap-4`}
                 >
-                  {filteredProduct.slice(0, visibleProducts).map((product, index) => (
-                    <div key={index} className="flex justify-center">
+                  {filteredProduct.slice(0, visibleProducts).map((product) => (
+                    <div key={product.id} className="flex justify-center">
+                    
                       <div className="w-full xl:p-4 p-2 border border-[#1E7773] bg-gradient-to-l from-[#403E4A] to-[#32303E] rounded-2xl group">
 
                         <Link href={product.is_customizeable ? `/customization/${product.slug}` : `/product/${product.slug}`}>
@@ -267,20 +267,21 @@ function Shop() {
                               alt={product.product_image[0]?.image_alt || "Product Image"}
                               onError={(e) => (e.currentTarget.src = Image_Not_Found)}
                             /> */}
-                            <img
-  className="w-full rounded-xl object-cover transition-all duration-300"
+                        <img
+  className="w-full rounded-xl h-[200px] object-cover transition-all duration-300"
   src={
     hoveredProductId === product.id && product.product_image?.[1]
       ? `${Assets_Url}${product.product_image[1]?.image}`
       : product.product_image?.[0]
-      ? `${Assets_Url}${product.product_image[0]?.image}`
-      : `${Image_Url}defaultImage.svg`
+        ? `${Assets_Url}${product.product_image[0]?.image}`
+        : `${Image_Url}defaultImage.svg`
   }
   alt={product.product_image?.[0]?.image_alt || "Product Image"}
   onMouseEnter={() => setHoveredProductId(product.id)}
   onMouseLeave={() => setHoveredProductId(null)}
   onError={(e) => (e.currentTarget.src = Image_Not_Found)}
 />
+
 
                           </div>
                         </Link>
@@ -316,6 +317,8 @@ function Shop() {
                       </div>
                     </div>
                   ))}
+
+                  
                 </div>
 
                 {filteredProduct.length > 12 && visibleProducts < filteredProduct.length ? (

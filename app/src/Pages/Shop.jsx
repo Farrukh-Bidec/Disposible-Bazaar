@@ -187,6 +187,9 @@ function Shop() {
     setShowQtyModal(false);
   };
 
+  const [hoveredProductId, setHoveredProductId] = useState(null);
+
+
   return (
     <div className="py-15 ">
       {/* ------ UI Same ------ */}
@@ -254,7 +257,7 @@ function Shop() {
 
                         <Link href={product.is_customizeable ? `/customization/${product.slug}` : `/product/${product.slug}`}>
                           <div className="relative p-5 flex justify-center items-center">
-                            <img
+                            {/* <img
                               className="w-full rounded-xl object-cover"
                               src={
                                 product.product_image
@@ -263,7 +266,22 @@ function Shop() {
                               }
                               alt={product.product_image[0]?.image_alt || "Product Image"}
                               onError={(e) => (e.currentTarget.src = Image_Not_Found)}
-                            />
+                            /> */}
+                            <img
+  className="w-full rounded-xl object-cover transition-all duration-300"
+  src={
+    hoveredProductId === product.id && product.product_image?.[1]
+      ? `${Assets_Url}${product.product_image[1]?.image}`
+      : product.product_image?.[0]
+      ? `${Assets_Url}${product.product_image[0]?.image}`
+      : `${Image_Url}defaultImage.svg`
+  }
+  alt={product.product_image?.[0]?.image_alt || "Product Image"}
+  onMouseEnter={() => setHoveredProductId(product.id)}
+  onMouseLeave={() => setHoveredProductId(null)}
+  onError={(e) => (e.currentTarget.src = Image_Not_Found)}
+/>
+
                           </div>
                         </Link>
 

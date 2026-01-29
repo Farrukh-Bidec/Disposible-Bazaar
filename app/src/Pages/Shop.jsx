@@ -198,18 +198,6 @@ function Shop() {
         bgImage="CustomHeroAssets/shopbanner.png"
       />
 
-
-
-
-
-
-
-
-
-
-
-      
-
       <div className="lg:px-10 px-0 flex ">
         <section className="hidden lg:flex flex-col p-5 text-white lg:w-1/5">
           <PriceRange onFilter={handleFilter} isCategoryShown={true} />

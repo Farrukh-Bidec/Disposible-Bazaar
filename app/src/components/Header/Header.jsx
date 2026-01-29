@@ -562,7 +562,7 @@ function Header() {
                     </div>
                 </div>
                 <ul className="lg:flex hidden flex flex-row items-center justify-center gap-2 text-sm  cursor-pointer">
-                    <li>
+                    
                         {user && (
                             <Link href="/wishlist">
                                 <li className="relative">
@@ -574,7 +574,7 @@ function Header() {
                                     )}
                                 </li>
                             </Link>
-                        )}</li>
+                        )}
                     <li>
                         {!user ? (
                             <Link href="/register/" aria-label="User_profile" >
@@ -598,6 +598,7 @@ function Header() {
                             <RiShoppingBasket2Line className='bg-[#1E7773] rounded-lg text-white p-1 text-3xl' />
                             <p className='text-xs px-2'> <span className='text-[15px] font-semibold'>My Cart</span> <br /> 0 items-Rs0.00 </p>
                         </li> */}
+                        
                             <li className="flex">
                                 <RiShoppingBasket2Line className="bg-[#1E7773] rounded-lg text-white p-1 text-3xl" />
                                 <p className="text-xs px-2 text-zinc-950">
@@ -608,6 +609,7 @@ function Header() {
                                     {totalItems} items - Rs {subtotal}
                                 </p>
                             </li>
+                            
                         </Link>
                     </li>
                 </ul>

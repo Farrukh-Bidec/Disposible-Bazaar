@@ -420,6 +420,7 @@ export default function CustomDetails() {
                             ) : (
                                 <span>No variants available</span>
                             )}
+                         <h3 className="text-center text-[13px] ">Printing Side</h3>
                         </div>
                         <form onSubmit={handleSubmit} className='w-3/4 flex flex-col gap-5'>
                             <div className="flex mdflex-row flex-wrap gap-3">
@@ -436,6 +437,7 @@ export default function CustomDetails() {
                                         {/* Dropdown options for Lid */}
                                         {lidsDropdown && (
                                             <div className="md:w-28 w-40 rounded-md my-2 h-32 absolute z-10 overflow-auto bg-white text-black">
+                                               
                                                 <div
                                                         key={123}
                                                         className="p-2 cursor-pointer hover:bg-gray-200"
@@ -470,6 +472,8 @@ export default function CustomDetails() {
                                         )}
                                     </div>
                                 )}
+                                
+                               
                                 {/* <div className="relative">
                                     <h3 onClick={() => setPieces(!pieces)} className="flex flex-row justify-between items-center text-md gap-3 border p-2 rounded-md md:w-24 w-40 border-[#1E7773] "><p>Pieces</p><p>{pieces ? <PiCaretUpThin /> : <PiCaretDownThin />}</p></h3>
                                     {pieces && (
@@ -504,6 +508,7 @@ export default function CustomDetails() {
                                             ))}
                                         </div>
                                     )}
+                                    
                                 </div>
                                 {/* <div className="relative">
                                     <h3 onClick={() => setSize(!size)} className="flex flex-row justify-between items-center text-md gap-3 border p-2 rounded-md md:w-24 w-40 border-[#1E7773] "><p>Size</p><p>{size ? <PiCaretUpThin /> : <PiCaretDownThin />}</p></h3>
@@ -556,7 +561,7 @@ export default function CustomDetails() {
                             >
                                 <p className="font-bazaar flex flex-row gap-2 pt-1">
                                     <BiSolidImageAdd size={22} />
-                                    {designText} {/* Display the updated text */}
+                                    {designText}
                                 </p>
                                 <input
                                     type="file"
@@ -604,11 +609,14 @@ export default function CustomDetails() {
 
                             / Per Pieces: {(Number(selectedPackPrice || 0) + Number(selectedOptionPrice || 0)) + Number(selectedLidPrice || 0)}
                         </p>
+                                                 {/* <h3 className="text-[13px] font-semibold py-2 ">Printing Price :</h3> */}
+
 {selectedOptionPrice ? (
   <p>
-    Lid Price: {Number(selectedOptionPrice) * Number(selectedPackSize || 1)}
+    Printing Price: {Number(selectedOptionPrice) * Number(selectedPackSize || 1)}
   </p>
 ) : (
+    
   <p className="text-gray-400 text-sm">Select a variant to see price</p>
 )}
                         {productDetail.product?.activeDiscount && ( <p className='text-sm '>{Number(productDetail.product?.activeDiscount?.discount_percentage)}% OFF ( {productDetail.product?.activeDiscount?.name} )</p>)}
@@ -643,6 +651,7 @@ export default function CustomDetails() {
                                 ) : (
                                     <p className="text-md">No Description Found</p>
                                 )}
+                                
                             </div>
                         )}
                         {productTextDetail === 'Additional information' && (
@@ -723,6 +732,7 @@ export default function CustomDetails() {
                                    <h4 className="text-md font-bold">Added to Cart</h4>
                                    <FiX size={24} onClick={() => setIsCartModalOpen(false)} />
                                </div>
+                               
                                <CartModal />
                                <div className="flex flex-row gap-2 mt-2">
                                    <Link href='/shop/' className='p-1 flex justify-center items-center pt-2 border text-[#1E7773] border-[#1E7773] w-full lg:text-[15px] font-bazaar text-xs rounded-md'>

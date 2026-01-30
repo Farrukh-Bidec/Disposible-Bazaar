@@ -633,53 +633,28 @@ function ShopDetails() {
                             Rs {selectedProductVariants[0]?.price}
                         </p>
 
+
                         <form onSubmit={handleSubmit} className='max-w-130  w-full flex flex-col gap-5 '>
                             {/* Quantity Selection */}
+
+
                            <div className="my-form border w-full border-[#1E7773] rounded-full flex items-stretch">
   <p className="my-form-heading bg-[#1E7773] rounded-l-full h-full p-1 px-5 flex items-center">
     Pieces
+    
   </p>
 
-  <div className="flex flex-wrap gap-4 justify-start p-1 px-2 items-center">
-    {selectedProductVariants && selectedProductVariants.length > 0 ? (
-      selectedProductVariants.length <= 2 ? (
-        // ✅ 2 ya kam variants → Radio Buttons (same UI)
-        selectedProductVariants.map((variant) => (
-          <div key={variant.id} className="flex flex-row items-center gap-2">
-           <input
-  id={`variant-${variant.id}`}
-  type="radio"
-  name="variant"
-  value={variant.id}
-  checked={selectedVariantId === variant.id}
-  onChange={() => {
-    setQuantity(variant.pack_size);
-    setSelectedVariantId(variant.id);
-    setSelectedVariantPrice(
-      Number(variant.price_per_piece ?? variant.price ?? 0)
-    );
-    setSelectedVariant(variant.pack_size);
-  }}
-/>
-
-            <label htmlFor={`variant-${variant.id}`}>
-              {variant.pack_size} - {variant.name}
-            </label>
-          </div>
-        ))
-      ) : (
-        // ✅ Zyada variants → Dropdown (layout same container me)
-        <select
-          className="border rounded-full px-4 py-1 text-[#fff] bg-[#1E7773]"
-          value={selectedVariantId || ""}
-          onChange={(e) => {
-            const selectedId = Number(e.target.value);
-            const variant = selectedProductVariants.find(
-              (v) => v.id === selectedId
-            );
-
-            if (!variant) return;
-
+<div className="flex flex-wrap gap-4 justify-start p-1 px-2 items-center">
+  {selectedProductVariants && selectedProductVariants.length > 0 ? (
+    selectedProductVariants.map((variant) => (
+      <div key={variant.id} className="flex flex-row items-center gap-2">
+        <input
+          id={`variant-${variant.id}`}
+          type="radio"
+          name="variant"
+          value={variant.id}
+          checked={selectedVariantId === variant.id}
+          onChange={() => {
             setQuantity(variant.pack_size);
             setSelectedVariantId(variant.id);
             setSelectedVariantPrice(
@@ -687,20 +662,21 @@ function ShopDetails() {
             );
             setSelectedVariant(variant.pack_size);
           }}
-        >
-       
+        />
 
-          {selectedProductVariants.map((variant) => (
-            <option key={variant.id} value={variant.id}>
-              {variant.pack_size} - {variant.name}
-            </option>
-          ))}
-        </select>
-      )
-    ) : (
-      <p>No variants available.</p>
-    )}
-  </div>
+        <label htmlFor={`variant-${variant.id}`}>
+          {variant.pack_size} - {variant.name}
+        </label>
+      </div>
+    ))
+  ) : (
+    <p>No variants available.</p>
+  )}
+</div>
+
+
+
+
 </div>
 
 

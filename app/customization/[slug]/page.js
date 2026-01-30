@@ -608,29 +608,8 @@ export default function CustomDetails() {
                                 : 0}
 
                             / Per Pieces: {(Number(selectedPackPrice || 0) + Number(selectedOptionPrice || 0)) + Number(selectedLidPrice || 0)}
-                       
-                       
                         </p>
-                        <p>
-  Lid Per Piece: ₨ {Number(selectedLidPrice || 0).toFixed(2)}
-</p>
-
-
-
-
-{selectedLidPrice ? (
-  <p>
-    Lid Total Price: ₨ {(
-      Number(selectedLidPrice || 0) *
-      Number(selectedPackSize || 1) *
-      Number(subQuantity || 1)
-    ).toFixed(2)}
-  </p>
-) : (
-  <p className="text-gray-400 text-sm">Select a lid to see price</p>
-)}
-
-
+                                                 <h3 className="text-[13px] font-semibold py-2 ">Lid Price :</h3>
 
 
 {selectedOptionPrice ? (

@@ -281,6 +281,27 @@ export default function CustomDetails() {
         };
     }, []);
 
+
+
+    const totalPieces =
+  Number(subQuantity || 1) * Number(selectedPackSize || 1);
+
+const perPieceBase =
+  Number(selectedPackPrice || 0) +
+  Number(selectedOptionPrice || 0) +
+  Number(selectedLidPrice || 0);
+
+const totalPrice = (totalPieces * perPieceBase).toFixed(2);
+
+const totalLidPrice = (
+  Number(selectedLidPrice || 0) * totalPieces
+).toFixed(2);
+
+const totalPrintingPrice = (
+  Number(selectedOptionPrice || 0) * totalPieces
+).toFixed(2);
+
+
     return (
         <div className="relative py-32 px-10 text-white overflow-hidden">
             <ToastContainer autoClose={500} />
@@ -601,38 +622,36 @@ export default function CustomDetails() {
                                 </button>
                             </div>
                         </form>
-                        <div> 
-                        <p>
-                            ₨ {subQuantity && selectedPackPrice && selectedPackSize || selectedOptionPrice
-                                ? ((Number(subQuantity || 1) * Number(selectedPackSize || 1)) * (Number(selectedPackPrice || 1) + Number(selectedOptionPrice ? selectedOptionPrice : 0) + Number(selectedLidPrice ? selectedLidPrice : 0))).toFixed(2)
-                                : 0}
-
-                            / Per Pieces: {(Number(selectedPackPrice || 0) + Number(selectedOptionPrice || 0)) + Number(selectedLidPrice || 0)}
-                        </p>
-                                                 {/* <h3 className="text-[13px] font-semibold py-2 ">Lid Price :</h3> */}
-
-{selectedLidPrice ? (
+                      <div>
   <p>
-    Lid Price: {Number(selectedLidPrice) * Number(selectedPackSize || 1)}
+    ₨ {totalPrice} 
+    / Per Pieces: ₨ {perPieceBase.toFixed(2)}
   </p>
-) : (
-  <p className="text-gray-400 text-sm">Select a lid to see price</p>
-)}
 
+  {selectedLidPrice ? (
+    <p>
+      Lid Price: ₨ {totalLidPrice}
+    </p>
+  ) : (
+    <p className="text-gray-400 text-sm">Select a lid to see price</p>
+  )}
 
+  {selectedOptionPrice ? (
+    <p>
+      Printing Price: ₨ {totalPrintingPrice}
+    </p>
+  ) : (
+    <p className="text-gray-400 text-sm">Select a variant to see price</p>
+  )}
 
+  {productDetail.product?.activeDiscount && (
+    <p className='text-sm'>
+      {Number(productDetail.product?.activeDiscount?.discount_percentage)}% OFF 
+      ( {productDetail.product?.activeDiscount?.name} )
+    </p>
+  )}
+</div>
 
-
-{selectedOptionPrice ? (
-  <p>
-    Printing Price: {Number(selectedOptionPrice) * Number(selectedPackSize || 1)}
-  </p>
-) : (
-    
-  <p className="text-gray-400 text-sm">Select a variant to see price</p>
-)}
-                        {productDetail.product?.activeDiscount && ( <p className='text-sm '>{Number(productDetail.product?.activeDiscount?.discount_percentage)}% OFF ( {productDetail.product?.activeDiscount?.name} )</p>)}
-                        </div>
 
                         <div className="flex flex-row md:gap-5 gap-2">
                             <button className='p-2 pt-3 border-b-4 border-[#1E7773] w-32 lg:text-[15px] font-bazaar cursor-pointer text-xs' onClick={() => handleWishlist(productDetail.product.id )}>ADD TO WISHLIST</button>

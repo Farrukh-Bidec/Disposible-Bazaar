@@ -623,7 +623,7 @@ export default function CustomDetails() {
                                     </h3>
 
                                     <p className="text-[13px] font-semibold text-white">
-                                        ₨ {Number(selectedLidPrice)}
+                                         {Number(selectedLidPrice)}
                                     </p>
                                 </div>
                             )}

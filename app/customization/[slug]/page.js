@@ -609,7 +609,7 @@ export default function CustomDetails() {
 
                             / Per Pieces: {(Number(selectedPackPrice || 0) + Number(selectedOptionPrice || 0)) + Number(selectedLidPrice || 0)}
                         </p>
-                                                 {/* <h3 className="text-[13px] font-semibold py-2 ">Printing Price :</h3> */}
+                                                 <h3 className="text-[13px] font-semibold py-2 ">Printing Price :</h3>
 
 {selectedOptionPrice ? (
   <p>

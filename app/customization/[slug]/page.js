@@ -609,7 +609,19 @@ export default function CustomDetails() {
 
                             / Per Pieces: {(Number(selectedPackPrice || 0) + Number(selectedOptionPrice || 0)) + Number(selectedLidPrice || 0)}
                         </p>
-                                                 <h3 className="text-[13px] font-semibold py-2 ">Printing Price :</h3>
+                                                 {/* <h3 className="text-[13px] font-semibold py-2 ">Lid Price :</h3> */}
+
+{selectedLidPrice ? (
+  <p>
+    Lid Price: {Number(selectedLidPrice) * Number(selectedPackSize || 1)}
+  </p>
+) : (
+  <p className="text-gray-400 text-sm">Select a lid to see price</p>
+)}
+
+
+
+
 
 {selectedOptionPrice ? (
   <p>

@@ -611,7 +611,6 @@ export default function CustomDetails() {
                         </p>
                                                  <h3 className="text-[13px] font-semibold py-2 ">Lid Price :</h3>
 
-
 {selectedOptionPrice ? (
   <p>
     Printing Price: {Number(selectedOptionPrice) * Number(selectedPackSize || 1)}
